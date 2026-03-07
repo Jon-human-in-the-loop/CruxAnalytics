@@ -573,8 +573,8 @@ export default function NewProjectScreen() {
         incidentCostPerMonth: parseFloat(incidentCost) || 0,
         currentRevenue: revenue,
         previousRevenue: parseFloat(prevRevenue) || revenue * 0.8,
-        currentBurnRate: opCosts || 0,
-        previousBurnRate: parseFloat(prevBurnRate) || (opCosts || 0) * 0.9,
+        currentBurnRate: opCosts,
+        previousBurnRate: parseFloat(prevBurnRate) || opCosts * 0.9,
       };
 
 
