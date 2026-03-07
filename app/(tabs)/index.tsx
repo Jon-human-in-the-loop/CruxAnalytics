@@ -310,33 +310,31 @@ export default function HomeScreen() {
           </View>
 
         </View>
+      </ScrollView>
+
+      {/* Floating Action Button */}
+      <View className="absolute bottom-6 right-6">
+        <TouchableOpacity
+          onPress={handleNewProject}
+          className="bg-primary rounded-full w-16 h-16 items-center justify-center shadow-2xl"
+          style={{
+            shadowColor: colors.primary,
+            shadowOffset: { width: 0, height: 4 },
+            shadowOpacity: 0.3,
+            shadowRadius: 8,
+            elevation: 8,
+          }}
+        >
+          <IconSymbol size={28} name="plus" color={colors.background} />
+        </TouchableOpacity>
       </View>
-    </View>
-      </ScrollView >
 
-    {/* Floating Action Button */ }
-    < View className = "absolute bottom-6 right-6" >
-      <TouchableOpacity
-        onPress={handleNewProject}
-        className="bg-primary rounded-full w-16 h-16 items-center justify-center shadow-2xl"
-        style={{
-          shadowColor: colors.primary,
-          shadowOffset: { width: 0, height: 4 },
-          shadowOpacity: 0.3,
-          shadowRadius: 8,
-          elevation: 8,
-        }}
-      >
-        <IconSymbol size={28} name="plus" color={colors.background} />
-      </TouchableOpacity>
-      </View >
-
-    {/* Onboarding Tutorial */ }
-    < OnboardingTutorial
-  visible = { showTutorial }
-  onComplete = { handleTutorialComplete }
-  onSkip = { handleTutorialSkip }
-    />
-    </ScreenContainer >
+      {/* Onboarding Tutorial */}
+      <OnboardingTutorial
+        visible={showTutorial}
+        onComplete={handleTutorialComplete}
+        onSkip={handleTutorialSkip}
+      />
+    </ScreenContainer>
   );
 }
