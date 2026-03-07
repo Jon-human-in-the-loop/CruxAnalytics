@@ -59,6 +59,8 @@ export default function NewProjectScreen() {
 
   // Validation errors
   const [errors, setErrors] = useState<Record<string, string>>({});
+  // Save error shown in-page (Alert.alert is not reliable on web)
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   // Check if notifications are available
   useEffect(() => {
@@ -542,6 +544,7 @@ export default function NewProjectScreen() {
       await Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     }
 
+    setSaveError(null);
     setLoading(true);
 
     try {
@@ -620,7 +623,7 @@ export default function NewProjectScreen() {
 
       // Emit event to refresh other screens
       eventEmitter.emit(Events.PROJECT_CREATED, savedId);
-      
+
       // Small delay to ensure event is processed
       await new Promise(resolve => setTimeout(resolve, 100));
 
@@ -659,11 +662,12 @@ export default function NewProjectScreen() {
       console.error('Error in handleSave:', error);
       const errorMessage = error?.message || error?.toString?.() || 'Unknown error';
       console.error('Full error details:', { error, errorMessage });
-      // Detailed error alert
-      Alert.alert(
-        t('validations.error'),
-        `Save failed: ${errorMessage}`
-      );
+      // Show error in-page (works on both web and native)
+      setSaveError(`Error al guardar: ${errorMessage}`);
+      // Also show Alert on native platforms
+      if (Platform.OS !== 'web') {
+        Alert.alert(t('validations.error'), `Save failed: ${errorMessage}`);
+      }
     } finally {
       setLoading(false);
     }
@@ -679,13 +683,22 @@ export default function NewProjectScreen() {
           <TemplateSelector onSelectTemplate={handleSelectTemplate} />
         </ScrollView>
       ) : useWizard ? (
-        <MultiStepForm
-          steps={wizardSteps}
-          onComplete={handleSave}
-          onCancel={() => router.back()}
-          showProgress={true}
-          loading={loading}
-        />
+        <>
+          {saveError && (
+            <View style={{ backgroundColor: '#fee2e2', borderRadius: 8, margin: 16, padding: 12 }}>
+              <Text style={{ color: '#b91c1c', fontWeight: '600', fontSize: 14 }}>
+                ⚠️ {saveError}
+              </Text>
+            </View>
+          )}
+          <MultiStepForm
+            steps={wizardSteps}
+            onComplete={handleSave}
+            onCancel={() => router.back()}
+            showProgress={true}
+            loading={loading}
+          />
+        </>
       ) : (
         <ScrollView
           className="flex-1"

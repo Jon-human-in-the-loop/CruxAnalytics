@@ -1,4 +1,4 @@
-import { mysqlTable, varchar, text, json, timestamp, int, index } from 'drizzle-orm/mysql-core';
+import { mysqlTable, varchar, text, json, timestamp, int, decimal, index } from 'drizzle-orm/mysql-core';
 
 /**
  * Financial results type for projects and scenarios
@@ -36,8 +36,8 @@ export const projects = mysqlTable('projects', {
   projectDuration: int('project_duration').notNull(),
   discountRate: int('discount_rate').notNull(),
   revenueGrowth: int('revenue_growth').notNull(),
-  bestCaseMultiplier: int('best_case_multiplier').notNull(),
-  worstCaseMultiplier: int('worst_case_multiplier').notNull(),
+  bestCaseMultiplier: decimal('best_case_multiplier', { precision: 10, scale: 4 }).notNull(),
+  worstCaseMultiplier: decimal('worst_case_multiplier', { precision: 10, scale: 4 }).notNull(),
   results: json('results').$type<FinancialResults>(),
   vanguardInput: json('vanguard_input'),
   saasInput: json('saas_input'),
