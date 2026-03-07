@@ -74,16 +74,28 @@ export class VanguardMetricsCalculator extends BaseCalculator {
   protected override validate(input: VanguardInput): void {
     super.validate(input);
 
-    // OFI validation
-    this.assertPositive(input.manualProcessHoursPerWeek, 'manualProcessHoursPerWeek');
-    this.assertPositive(input.averageHourlyCost, 'averageHourlyCost');
+    // OFI validation - allow 0 for optional fields
+    this.assertFinite(input.manualProcessHoursPerWeek, 'manualProcessHoursPerWeek');
+    if (input.manualProcessHoursPerWeek < 0) {
+      throw new Error(`${this.calculatorName}: manualProcessHoursPerWeek must be non-negative`);
+    }
+    this.assertFinite(input.averageHourlyCost, 'averageHourlyCost');
+    if (input.averageHourlyCost < 0) {
+      throw new Error(`${this.calculatorName}: averageHourlyCost must be non-negative`);
+    }
     this.assertRange(input.automationPotential, 0, 100, 'automationPotential');
 
-    // TFDI validation
-    this.assertPositive(input.maintenanceHoursPerSprint, 'maintenanceHoursPerSprint');
+    // TFDI validation - allow 0 for optional fields
+    this.assertFinite(input.maintenanceHoursPerSprint, 'maintenanceHoursPerSprint');
+    if (input.maintenanceHoursPerSprint < 0) {
+      throw new Error(`${this.calculatorName}: maintenanceHoursPerSprint must be non-negative`);
+    }
     this.assertPositive(input.totalDevHoursPerSprint, 'totalDevHoursPerSprint');
     this.assertPositive(input.devTeamAnnualCost, 'devTeamAnnualCost');
-    this.assertPositive(input.incidentCostPerMonth, 'incidentCostPerMonth');
+    this.assertFinite(input.incidentCostPerMonth, 'incidentCostPerMonth');
+    if (input.incidentCostPerMonth < 0) {
+      throw new Error(`${this.calculatorName}: incidentCostPerMonth must be non-negative`);
+    }
 
     // SER validation
     this.assertPositive(input.currentRevenue, 'currentRevenue');
