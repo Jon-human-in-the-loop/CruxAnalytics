@@ -140,7 +140,17 @@ export default function SnapshotsHistoryScreen() {
     );
   };
 
-  if (!project && !loading) {
+  // Show spinner immediately while loading to avoid blank flash
+  if (loading) {
+    return (
+      <ScreenContainer className="justify-center items-center">
+        <ActivityIndicator size="large" />
+        <Text className="mt-4 text-muted">{t('common.loading')}</Text>
+      </ScreenContainer>
+    );
+  }
+
+  if (!project) {
     return (
       <ScreenContainer className="justify-center items-center p-6">
         <Text className="text-foreground text-center">{t('validations.project_not_found')}</Text>
@@ -220,12 +230,7 @@ export default function SnapshotsHistoryScreen() {
         )}
 
         {/* Scenarios List */}
-        {loading ? (
-          <View className="flex-1 justify-center items-center py-12">
-            <ActivityIndicator size="large" />
-            <Text className="mt-4 text-muted">{t('common.loading')}</Text>
-          </View>
-        ) : scenarios.length === 0 ? (
+        {scenarios.length === 0 ? (
           <View className="flex-1 justify-center items-center py-12">
             <Text className="text-6xl mb-4">📊</Text>
             <Text className="text-xl font-bold text-foreground mb-2">

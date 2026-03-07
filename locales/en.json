@@ -110,7 +110,10 @@
     "load_draft": "Load draft",
     "discard_draft": "Discard draft",
     "auto_saved": "Auto-saved",
-    "project_name_placeholder": "e.g., Digital Transformation"
+    "project_name_placeholder": "e.g., Digital Transformation",
+    "save_error": "Error al guardar",
+    "new_project": "Nuevo Proyecto",
+    "fill_details": "Completa los detalles de tu proyecto"
   },
   "wizard": {
     "step1": {
@@ -304,7 +307,10 @@
     "sort_name_asc": "Name (A-Z)",
     "sort_name_desc": "Name (Z-A)",
     "sort_roi_desc": "ROI (Highest)",
-    "sort_roi_asc": "ROI (Lowest)"
+    "sort_roi_asc": "ROI (Lowest)",
+    "no_projects_found": "No se encontraron proyectos",
+    "sort_npv_desc": "NPV (Mayor)",
+    "sort_npv_asc": "NPV (Menor)"
   },
   "settings": {
     "title": "Settings",
@@ -362,7 +368,9 @@
     "terms": "Terms and Conditions",
     "privacy": "Privacy Policy",
     "support": "Support",
-    "copyright": "© 2026 Vanguard Crux. All rights reserved."
+    "copyright": "© 2026 Vanguard Crux. All rights reserved.",
+    "theme_changed": "Tema cambiado",
+    "restart_required": "Reinicia la aplicación para ver los cambios"
   },
   "ai": {
     "title": "AI Diagnosis",
@@ -439,7 +447,9 @@
     "min_value": "Minimum value is {{min}}",
     "maint_exceeds_sprint": "Maintenance cannot exceed total sprint hours",
     "max_value": "Maximum value is {{max}}",
-    "invalid_trajectory": "Please enter valid historic numbers or leave blank"
+    "invalid_trajectory": "Please enter valid historic numbers or leave blank",
+    "invalid_format": "Formato inválido",
+    "invalid_operational_numbers": "Por favor ingresa números operacionales válidos"
   },
   "vanguard": {
     "optimal": "Optimal",
@@ -576,7 +586,7 @@
     "needs_attention": "Needs Attention",
     "complete_3": "Complete at least 3 analyses to see your score",
     "tools_title": "Analysis Tools",
-    "projects_title": "Recent Projects"
+    "projects_title": "Projects"
   },
   "templates": {
     "select_template": "Select a Template",

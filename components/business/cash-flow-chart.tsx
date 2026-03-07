@@ -16,7 +16,7 @@ export function CashFlowChart({ cashFlowData, currency = '$' }: CashFlowChartPro
   const { t } = useTranslation();
   const colors = useColors();
   const [chartType, setChartType] = useState<ChartType>('monthly');
-  
+
   const screenWidth = Dimensions.get('window').width;
   const chartWidth = screenWidth - 40; // padding
 
@@ -69,14 +69,12 @@ export function CashFlowChart({ cashFlowData, currency = '$' }: CashFlowChartPro
               opacity: pressed ? 0.7 : 1,
             },
           ]}
-          className={`flex-1 px-4 py-2 rounded-full ${
-            chartType === 'monthly' ? 'bg-primary' : 'bg-transparent'
-          }`}
+          className={`flex-1 px-4 py-2 rounded-full ${chartType === 'monthly' ? 'bg-primary' : 'bg-transparent'
+            }`}
         >
           <Text
-            className={`text-center font-semibold ${
-              chartType === 'monthly' ? 'text-background' : 'text-foreground'
-            }`}
+            className={`text-center font-semibold ${chartType === 'monthly' ? 'text-background' : 'text-foreground'
+              }`}
           >
             {t('charts.monthly')}
           </Text>
@@ -89,14 +87,12 @@ export function CashFlowChart({ cashFlowData, currency = '$' }: CashFlowChartPro
               opacity: pressed ? 0.7 : 1,
             },
           ]}
-          className={`flex-1 px-4 py-2 rounded-full ${
-            chartType === 'cumulative' ? 'bg-primary' : 'bg-transparent'
-          }`}
+          className={`flex-1 px-4 py-2 rounded-full ${chartType === 'cumulative' ? 'bg-primary' : 'bg-transparent'
+            }`}
         >
           <Text
-            className={`text-center font-semibold ${
-              chartType === 'cumulative' ? 'text-background' : 'text-foreground'
-            }`}
+            className={`text-center font-semibold ${chartType === 'cumulative' ? 'text-background' : 'text-foreground'
+              }`}
           >
             {t('charts.cumulative')}
           </Text>
@@ -127,6 +123,12 @@ export function CashFlowChart({ cashFlowData, currency = '$' }: CashFlowChartPro
               height={220}
               yAxisLabel={currency}
               yAxisSuffix=""
+              formatYLabel={(value) => {
+                const num = parseInt(value, 10);
+                if (Math.abs(num) >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+                if (Math.abs(num) >= 1000) return (num / 1000).toFixed(0) + 'k';
+                return value;
+              }}
               chartConfig={barChartConfig}
               style={{
                 borderRadius: 16,
@@ -150,6 +152,12 @@ export function CashFlowChart({ cashFlowData, currency = '$' }: CashFlowChartPro
               height={220}
               yAxisLabel={currency}
               yAxisSuffix=""
+              formatYLabel={(value) => {
+                const num = parseInt(value, 10);
+                if (Math.abs(num) >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+                if (Math.abs(num) >= 1000) return (num / 1000).toFixed(0) + 'k';
+                return value;
+              }}
               chartConfig={chartConfig}
               bezier
               style={{

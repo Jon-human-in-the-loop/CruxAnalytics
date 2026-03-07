@@ -90,8 +90,11 @@ export function AIInsightCard({
         <View>
           {/* Analysis Text */}
           <View className="bg-background/50 rounded-xl p-4 mb-4">
-            <Text className="text-sm text-foreground leading-relaxed">
-              {analysis}
+            <Text
+              className="text-sm text-foreground leading-relaxed"
+              style={{ color: colors.foreground }} // Ensure visibility on all devices
+            >
+              {analysis.replace(/\*\*/g, '')}
             </Text>
           </View>
 

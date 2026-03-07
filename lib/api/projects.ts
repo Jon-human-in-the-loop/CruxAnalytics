@@ -18,7 +18,15 @@ function getVanillaClient() {
           transformer: superjson,
           async headers() {
             const token = await Auth.getSessionToken();
-            return token ? { Authorization: `Bearer ${token}` } : {};
+            const guestId = await Auth.getGuestId();
+
+            const headers: Record<string, string> = {
+              'x-guest-id': guestId,
+            };
+            if (token) {
+              headers['Authorization'] = `Bearer ${token}`;
+            }
+            return headers;
           },
           fetch(url, options) {
             return fetch(url, {

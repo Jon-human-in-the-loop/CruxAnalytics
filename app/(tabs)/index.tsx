@@ -5,13 +5,7 @@ import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 
 import { ScreenContainer } from '@/components/screen-container';
-import { ProjectCard } from '@/components/business/project-card';
-import { SkeletonProjectList } from '@/components/business/skeleton-project-card';
-import { OnboardingTutorial } from '@/components/onboarding-tutorial';
 import { LanguageSelector } from '@/components/language-selector';
-import { SearchBar } from '@/components/search-bar';
-import { FilterChips } from '@/components/filter-chips';
-import { SortSelector } from '@/components/sort-selector';
 import { useTranslation } from '@/lib/i18n-context';
 import { getAllProjects } from '@/lib/project-storage';
 import { hasSeenTutorial, markTutorialAsSeen } from '@/lib/tutorial-storage';
@@ -171,17 +165,6 @@ export default function HomeScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const [showTutorial, setShowTutorial] = useState(false);
 
-  const {
-    filteredProjects,
-    searchQuery,
-    setSearchQuery,
-    filterOption,
-    setFilterOption,
-    sortOption,
-    setSortOption,
-    counts,
-  } = useProjectFilters(projects);
-
   useEffect(() => {
     loadProjects();
     checkTutorialStatus();
@@ -255,11 +238,6 @@ export default function HomeScreen() {
     router.push('/new-project');
   };
 
-  const handleProjectPress = (project: ProjectData) => {
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-    router.push(`/project/${project.id}`);
-  };
-
   return (
     <ScreenContainer className="relative">
       <ScrollView
@@ -331,95 +309,34 @@ export default function HomeScreen() {
             </View>
           </View>
 
-          {/* Projects List */}
-          {projects.length > 0 && (
-            <>
-              <Text className="text-2xl font-heading-medium text-foreground mb-4">
-                {t('dashboard.projects_title')}
-              </Text>
-
-              {/* Search and Filters */}
-              <View className="gap-4">
-                <SearchBar
-                  onSearch={setSearchQuery}
-                  placeholder={t('projects_list.search_placeholder')}
-                />
-
-                <FilterChips
-                  selected={filterOption}
-                  onSelect={setFilterOption}
-                  counts={counts}
-                  labels={{
-                    all: t('projects_list.filter_all'),
-                    viable: t('status.viable'),
-                    review: t('status.review'),
-                    not_viable: t('status.not_viable'),
-                  }}
-                />
-              </View>
-            </>
-          )}
-
-          <View className="gap-4">
-            {loading ? (
-              <SkeletonProjectList count={3} />
-            ) : projects.length === 0 ? (
-              <View className="bg-surface border border-border rounded-3xl p-12 items-center gap-4">
-                <View className="w-20 h-20 rounded-full bg-primary/10 items-center justify-center mb-2">
-                  <IconSymbol size={40} name="folder.badge.plus" color={colors.primary} />
-                </View>
-                <Text className="text-xl font-heading-medium text-foreground text-center">
-                  {t('home.no_projects')}
-                </Text>
-                <Text className="text-base font-body text-muted text-center max-w-sm">
-                  {t('home.create_first')}
-                </Text>
-              </View>
-            ) : filteredProjects.length === 0 ? (
-              <View className="bg-surface border border-border rounded-2xl p-8 items-center gap-4">
-                <IconSymbol size={48} name="magnifyingglass" color={colors.muted} />
-                <Text className="text-base font-body text-muted text-center mb-2">
-                  {t('projects_list.no_results')}
-                </Text>
-              </View>
-            ) : (
-              <View>
-                {filteredProjects.map((project) => (
-                  <ProjectCard
-                    key={project.id}
-                    project={project}
-                    onPress={() => handleProjectPress(project)}
-                  />
-                ))}
-              </View>
-            )}
-          </View>
         </View>
-      </ScrollView>
-
-      {/* Floating Action Button */}
-      <View className="absolute bottom-6 right-6">
-        <TouchableOpacity
-          onPress={handleNewProject}
-          className="bg-primary rounded-full w-16 h-16 items-center justify-center shadow-2xl"
-          style={{
-            shadowColor: colors.primary,
-            shadowOffset: { width: 0, height: 4 },
-            shadowOpacity: 0.3,
-            shadowRadius: 8,
-            elevation: 8,
-          }}
-        >
-          <IconSymbol size={28} name="plus" color={colors.background} />
-        </TouchableOpacity>
       </View>
+    </View>
+      </ScrollView >
 
-      {/* Onboarding Tutorial */}
-      <OnboardingTutorial
-        visible={showTutorial}
-        onComplete={handleTutorialComplete}
-        onSkip={handleTutorialSkip}
-      />
-    </ScreenContainer>
+    {/* Floating Action Button */ }
+    < View className = "absolute bottom-6 right-6" >
+      <TouchableOpacity
+        onPress={handleNewProject}
+        className="bg-primary rounded-full w-16 h-16 items-center justify-center shadow-2xl"
+        style={{
+          shadowColor: colors.primary,
+          shadowOffset: { width: 0, height: 4 },
+          shadowOpacity: 0.3,
+          shadowRadius: 8,
+          elevation: 8,
+        }}
+      >
+        <IconSymbol size={28} name="plus" color={colors.background} />
+      </TouchableOpacity>
+      </View >
+
+    {/* Onboarding Tutorial */ }
+    < OnboardingTutorial
+  visible = { showTutorial }
+  onComplete = { handleTutorialComplete }
+  onSkip = { handleTutorialSkip }
+    />
+    </ScreenContainer >
   );
 }

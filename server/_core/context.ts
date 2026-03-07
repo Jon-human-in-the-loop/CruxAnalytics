@@ -40,22 +40,33 @@ export async function createContext(opts: CreateExpressContextOptions): Promise<
 
     // Default Guest User for Open Source / Local testing
     if (!user) {
-      user = {
-        id: 1,
-        openId: 'guest-user-openid',
-        email: 'guest@crux.local',
-        name: 'Guest User',
-        role: 'admin',
-        loginMethod: 'open-source',
-        subscriptionTier: 'premium',
-        subscriptionExpiry: null,
-        revenueCatUserId: null,
-        aiAnalysisCount: 0,
-        aiAnalysisResetDate: new Date(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        lastSignedIn: new Date(),
-      } as User;
+      const guestId = opts.req.headers['x-guest-id'] as string || 'guest-user-openid';
+
+      const { users } = await import('../../drizzle/schema');
+      const { db } = await import('../../shared/db');
+      const { eq } = await import('drizzle-orm');
+
+      let existingUser = await db.query.users.findFirst({
+        where: eq(users.openId, guestId),
+      });
+
+      if (!existingUser) {
+        await db.insert(users).values({
+          openId: guestId,
+          name: 'Guest User',
+          email: `${guestId.substring(0, 15)}@crux.local`,
+          loginMethod: 'open-source',
+          role: 'admin',
+          subscriptionTier: 'premium',
+        });
+        existingUser = await db.query.users.findFirst({
+          where: eq(users.openId, guestId),
+        });
+      }
+
+      if (existingUser) {
+        user = existingUser;
+      }
     }
   }
 

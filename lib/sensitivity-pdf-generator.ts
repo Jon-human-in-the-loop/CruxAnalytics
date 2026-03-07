@@ -149,17 +149,11 @@ function generateSensitivityHTML(
   const baseValue = getValue('initialInvestment', 0);
 
   const getCellColor = (value: number): string => {
-    const change = ((value - baseValue) / Math.abs(baseValue)) * 100;
-    if (change > 10) return '#d4edda'; // Light green
-    if (change < -10) return '#f8d7da'; // Light red
-    return '#fff3cd'; // Light yellow
+    return 'transparent';
   };
 
   const getCellTextColor = (value: number): string => {
-    const change = ((value - baseValue) / Math.abs(baseValue)) * 100;
-    if (change > 10) return '#155724'; // Dark green
-    if (change < -10) return '#721c24'; // Dark red
-    return '#856404'; // Dark yellow
+    return '#000000';
   };
 
   const t = (key: string): string => {
@@ -312,90 +306,94 @@ function generateSensitivityHTML(
     }
     
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Latin Modern Roman', 'Computer Modern Roman', 'Computer Modern', Georgia, 'Times New Roman', Times, serif;
+      font-size: 11pt;
       line-height: 1.6;
-      color: #333;
-      padding: 40px;
+      color: #000;
+      padding: 0;
+      max-width: 800px;
+      margin: 0 auto;
       background: #fff;
     }
     
     .header {
       text-align: center;
       margin-bottom: 40px;
-      padding-bottom: 20px;
-      border-bottom: 3px solid #0a7ea4;
+      padding-top: 20px;
     }
     
     h1 {
-      font-size: 32px;
-      color: #0a7ea4;
-      margin-bottom: 10px;
+      font-size: 20pt;
+      font-weight: bold;
+      color: #000;
+      margin-bottom: 15px;
     }
     
     h2 {
-      font-size: 24px;
-      color: #333;
+      font-size: 14pt;
+      font-weight: bold;
+      color: #000;
       margin: 30px 0 15px;
     }
     
     h3 {
-      font-size: 18px;
-      color: #555;
+      font-size: 12pt;
+      color: #000;
       margin: 20px 0 10px;
+      font-weight: bold;
     }
     
     .subtitle {
-      font-size: 18px;
-      color: #666;
+      font-size: 12pt;
+      color: #333;
       margin-bottom: 5px;
     }
     
     .date {
-      font-size: 14px;
-      color: #999;
+      font-size: 11pt;
+      color: #000;
+      font-style: italic;
     }
     
     .description {
-      background: #f5f5f5;
-      padding: 15px;
-      border-radius: 8px;
+      padding: 10px 0;
       margin-bottom: 30px;
-      font-size: 14px;
+      font-style: italic;
     }
     
     .matrix-table {
       width: 100%;
       border-collapse: collapse;
       margin: 20px 0;
-      font-size: 12px;
+      border-top: 2px solid #000;
+      border-bottom: 2px solid #000;
     }
     
     .matrix-table th,
     .matrix-table td {
-      border: 1px solid #ddd;
-      padding: 10px;
+      border: none;
+      padding: 8px 4px;
       text-align: center;
     }
     
     .matrix-table th {
-      background: #0a7ea4;
-      color: white;
-      font-weight: 600;
+      border-bottom: 1px solid #000;
+      color: #000;
+      font-weight: bold;
     }
     
     .matrix-table th.base-case {
-      background: #0a7ea4;
+      font-weight: bold;
     }
     
     .matrix-table td.base-case {
-      border: 2px solid #0a7ea4;
-      font-weight: 700;
+      font-weight: bold;
+      background: #f5f5f5;
     }
     
     .matrix-table .variable-name {
       text-align: left;
-      font-weight: 600;
-      background: #f9f9f9;
+      font-weight: bold;
     }
     
     .legend {
@@ -421,22 +419,24 @@ function generateSensitivityHTML(
     
     .tornado-chart {
       margin: 20px 0;
+      border: 1px solid #000;
+      padding: 20px;
     }
     
     .tornado-row {
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
     
     .tornado-label {
-      font-weight: 600;
+      font-weight: bold;
       margin-bottom: 5px;
-      font-size: 14px;
+      font-size: 10pt;
     }
     
     .tornado-bars {
       display: flex;
       align-items: center;
-      height: 40px;
+      height: 30px;
     }
     
     .tornado-negative,
@@ -445,20 +445,20 @@ function generateSensitivityHTML(
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 11px;
-      color: white;
-      font-weight: 600;
+      font-size: 9pt;
+      color: #000;
+      font-weight: bold;
     }
     
     .tornado-negative {
-      background: #ef4444;
-      opacity: 0.7;
+      background: #e5e5e5;
+      border-right: 1px solid #000;
       justify-content: flex-end;
       padding-right: 10px;
     }
     
     .tornado-positive {
-      background: #22c55e;
+      background: #d4d4d4;
       justify-content: flex-start;
       padding-left: 10px;
     }
@@ -466,7 +466,7 @@ function generateSensitivityHTML(
     .tornado-center {
       width: 2px;
       height: 100%;
-      background: #333;
+      background: #000;
     }
     
     .recommendations {
@@ -474,63 +474,50 @@ function generateSensitivityHTML(
     }
     
     .recommendation-card {
-      background: #f9f9f9;
-      border-left: 4px solid #0a7ea4;
+      background: #fff;
+      border: 1px solid #000;
       padding: 15px;
       margin-bottom: 15px;
-      border-radius: 4px;
     }
     
     .recommendation-card h4 {
-      color: #0a7ea4;
-      margin-bottom: 10px;
-      font-size: 16px;
+      color: #000;
+      margin-bottom: 8px;
+      font-size: 12pt;
+      border-bottom: 1px solid #e5e5e5;
+      padding-bottom: 5px;
     }
     
     .badges {
       display: flex;
-      gap: 20px;
+      gap: 15px;
       margin-bottom: 10px;
-      font-size: 13px;
+      font-size: 10pt;
     }
     
     .badge {
       display: inline-block;
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-    
-    .badge-high {
-      background: #fee2e2;
-      color: #991b1b;
-    }
-    
-    .badge-medium {
-      background: #fef3c7;
-      color: #92400e;
-    }
-    
-    .badge-low {
-      background: #d1fae5;
-      color: #065f46;
+      padding: 2px 6px;
+      font-weight: bold;
+      border: 1px solid #000;
+      color: #000;
+      background: #fff;
     }
     
     .recommendation-card p {
-      font-size: 13px;
+      font-size: 10pt;
       line-height: 1.6;
-      color: #555;
+      color: #000;
     }
     
     .footer {
       text-align: center;
       margin-top: 40px;
       padding-top: 20px;
-      border-top: 1px solid #ddd;
-      font-size: 12px;
-      color: #999;
+      border-top: 1px solid #000;
+      font-size: 9pt;
+      color: #000;
+      font-style: italic;
     }
     
     @media print {
@@ -558,21 +545,6 @@ function generateSensitivityHTML(
   <h2>${t('matrix_title')}</h2>
   ${matrixHTML}
   
-  <div class="legend">
-    <div class="legend-item">
-      <div class="legend-box" style="background: #d4edda;"></div>
-      <span>${t('positive')}</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-box" style="background: #fff3cd;"></div>
-      <span>${t('neutral')}</span>
-    </div>
-    <div class="legend-item">
-      <div class="legend-box" style="background: #f8d7da;"></div>
-      <span>${t('negative')}</span>
-    </div>
-  </div>
-  
   <h2>${t('tornado_title')}</h2>
   ${tornadoHTML}
   
@@ -595,6 +567,10 @@ export async function generateSensitivityPDF(
 ): Promise<string> {
   const { project, metric, language } = options;
 
+  if (Platform.OS === 'web') {
+    return '';
+  }
+
   const html = generateSensitivityHTML(project, metric, language);
 
   const fileName = `sensitivity-analysis-${project.name.replace(/\s+/g, '-')}-${Date.now()}.html`;
@@ -616,8 +592,28 @@ export async function shareSensitivityPDF(
 ): Promise<void> {
   if (Platform.OS === 'web') {
     const html = generateSensitivityHTML(project, metric, language);
-    const fileName = `sensitivity-analysis-${project.name.replace(/\s+/g, '-')}.html`;
-    downloadWebFile(html, fileName);
+    const fileName = `sensitivity-analysis-${project.name.replace(/\s+/g, '-')}`;
+
+    try {
+      const html2pdf = (await import('html2pdf.js')).default;
+      const element = document.createElement('div');
+      element.innerHTML = html;
+
+      const opt = {
+        margin: [20, 20, 20, 20],
+        filename: `${fileName}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, windowWidth: 800 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: 'avoid-all' }
+      };
+
+      html2pdf().from(element).set(opt).save();
+    } catch (error) {
+      console.error('Error generating PDF on web:', error);
+      // Fallback
+      downloadWebFile(html, `${fileName}.html`);
+    }
     return;
   }
 

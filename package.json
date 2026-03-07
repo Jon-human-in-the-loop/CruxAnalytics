@@ -71,6 +71,7 @@
     "expo-web-browser": "~15.0.10",
     "express": "^4.22.1",
     "html2canvas": "^1.4.1",
+    "html2pdf.js": "^0.14.0",
     "isomorphic-dompurify": "^2.35.0",
     "jose": "6.1.0",
     "jspdf": "^4.2.0",

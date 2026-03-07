@@ -54,11 +54,12 @@ export async function sharePDFReport(filePath: string, project: ProjectData, lan
       element.innerHTML = html;
 
       const opt = {
-        margin: 10,
+        margin: [20, 20, 20, 20],
         filename: `${fileName}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+        html2canvas: { scale: 2, useCORS: true, windowWidth: 800 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: 'avoid-all' }
       };
 
       html2pdf().from(element).set(opt).save();
@@ -118,53 +119,55 @@ function generateHTMLReport(
     }
     
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Latin Modern Roman', 'Computer Modern Roman', 'Computer Modern', Georgia, 'Times New Roman', Times, serif;
+      font-size: 11pt;
       line-height: 1.6;
-      color: #1a1a1a;
+      text-align: justify;
+      color: #000000;
       background: #ffffff;
-      padding: 40px;
-      max-width: 1200px;
+      padding: 0;
+      max-width: 800px;
       margin: 0 auto;
     }
     
     .header {
-      border-bottom: 4px solid #2563EB;
-      padding-bottom: 30px;
+      text-align: center;
       margin-bottom: 40px;
+      padding-top: 20px;
     }
     
     .header h1 {
-      font-size: 32px;
-      color: #1a1a1a;
-      margin-bottom: 8px;
+      font-size: 20pt;
+      font-weight: bold;
+      color: #000000;
+      margin-bottom: 15px;
     }
     
     .header .subtitle {
-      font-size: 18px;
-      color: #687076;
+      font-size: 12pt;
+      color: #333333;
+      margin-bottom: 5px;
     }
     
     .validated-badge {
-      display: inline-block;
-      background: #2563EB;
-      color: white;
-      padding: 8px 16px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 600;
-      margin-top: 16px;
+      display: block;
+      text-align: center;
+      font-size: 11pt;
+      font-style: italic;
+      margin-top: 20px;
+      color: #000000;
     }
     
     .section {
-      margin-bottom: 40px;
+      margin-bottom: 30px;
     }
     
     .section-title {
-      font-size: 24px;
-      color: #1a1a1a;
-      margin-bottom: 20px;
-      padding-bottom: 10px;
-      border-bottom: 2px solid #e5e7eb;
+      font-size: 14pt;
+      font-weight: bold;
+      color: #000000;
+      margin-bottom: 15px;
+      margin-top: 25px;
     }
     
     .metrics-grid {
@@ -175,43 +178,40 @@ function generateHTMLReport(
     }
     
     .metric-card {
-      background: #f8f9fa;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 20px;
+      border: 1px solid #000;
+      padding: 15px;
+      text-align: center;
     }
     
     .metric-label {
-      font-size: 14px;
-      color: #687076;
+      font-size: 10pt;
+      text-transform: uppercase;
+      letter-spacing: 1px;
       margin-bottom: 8px;
     }
     
     .metric-value {
-      font-size: 28px;
+      font-size: 18pt;
       font-weight: bold;
-      color: #1a1a1a;
     }
     
     .metric-value.positive {
-      color: #059669;
+      color: #000000; /* LaTeX is typically pure B&W */
     }
     
     .metric-value.negative {
-      color: #ef4444;
+      color: #000000;
     }
     
     .metric-subtitle {
-      font-size: 12px;
-      color: #687076;
+      font-size: 9pt;
+      font-style: italic;
       margin-top: 4px;
     }
     
     .chart-container {
-      background: #f8f9fa;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 20px;
+      border: 1px solid #000;
+      padding: 15px;
       margin-bottom: 20px;
       text-align: center;
     }
@@ -219,28 +219,24 @@ function generateHTMLReport(
     .chart-container img {
       max-width: 100%;
       height: auto;
-      border-radius: 8px;
     }
     
     .chart-placeholder {
-      padding: 60px 20px;
-      color: #687076;
+      padding: 40px 20px;
       font-style: italic;
     }
     
     .project-info {
-      background: #f8f9fa;
-      border-left: 4px solid #2563EB;
-      padding: 20px;
+      border-top: 2px solid #000;
+      border-bottom: 2px solid #000;
+      padding: 15px 0;
       margin-bottom: 30px;
-      border-radius: 8px;
     }
     
     .project-info-row {
       display: flex;
       justify-content: space-between;
-      padding: 8px 0;
-      border-bottom: 1px solid #e5e7eb;
+      padding: 4px 0;
     }
     
     .project-info-row:last-child {
@@ -248,12 +244,11 @@ function generateHTMLReport(
     }
     
     .project-info-label {
-      font-weight: 600;
-      color: #1a1a1a;
+      font-weight: bold;
     }
     
     .project-info-value {
-      color: #687076;
+      color: #000;
     }
     
     .footer {

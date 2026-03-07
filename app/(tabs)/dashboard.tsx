@@ -52,15 +52,15 @@ export default function DashboardScreen() {
     const unsubscribeCreated = eventEmitter.on(Events.PROJECT_CREATED, () => {
       loadProjects();
     });
-    
+
     const unsubscribeUpdated = eventEmitter.on(Events.PROJECT_UPDATED, () => {
       loadProjects();
     });
-    
+
     const unsubscribeDeleted = eventEmitter.on(Events.PROJECT_DELETED, () => {
       loadProjects();
     });
-    
+
     const unsubscribeDuplicated = eventEmitter.on(Events.PROJECT_DUPLICATED, () => {
       loadProjects();
     });
@@ -77,7 +77,7 @@ export default function DashboardScreen() {
     try {
       setLoading(true);
       const allProjects = await getAllProjects();
-      
+
       // Extract metrics from each project
       const projectMetrics: ProjectMetrics[] = allProjects
         .filter((p) => p.results) // Only projects with calculated results
@@ -121,7 +121,7 @@ export default function DashboardScreen() {
 
   const sortedProjects = [...projects].sort((a, b) => {
     let comparison = 0;
-    
+
     switch (sortBy) {
       case 'roi':
         comparison = a.roi - b.roi;
@@ -133,7 +133,7 @@ export default function DashboardScreen() {
         comparison = a.paybackPeriod - b.paybackPeriod;
         break;
     }
-    
+
     return sortOrder === 'asc' ? comparison : -comparison;
   });
 
@@ -141,7 +141,7 @@ export default function DashboardScreen() {
     if (Platform.OS !== 'web') {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     }
-    
+
     if (sortBy === metric) {
       setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
     } else {
@@ -261,14 +261,12 @@ export default function DashboardScreen() {
         <View className="flex-row gap-2 mb-4">
           <TouchableOpacity
             onPress={() => handleSort('roi')}
-            className={`flex-1 py-2 rounded-lg ${
-              sortBy === 'roi' ? 'bg-primary' : 'bg-surface border border-border'
-            }`}
+            className={`flex-1 py-2 rounded-lg ${sortBy === 'roi' ? 'bg-primary' : 'bg-surface border border-border'
+              }`}
           >
             <Text
-              className={`text-center font-semibold text-sm ${
-                sortBy === 'roi' ? 'text-background' : 'text-foreground'
-              }`}
+              className={`text-center font-semibold text-sm ${sortBy === 'roi' ? 'text-background' : 'text-foreground'
+                }`}
             >
               ROI {sortBy === 'roi' && (sortOrder === 'desc' ? '↓' : '↑')}
             </Text>
@@ -276,14 +274,12 @@ export default function DashboardScreen() {
 
           <TouchableOpacity
             onPress={() => handleSort('npv')}
-            className={`flex-1 py-2 rounded-lg ${
-              sortBy === 'npv' ? 'bg-primary' : 'bg-surface border border-border'
-            }`}
+            className={`flex-1 py-2 rounded-lg ${sortBy === 'npv' ? 'bg-primary' : 'bg-surface border border-border'
+              }`}
           >
             <Text
-              className={`text-center font-semibold text-sm ${
-                sortBy === 'npv' ? 'text-background' : 'text-foreground'
-              }`}
+              className={`text-center font-semibold text-sm ${sortBy === 'npv' ? 'text-background' : 'text-foreground'
+                }`}
             >
               NPV {sortBy === 'npv' && (sortOrder === 'desc' ? '↓' : '↑')}
             </Text>
@@ -291,14 +287,12 @@ export default function DashboardScreen() {
 
           <TouchableOpacity
             onPress={() => handleSort('payback')}
-            className={`flex-1 py-2 rounded-lg ${
-              sortBy === 'payback' ? 'bg-primary' : 'bg-surface border border-border'
-            }`}
+            className={`flex-1 py-2 rounded-lg ${sortBy === 'payback' ? 'bg-primary' : 'bg-surface border border-border'
+              }`}
           >
             <Text
-              className={`text-center font-semibold text-sm ${
-                sortBy === 'payback' ? 'text-background' : 'text-foreground'
-              }`}
+              className={`text-center font-semibold text-sm ${sortBy === 'payback' ? 'text-background' : 'text-foreground'
+                }`}
             >
               Payback {sortBy === 'payback' && (sortOrder === 'desc' ? '↓' : '↑')}
             </Text>
@@ -341,8 +335,8 @@ export default function DashboardScreen() {
                       {sortBy === 'roi'
                         ? `${value.toFixed(1)}%`
                         : sortBy === 'npv'
-                        ? `$${value.toLocaleString()}`
-                        : `${value.toFixed(1)} ${t('common.months')}`}
+                          ? `$${value.toLocaleString()}`
+                          : `${value.toFixed(1)} ${t('common.months')}`}
                     </Text>
                   </View>
                 </View>
@@ -391,9 +385,9 @@ export default function DashboardScreen() {
                   </Text>
                 </View>
                 <View className="flex-1">
-                  <Text className="text-xs text-muted">{t('breakeven.break_even')}</Text>
+                  <Text className="text-xs text-muted">Break-even</Text>
                   <Text className="text-sm font-bold text-foreground">
-                    {project.breakEvenMonth !== null ? `${t('common.month')} ${project.breakEvenMonth}` : 'N/A'}
+                    {project.breakEvenMonth !== null ? `${t('common.months')} ${project.breakEvenMonth}` : 'N/A'}
                   </Text>
                 </View>
               </View>

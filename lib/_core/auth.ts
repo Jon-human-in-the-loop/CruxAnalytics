@@ -2,6 +2,36 @@ import * as SecureStore from "expo-secure-store";
 import { Platform } from "react-native";
 import { SESSION_TOKEN_KEY, USER_INFO_KEY } from "@/constants/oauth";
 
+export const GUEST_ID_KEY = 'crux_guest_id';
+
+function generateGuestId() {
+  return `guest-${Date.now()}-${Math.random().toString(36).substring(2, 15)}`;
+}
+
+export async function getGuestId(): Promise<string> {
+  try {
+    let guestId: string | null = null;
+    if (Platform.OS === 'web') {
+      guestId = window.localStorage.getItem(GUEST_ID_KEY);
+      if (!guestId) {
+        guestId = generateGuestId();
+        window.localStorage.setItem(GUEST_ID_KEY, guestId);
+      }
+    } else {
+      guestId = await SecureStore.getItemAsync(GUEST_ID_KEY);
+      if (!guestId) {
+        guestId = generateGuestId();
+        await SecureStore.setItemAsync(GUEST_ID_KEY, guestId);
+      }
+    }
+    return guestId;
+  } catch (error) {
+    console.error('[Auth] Failed to get/set guest id:', error);
+    return generateGuestId();
+  }
+}
+import { SESSION_TOKEN_KEY, USER_INFO_KEY } from "@/constants/oauth";
+
 export type User = {
   id: number;
   openId: string;

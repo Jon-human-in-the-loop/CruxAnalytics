@@ -464,7 +464,7 @@
     "needs_attention": "Necesita atención",
     "complete_3": "Completa al menos 3 análisis para ver tu score",
     "tools_title": "Herramientas de Análisis",
-    "projects_title": "Proyectos Recientes"
+    "projects_title": "Proyectos"
   },
   "templates": {
     "select_template": "Selecciona una Plantilla",

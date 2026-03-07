@@ -37,23 +37,6 @@ export const projectsRouter = router({
   create: protectedProcedure
     .input(projectInputSchema)
     .mutation(async ({ input, ctx }) => {
-      // 1. Ensure user exists in DB (CRITICAL for Guest Mode)
-      if (ctx.user.id === 1) {
-        const { users } = await import('../../drizzle/schema');
-        await db.insert(users).values({
-          id: 1,
-          openId: 'guest-user-openid',
-          name: 'Guest User',
-          email: 'guest@crux.local',
-          loginMethod: 'open-source',
-          role: 'admin',
-          subscriptionTier: 'premium',
-        }).onDuplicateKeyUpdate({
-          set: { lastSignedIn: new Date() }
-        });
-      }
-
-
       try {
         const id = randomUUID();
         console.log('Creating project with data:', { id, userId: ctx.user.id, ...input });
