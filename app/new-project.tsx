@@ -528,12 +528,12 @@ export default function NewProjectScreen() {
     const opCosts = parseFloat(operatingCosts);
     const maintCosts = parseFloat(maintenanceCosts);
 
-    if (isNaN(investment) || investment <= 0) {
+    if (isNaN(investment) || investment < 0) {
       Alert.alert(t('validations.error'), t('validations.invalid_investment'));
       return;
     }
 
-    if (isNaN(revenue) || revenue <= 0) {
+    if (isNaN(revenue) || revenue < 0) {
       Alert.alert(t('validations.error'), t('validations.invalid_revenue'));
       return;
     }
@@ -619,6 +619,9 @@ export default function NewProjectScreen() {
 
       // Emit event to refresh other screens
       eventEmitter.emit(Events.PROJECT_CREATED, savedId);
+      
+      // Small delay to ensure event is processed
+      await new Promise(resolve => setTimeout(resolve, 100));
 
       // Schedule reminder if notifications are enabled
       if (notificationsAvailable && reminderFrequency !== 'none') {
