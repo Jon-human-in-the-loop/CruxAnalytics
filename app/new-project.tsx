@@ -595,20 +595,21 @@ export default function NewProjectScreen() {
       };
 
       // Create project
+      // Note: Server will generate the UUID, so we don't need to set an ID here
       const project: ProjectData = {
-        id: Date.now().toString(),
+        id: '', // Will be set by server
         name: name.trim(),
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
-        initialInvestment: investment,
-        discountRate: parseFloat(discountRate),
+        initialInvestment: Math.round(investment),
+        discountRate: Math.round(parseFloat(discountRate)),
         projectDuration: parseInt(projectDuration),
-        yearlyRevenue: revenue,
-        revenueGrowth: parseFloat(revenueGrowth),
-        operatingCosts: opCosts || 0,
-        maintenanceCosts: maintCosts || 0,
-        bestCaseMultiplier: 1.2,
-        worstCaseMultiplier: 0.8,
+        yearlyRevenue: Math.round(revenue),
+        revenueGrowth: Math.round(parseFloat(revenueGrowth)),
+        operatingCosts: Math.round(opCosts || 0),
+        maintenanceCosts: Math.round(maintCosts || 0),
+        bestCaseMultiplier: Math.round(1.2 * 100) / 100, // Keep as decimal for now
+        worstCaseMultiplier: Math.round(0.8 * 100) / 100, // Keep as decimal for now
         results,
         vanguardInput, // Save the input too
       };
@@ -651,12 +652,14 @@ export default function NewProjectScreen() {
           router.push(`/project/${savedId}`);
         }
       }, 100);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error in handleSave:', error);
+      const errorMessage = error?.message || error?.toString?.() || 'Unknown error';
+      console.error('Full error details:', { error, errorMessage });
       // Detailed error alert
       Alert.alert(
         t('validations.error'),
-        `Save failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+        `Save failed: ${errorMessage}`
       );
     } finally {
       setLoading(false);

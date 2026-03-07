@@ -8,15 +8,15 @@ import { randomUUID } from 'crypto';
 const projectInputSchema = z.object({
   name: z.string().min(1).max(255),
   description: z.string().optional(),
-  initialInvestment: z.number().nonnegative(),
-  yearlyRevenue: z.number().nonnegative(),
-  operatingCosts: z.number().nonnegative(),
-  maintenanceCosts: z.number().nonnegative(),
+  initialInvestment: z.number().nonnegative().int(),
+  yearlyRevenue: z.number().nonnegative().int(),
+  operatingCosts: z.number().nonnegative().int(),
+  maintenanceCosts: z.number().nonnegative().int(),
   projectDuration: z.number().int().positive(),
-  discountRate: z.number().nonnegative(),
-  revenueGrowth: z.number(),
-  bestCaseMultiplier: z.number().nonnegative(),
-  worstCaseMultiplier: z.number().nonnegative(),
+  discountRate: z.number().nonnegative().int(),
+  revenueGrowth: z.number().int(),
+  bestCaseMultiplier: z.number().positive(),
+  worstCaseMultiplier: z.number().positive(),
   results: z.any().optional(),
   vanguardInput: z.any().optional(),
   saasInput: z.any().optional(),
@@ -54,13 +54,19 @@ export const projectsRouter = router({
       }
 
 
-      const id = randomUUID();
-      await db.insert(projects).values({
-        id,
-        userId: ctx.user.id,
-        ...input,
-      });
-      return { id };
+      try {
+        const id = randomUUID();
+        console.log('Creating project with data:', { id, userId: ctx.user.id, ...input });
+        await db.insert(projects).values({
+          id,
+          userId: ctx.user.id,
+          ...input,
+        });
+        return { id };
+      } catch (dbError) {
+        console.error('Database error creating project:', dbError);
+        throw new Error(`Failed to save project: ${dbError instanceof Error ? dbError.message : 'Database error'}`);
+      }
     }),
 
   // Get single project
