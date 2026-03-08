@@ -45,30 +45,32 @@ function getScoreLabel(score: number, t: (key: string) => string): string {
 // ============================================
 function HealthScoreGauge({ score, colors, t }: { score: number | null; colors: any; t: (key: string) => string }) {
   return (
-    <View className="bg-surface border border-border rounded-3xl p-8">
-      <Text className="text-muted text-sm mb-4 uppercase tracking-wider font-body-medium">{t('dashboard.health_score')}</Text>
-      {score !== null ? (
-        <>
-          <View
-            className="w-36 h-36 rounded-full border-8 items-center justify-center mb-4"
-            style={{ borderColor: `${getScoreColor(score)}30` }}
-          >
-            <Text className="text-5xl font-mono text-foreground" style={{ letterSpacing: -0.01 * 16 }}>
-              {score}
+    <View className="bg-surface border border-border rounded-3xl p-5">
+      <Text className="text-muted text-xs mb-3 uppercase tracking-wider font-body-medium">{t('dashboard.health_score')}</Text>
+      <View className="flex-row items-center gap-5">
+        {score !== null ? (
+          <>
+            <View
+              className="w-20 h-20 rounded-full border-[6px] items-center justify-center"
+              style={{ borderColor: `${getScoreColor(score)}30` }}
+            >
+              <Text className="text-3xl font-mono text-foreground">
+                {score}
+              </Text>
+            </View>
+            <Text className="text-success font-body-medium text-base">{getScoreLabel(score, t)}</Text>
+          </>
+        ) : (
+          <>
+            <View className="w-20 h-20 rounded-full border-[6px] border-border items-center justify-center">
+              <IconSymbol size={32} name="chart.line.uptrend.xyaxis" color={colors.muted} />
+            </View>
+            <Text className="flex-1 text-muted font-body text-sm">
+              {t('dashboard.complete_3')}
             </Text>
-          </View>
-          <Text className="text-success font-body-medium">{getScoreLabel(score, t)}</Text>
-        </>
-      ) : (
-        <>
-          <View className="w-36 h-36 rounded-full border-8 border-border items-center justify-center mb-4">
-            <IconSymbol size={48} name="chart.line.uptrend.xyaxis" color={colors.muted} />
-          </View>
-          <Text className="text-muted font-body text-center text-sm">
-            {t('dashboard.complete_3')}
-          </Text>
-        </>
-      )}
+          </>
+        )}
+      </View>
     </View>
   );
 }
@@ -347,32 +349,32 @@ export default function HomeScreen() {
             </Text>
           </View>
 
-          {/* Health Score + Quick Stats Row */}
+          {/* Health Score + Quick Stats - stacked for mobile */}
           {projects.length > 0 && (
-            <View className="flex-row gap-6">
+            <View className="gap-4">
               <HealthScoreGauge score={calculateHealthScore(projects)} colors={colors} t={t} />
-              <View className="flex-1 bg-surface border border-border rounded-3xl p-8">
-                <Text className="text-xl font-heading-medium text-foreground mb-6">
+              <View className="bg-surface border border-border rounded-3xl p-5">
+                <Text className="text-base font-heading-medium text-foreground mb-4">
                   {t('dashboard.quick_stats')}
                 </Text>
-                <View className="flex-col gap-4">
-                  <View className="bg-primary/5 rounded-2xl p-4">
-                    <View className="flex-row items-center gap-2 mb-2">
-                      <IconSymbol size={20} name="chart.bar.fill" color={colors.primary} />
-                      <Text className="text-3xl font-heading text-primary">
+                <View className="flex-row gap-3">
+                  <View className="flex-1 bg-primary/5 rounded-2xl p-4">
+                    <View className="flex-row items-center gap-2 mb-1">
+                      <IconSymbol size={18} name="chart.bar.fill" color={colors.primary} />
+                      <Text className="text-2xl font-heading text-primary">
                         {projects.length}
                       </Text>
                     </View>
-                    <Text className="text-sm font-body text-muted">{t('dashboard.total_projects')}</Text>
+                    <Text className="text-xs font-body text-muted">{t('dashboard.total_projects')}</Text>
                   </View>
-                  <View className="bg-success/5 rounded-2xl p-4">
-                    <View className="flex-row items-center gap-2 mb-2">
-                      <IconSymbol size={20} name="checkmark.circle.fill" color={colors.success} />
-                      <Text className="text-3xl font-heading text-success">
+                  <View className="flex-1 bg-success/5 rounded-2xl p-4">
+                    <View className="flex-row items-center gap-2 mb-1">
+                      <IconSymbol size={18} name="checkmark.circle.fill" color={colors.success} />
+                      <Text className="text-2xl font-heading text-success">
                         {projects.filter(p => p.results && p.results.roi > 0).length}
                       </Text>
                     </View>
-                    <Text className="text-sm font-body text-muted">{t('status.viable')}</Text>
+                    <Text className="text-xs font-body text-muted">{t('status.viable')}</Text>
                   </View>
                 </View>
               </View>
