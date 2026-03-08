@@ -21,6 +21,7 @@ export function GlassCard({
 }) {
     return (
         <View
+            style={{ borderRadius: 16 }}
             className={`
         rounded-2xl p-6
         bg-white/5 backdrop-blur-xl
@@ -67,6 +68,7 @@ export function GradientButton({
     return (
         <Pressable
             onPress={onPress}
+            style={{ borderRadius: 16, overflow: 'hidden' }}
             className={`
         rounded-2xl overflow-hidden
         active:scale-95 transition-transform
@@ -215,6 +217,7 @@ export function Badge({
 
     return (
         <View
+            style={{ borderRadius: 8 }}
             className={`px-3 py-1 rounded-lg border ${variantClasses[variant]} ${className}`}
         >
             <Text className="text-xs font-medium">{children}</Text>

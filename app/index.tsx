@@ -68,7 +68,7 @@ function HeroSection() {
                 </View>
 
                 {/* Trust indicators */}
-                <View className="flex-row gap-8 mt-12 opacity-60">
+                <View className="flex-row flex-wrap gap-x-6 gap-y-3 mt-12 opacity-60 justify-center">
                     <View className="flex-row items-center gap-2">
                         <Ionicons name="lock-closed" size={16} color="#9ca3af" />
                         <Text className="text-gray-400 text-sm">{t('landing.hero.privacy')}</Text>
