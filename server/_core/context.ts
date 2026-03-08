@@ -51,14 +51,19 @@ export async function createContext(opts: CreateExpressContextOptions): Promise<
       });
 
       if (!existingUser) {
-        await db.insert(users).values({
-          openId: guestId,
-          name: 'Guest User',
-          email: `${guestId.substring(0, 15)}@crux.local`,
-          loginMethod: 'open-source',
-          role: 'admin',
-          subscriptionTier: 'premium',
-        });
+        try {
+          await db.insert(users).values({
+            openId: guestId,
+            name: 'Guest User',
+            email: `${guestId.substring(0, 15)}@crux.local`,
+            loginMethod: 'open-source',
+            role: 'admin',
+            subscriptionTier: 'premium',
+          });
+        } catch (_insertError) {
+          // Duplicate key: another concurrent request already created this guest user.
+          // Fall through to the findFirst below to retrieve the existing record.
+        }
         existingUser = await db.query.users.findFirst({
           where: eq(users.openId, guestId),
         });
