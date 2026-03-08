@@ -3,6 +3,7 @@ import { ScrollView, Text, View, TouchableOpacity, RefreshControl, Pressable } f
 import { router } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
+import Svg, { Line, Polyline, Rect, Path, Circle } from 'react-native-svg';
 
 import { ScreenContainer } from '@/components/screen-container';
 import { LanguageSelector } from '@/components/language-selector';
@@ -73,12 +74,90 @@ function HealthScoreGauge({ score, colors, t }: { score: number | null; colors: 
 }
 
 // ============================================
+// MINI CHART COMPONENTS
+// ============================================
+function BreakEvenChart({ color }: { color: string }) {
+  return (
+    <Svg width="100%" height="52" viewBox="0 0 120 52">
+      <Line x1="0" y1="34" x2="120" y2="34" stroke="#4b5563" strokeWidth="1.5" strokeDasharray="4 3" />
+      <Polyline points="0,50 60,22 120,2" stroke={color} strokeWidth="2.5" fill="none" strokeLinecap="round" />
+      <Circle cx="60" cy="22" r="4" fill={color} />
+      <Circle cx="60" cy="34" r="3" fill="#4b5563" opacity="0.6" />
+    </Svg>
+  );
+}
+
+function CashFlowChart({ color }: { color: string }) {
+  const bars = [18, 28, 12, 36, 22, 42, 34];
+  return (
+    <Svg width="100%" height="52" viewBox="0 0 120 52">
+      {bars.map((h, i) => (
+        <Rect key={i} x={i * 17 + 2} y={52 - h} width="13" height={h} fill={color} opacity={0.4 + i * 0.09} rx="3" />
+      ))}
+      <Line x1="0" y1="51" x2="120" y2="51" stroke={color} strokeWidth="1" opacity="0.3" />
+    </Svg>
+  );
+}
+
+function PricingChart({ color }: { color: string }) {
+  return (
+    <Svg width="100%" height="52" viewBox="0 0 120 52">
+      <Rect x="8" y="36" width="24" height="16" fill={color} opacity="0.4" rx="3" />
+      <Rect x="48" y="22" width="24" height="30" fill={color} opacity="0.7" rx="3" />
+      <Rect x="88" y="6" width="24" height="46" fill={color} opacity="1" rx="3" />
+      <Line x1="0" y1="51" x2="120" y2="51" stroke={color} strokeWidth="1" opacity="0.3" />
+    </Svg>
+  );
+}
+
+function LoanChart({ color }: { color: string }) {
+  return (
+    <Svg width="100%" height="52" viewBox="0 0 120 52">
+      <Path d="M0,4 C30,6 60,18 90,36 C100,42 110,47 120,50" stroke={color} strokeWidth="2.5" fill="none" strokeLinecap="round" />
+      <Path d="M0,4 C30,6 60,18 90,36 C100,42 110,47 120,50 L120,52 L0,52 Z" fill={color} opacity="0.12" />
+    </Svg>
+  );
+}
+
+function EmployeeROIChart({ color }: { color: string }) {
+  return (
+    <Svg width="100%" height="52" viewBox="0 0 120 52">
+      <Rect x="15" y="26" width="30" height="26" fill="#6b7280" opacity="0.45" rx="3" />
+      <Rect x="75" y="8" width="30" height="44" fill={color} opacity="0.9" rx="3" />
+      <Line x1="60" y1="2" x2="60" y2="52" stroke="#374151" strokeWidth="1" strokeDasharray="3 3" opacity="0.4" />
+      <Line x1="0" y1="51" x2="120" y2="51" stroke={color} strokeWidth="1" opacity="0.3" />
+    </Svg>
+  );
+}
+
+function MarketingROIChart({ color }: { color: string }) {
+  const widths = [110, 82, 60, 40, 24];
+  return (
+    <Svg width="100%" height="52" viewBox="0 0 120 52">
+      {widths.map((w, i) => (
+        <Rect key={i} x={(120 - w) / 2} y={i * 10 + 1} width={w} height="8" fill={color} opacity={1 - i * 0.16} rx="3" />
+      ))}
+    </Svg>
+  );
+}
+
+const CHART_COMPONENTS: Record<string, React.ComponentType<{ color: string }>> = {
+  'break-even': BreakEvenChart,
+  'cash-flow': CashFlowChart,
+  'pricing': PricingChart,
+  'loan': LoanChart,
+  'employee-roi': EmployeeROIChart,
+  'marketing': MarketingROIChart,
+};
+
+// ============================================
 // TOOL CARDS DATA & COMPONENT
 // ============================================
 function getToolCards(t: (key: string) => string) {
   return [
     {
       icon: 'chart.line.uptrend.xyaxis',
+      chartType: 'break-even',
       title: t('calculators.break_even.title'),
       description: t('calculators.break_even.description'),
       href: '/(tabs)/calculators/break-even' as const,
@@ -86,6 +165,7 @@ function getToolCards(t: (key: string) => string) {
     },
     {
       icon: 'dollarsign.circle',
+      chartType: 'cash-flow',
       title: t('calculators.cash_flow.title'),
       description: t('calculators.cash_flow.description'),
       href: '/(tabs)/calculators/cash-flow' as const,
@@ -93,6 +173,7 @@ function getToolCards(t: (key: string) => string) {
     },
     {
       icon: 'tag',
+      chartType: 'pricing',
       title: t('calculators.pricing.title'),
       description: t('calculators.pricing.description'),
       href: '/(tabs)/calculators/pricing' as const,
@@ -100,6 +181,7 @@ function getToolCards(t: (key: string) => string) {
     },
     {
       icon: 'creditcard',
+      chartType: 'loan',
       title: t('calculators.loan.title'),
       description: t('calculators.loan.description'),
       href: '/(tabs)/calculators/loan' as const,
@@ -107,6 +189,7 @@ function getToolCards(t: (key: string) => string) {
     },
     {
       icon: 'person.2',
+      chartType: 'employee-roi',
       title: t('calculators.employee_roi.title'),
       description: t('calculators.employee_roi.description'),
       href: '/(tabs)/calculators/employee-roi' as const,
@@ -114,6 +197,7 @@ function getToolCards(t: (key: string) => string) {
     },
     {
       icon: 'megaphone',
+      chartType: 'marketing',
       title: t('calculators.marketing_roi.title'),
       description: t('calculators.marketing_roi.description'),
       href: '/(tabs)/calculators/marketing' as const,
@@ -122,37 +206,34 @@ function getToolCards(t: (key: string) => string) {
   ];
 }
 
-function ToolCard({ icon, title, description, href, color, colors }: any) {
+function ToolCard({ icon, chartType, title, description, href, color, colors }: any) {
   const handlePress = () => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     router.push(href);
   };
 
-  // Color mapping for the icon background
-  const getBgColor = () => {
-    const colorValue = colors[color];
-    // Convert hex to rgba with 10% opacity
-    const hex = colorValue.replace('#', '');
-    const r = parseInt(hex.substring(0, 2), 16);
-    const g = parseInt(hex.substring(2, 4), 16);
-    const b = parseInt(hex.substring(4, 6), 16);
-    return `rgba(${r}, ${g}, ${b}, 0.1)`;
-  };
+  const colorValue = colors[color];
+  const ChartComponent = CHART_COMPONENTS[chartType];
 
   return (
-    <Pressable
-      onPress={handlePress}
-      className="w-full mb-4"
-    >
-      <View className="bg-surface border border-border rounded-2xl p-6 min-h-[160px] lg:h-44">
-        <View
-          className="w-12 h-12 rounded-xl items-center justify-center mb-4"
-          style={{ backgroundColor: getBgColor() }}
-        >
-          <IconSymbol size={24} name={icon} color={colors[color]} />
+    <Pressable onPress={handlePress} className="w-full mb-4">
+      <View className="bg-surface border border-border rounded-2xl overflow-hidden">
+        {/* Mini chart header */}
+        <View className="h-16 px-4 pt-2 justify-end" style={{ backgroundColor: `${colorValue}15` }}>
+          {ChartComponent && <ChartComponent color={colorValue} />}
+          {/* Small icon badge */}
+          <View
+            className="absolute top-2 right-3 w-8 h-8 rounded-lg items-center justify-center"
+            style={{ backgroundColor: `${colorValue}30` }}
+          >
+            <IconSymbol size={16} name={icon} color={colorValue} />
+          </View>
         </View>
-        <Text className="text-lg font-heading-medium text-foreground mb-2" numberOfLines={1}>{title}</Text>
-        <Text className="text-sm font-body text-muted" numberOfLines={2}>{description}</Text>
+        {/* Text content */}
+        <View className="px-4 pt-3 pb-4">
+          <Text className="text-base font-heading-medium text-foreground mb-1" numberOfLines={1}>{title}</Text>
+          <Text className="text-xs font-body text-muted" numberOfLines={2}>{description}</Text>
+        </View>
       </View>
     </Pressable>
   );

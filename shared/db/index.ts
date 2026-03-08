@@ -1,5 +1,5 @@
 import { drizzle } from 'drizzle-orm/mysql2';
-import * as schema from './schema';
+import * as schema from '../../drizzle/schema';
 
 let _db: ReturnType<typeof drizzle> | null = null;
 
