@@ -17,8 +17,9 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: colors.primary, // Changed to use primary (Teal)
+        tabBarActiveTintColor: colors.primary,
         headerShown: false,
+        lazy: false,
         tabBarButton: HapticTab,
         tabBarStyle: {
           paddingTop: 8,
