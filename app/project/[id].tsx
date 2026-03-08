@@ -834,6 +834,20 @@ export default function ProjectDetailsScreen() {
             </View>
           </View>
         )}
+        {/* Back to Home */}
+        <TouchableOpacity
+          onPress={() => {
+            if (Platform.OS !== 'web') {
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+            }
+            router.push('/(tabs)/' as any);
+          }}
+          className="mt-6 bg-surface border border-border rounded-xl py-4 items-center active:opacity-70"
+        >
+          <Text className="text-foreground font-semibold text-base">
+            🏠 {t('common.go_home')}
+          </Text>
+        </TouchableOpacity>
       </ScrollView>
 
       {/* Share Modal */}
