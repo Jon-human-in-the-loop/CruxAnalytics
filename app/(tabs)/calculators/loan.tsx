@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useMemo } from 'react';
-import { View, Text, TextInput, Pressable, ScrollView, Alert } from 'react-native';
+import { View, Text, TextInput, Pressable, ScrollView, Alert, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {
     GlassCard,
@@ -247,30 +247,35 @@ export default function LoanPage() {
                         {result ? (
                             <>
                                 {/* Monthly Payment */}
-                                <GlassCard gradient className="items-center py-8">
-                                    <Text className="text-gray-400">{t('calculators.loan.monthly_payment')}</Text>
-                                    <Text className="text-5xl font-bold text-white mt-2">
-                                        ${result.monthlyPayment.toLocaleString()}
-                                    </Text>
-                                </GlassCard>
+                                {(() => {
+                                    const small = Dimensions.get('window').width < 600;
+                                    return (
+                                    <GlassCard gradient className={`items-center ${small ? 'py-4' : 'py-8'}`}>
+                                        <Text className="text-gray-400">{t('calculators.loan.monthly_payment')}</Text>
+                                        <Text className="font-bold text-white mt-2" style={{ fontSize: small ? 32 : 48 }}>
+                                            ${result.monthlyPayment.toLocaleString()}
+                                        </Text>
+                                    </GlassCard>
+                                    );
+                                })()}
 
                                 {/* Summary Cards */}
                                 <View className="flex-row flex-wrap gap-4">
-                                    <GlassCard className="flex-1 min-w-[140px]">
+                                    <GlassCard className="flex-1">
                                         <Text className="text-gray-400 text-sm">{t('calculators.loan.total_to_pay')}</Text>
                                         <Text className="text-2xl font-bold text-white">
                                             ${result.totalPayment.toLocaleString()}
                                         </Text>
                                     </GlassCard>
 
-                                    <GlassCard className="flex-1 min-w-[140px]">
+                                    <GlassCard className="flex-1">
                                         <Text className="text-gray-400 text-sm">{t('calculators.loan.total_interest')}</Text>
                                         <Text className="text-2xl font-bold text-rose-400">
                                             ${result.totalInterest.toLocaleString()}
                                         </Text>
                                     </GlassCard>
 
-                                    <GlassCard className="flex-1 min-w-[140px]">
+                                    <GlassCard className="flex-1">
                                         <Text className="text-gray-400 text-sm">{t('calculators.loan.effective_rate')}</Text>
                                         <Text className="text-2xl font-bold text-amber-400">
                                             {result.effectiveAnnualRate != null ? result.effectiveAnnualRate.toFixed(1) : '0'}%
