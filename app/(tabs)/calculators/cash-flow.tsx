@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useMemo } from 'react';
-import { View, Text, TextInput, Pressable, ScrollView, Alert, Dimensions, Platform } from 'react-native';
+import { View, Text, TextInput, Pressable, ScrollView, Alert, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {
     GlassCard,
@@ -55,8 +55,6 @@ function InputField({
 function CashFlowTimeline({ forecasts }: { forecasts: Array<{ month: number; netCash: number; balance: number }> }) {
     const { t } = useTranslation();
     const maxBalance = Math.max(...forecasts.map(f => Math.abs(f.balance)));
-    const isSmall = Dimensions.get('window').width < 600;
-
     return (
         <GlassCard>
             <Text className="text-white font-semibold mb-4">{t('calculators.cash_flow.projection_12_months')}</Text>
@@ -68,11 +66,10 @@ function CashFlowTimeline({ forecasts }: { forecasts: Array<{ month: number; net
                         const isPositive = forecast.balance >= 0;
 
                         return (
-                            <View key={index} className="items-center" style={{ width: isSmall ? 36 : 44 }}>
+                            <View key={index} className="items-center w-9 md:w-11">
                                 {/* Bar */}
                                 <View
-                                    className="justify-end bg-slate-800 rounded-lg overflow-hidden"
-                                    style={{ height: isSmall ? 36 : 48, width: isSmall ? 14 : 18 }}
+                                    className="justify-end bg-slate-800 rounded-lg overflow-hidden h-9 w-3.5 md:h-12 md:w-[18px]"
                                 >
                                     <View
                                         className={`w-full rounded-t-lg ${isPositive ? 'bg-[#86EFAC]' : 'bg-[#FB923C]'}`}
@@ -215,16 +212,14 @@ export default function CashFlowPage() {
         }
     };
 
-    const isSmall = Dimensions.get('window').width < 600;
-
     return (
         <ScrollView
             className="flex-1 bg-[#020617]"
-            contentContainerStyle={{ paddingHorizontal: isSmall ? 12 : 20, paddingVertical: isSmall ? 16 : 40 }}
+            contentContainerStyle={{ paddingHorizontal: 12, paddingVertical: 16 }}
         >
-            <View className="max-w-5xl mx-auto">
+            <View className="max-w-5xl mx-auto md:px-2 md:py-6">
                 {/* Top Navigation */}
-                <View className={`flex-row items-center justify-between ${isSmall ? 'mb-4' : 'mb-8'}`}>
+                <View className={`flex-row items-center justify-between mb-4 md:mb-8`}>
                     <Pressable
                         onPress={() => router.back()}
                         className="p-3 bg-white/10 rounded-full border border-white/20 active:scale-95 transition-transform"
@@ -235,7 +230,7 @@ export default function CashFlowPage() {
                 </View>
 
                 {/* Header Title Section */}
-                <View className={isSmall ? 'mb-2' : 'mb-6'}>
+                <View className="mb-2 md:mb-6">
                     <SectionHeading
                         title={t('calculators.cash_flow.title')}
                         subtitle={t('calculators.cash_flow.subtitle')}
@@ -246,7 +241,7 @@ export default function CashFlowPage() {
                     {/* Input Form */}
                     <View className="w-full">
                         <GlassCard>
-                            <Text className={`text-white font-semibold ${isSmall ? 'text-base mb-4' : 'text-lg mb-6'}`}>{t('calculators.enter_data')}</Text>
+                            <Text className={`text-white font-semibold text-base mb-4 md:text-lg md:mb-6`}>{t('calculators.enter_data')}</Text>
 
                             <InputField
                                 label={t('calculators.cash_flow.starting_cash')}
@@ -283,42 +278,42 @@ export default function CashFlowPage() {
                     </View>
 
                     {/* Results */}
-                    <View className={`w-full ${isSmall ? 'gap-3' : 'gap-4'}`}>
+                    <View className={`w-full gap-3 md:gap-4`}>
                         {result ? (
                             <>
                                 {/* Summary Cards */}
-                                <View className={`${isSmall ? 'gap-3' : 'flex-row flex-wrap gap-4'}`}>
-                                    <GlassCard className={`${isSmall ? '' : 'flex-1 min-w-[140px]'}`}>
+                                <View className={`gap-3 md:flex-row md:flex-wrap md:gap-4`}>
+                                    <GlassCard className={`md:flex-1 md:min-w-[140px]`}>
                                         <Text className="text-gray-400 text-sm">{t('calculators.cash_flow.final_balance')}</Text>
-                                        <Text className={`${isSmall ? 'text-xl' : 'text-2xl'} font-bold ${result.endingCashBalance >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
+                                        <Text className={`text-xl md:text-2xl font-bold ${result.endingCashBalance >= 0 ? 'text-emerald-400' : 'text-rose-400'}`}>
                                             ${(result.endingCashBalance ?? 0).toLocaleString()}
                                         </Text>
                                     </GlassCard>
 
-                                    <GlassCard className={`${isSmall ? '' : 'flex-1 min-w-[140px]'}`}>
+                                    <GlassCard className={`md:flex-1 md:min-w-[140px]`}>
                                         <Text className="text-gray-400 text-sm">{t('calculators.cash_flow.runway')}</Text>
-                                        <Text className={`${isSmall ? 'text-xl' : 'text-2xl'} font-bold text-white`}>
+                                        <Text className={`text-xl md:text-2xl font-bold text-white`}>
                                             {result.monthsUntilDeficit ?? '∞'} {t('calculators.cash_flow.months')}
                                         </Text>
                                     </GlassCard>
 
-                                    <GlassCard className={`${isSmall ? '' : 'flex-1 min-w-[140px]'}`}>
+                                    <GlassCard className={`md:flex-1 md:min-w-[140px]`}>
                                         <Text className="text-gray-400 text-sm">{t('calculators.cash_flow.minimum_reserve')}</Text>
-                                        <Text className={`${isSmall ? 'text-xl' : 'text-2xl'} font-bold text-amber-400`}>
+                                        <Text className={`text-xl md:text-2xl font-bold text-amber-400`}>
                                             ${(result.minimumCashReserveNeeded ?? 0).toLocaleString()}
                                         </Text>
                                     </GlassCard>
                                 </View>
 
                                 {/* Health Status */}
-                                <GlassCard className={`border-2 ${isSmall ? 'p-3' : ''} ${result.isHealthy ? 'border-[#86EFAC]/50' : 'border-[#FB923C]/50'}`}>
+                                <GlassCard className={`border-2 p-3 md:p-6 ${result.isHealthy ? 'border-[#86EFAC]/50' : 'border-[#FB923C]/50'}`}>
                                     <View className="flex-row items-center gap-3">
-                                        <Text className={isSmall ? 'text-2xl' : 'text-3xl'}>{result.isHealthy ? '🟢' : '🔴'}</Text>
+                                        <Text className="text-2xl md:text-3xl">{result.isHealthy ? '🟢' : '🔴'}</Text>
                                         <View className="flex-1">
-                                            <Text className={`text-white font-bold ${isSmall ? 'text-base' : 'text-lg'}`}>
+                                            <Text className={`text-white font-bold text-base md:text-lg`}>
                                                 {result.isHealthy ? t('calculators.cash_flow.healthy_cash_flow') : t('calculators.cash_flow.cash_flow_at_risk')}
                                             </Text>
-                                            <Text className={`${isSmall ? 'text-sm' : ''} ${result.isHealthy ? 'text-emerald-400' : 'text-rose-400'}`}>
+                                            <Text className={`text-sm md:text-base ${result.isHealthy ? 'text-emerald-400' : 'text-rose-400'}`}>
                                                 {result.isHealthy
                                                     ? t('calculators.cash_flow.sufficient_liquidity')
                                                     : t('calculators.cash_flow.run_out_warning', { months: String(result.monthsUntilDeficit ?? '?') })
@@ -358,7 +353,7 @@ export default function CashFlowPage() {
                                 </GradientButton>
                             </>
                         ) : (
-                            <GlassCard className={`items-center ${isSmall ? 'py-6' : 'py-12'}`}>
+                            <GlassCard className={`items-center py-6 md:py-12`}>
                                 <Ionicons name="wallet" size={48} color="#6b7280" />
                                 <Text className="text-gray-400 mt-4 text-center">
                                     {t('calculators.no_data')}

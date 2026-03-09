@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useMemo } from 'react';
-import { View, Text, TextInput, Pressable, ScrollView, Alert, Dimensions, Platform } from 'react-native';
+import { View, Text, TextInput, Pressable, ScrollView, Alert, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
@@ -86,17 +86,15 @@ function ResultCard({
         rose: 'bg-rose-500',
     };
 
-    const isSmall = Dimensions.get('window').width < 600;
-
     return (
-        <GlassCard className={large ? 'w-full' : (isSmall ? '' : 'flex-1 min-w-[140px]')}>
+        <GlassCard className={large ? 'w-full' : 'md:flex-1 md:min-w-[140px]'}>
             <View className="flex-row items-center gap-3 mb-2">
                 <View className={`w-10 h-10 rounded-lg ${bgColorMap[color]} items-center justify-center`}>
                     <Text className="text-xl">{icon}</Text>
                 </View>
                 <Text className="text-gray-400 text-sm flex-1">{label}</Text>
             </View>
-            <Text className={`text-white font-bold ${large ? (isSmall ? 'text-2xl' : 'text-3xl') : (isSmall ? 'text-xl' : 'text-2xl')}`}>
+            <Text className={`text-white font-bold ${large ? 'text-2xl md:text-3xl' : 'text-xl md:text-2xl'}`}>
                 {value}
             </Text>
         </GlassCard>
@@ -123,14 +121,13 @@ function BreakEvenChart({
     const maxUnits = Math.max(breakEvenUnits * 1.5, currentUnits || 0);
     const breakEvenPercent = (breakEvenUnits / maxUnits) * 100;
     const currentPercent = currentUnits ? (currentUnits / maxUnits) * 100 : null;
-    const barHeight = Dimensions.get('window').width < 600 ? 20 : 32;
 
     return (
         <GlassCard className="p-4">
             <Text className="text-white font-semibold mb-3">{t('calculators.break_even.visualization')}</Text>
 
             {/* Chart Bar */}
-            <View className="bg-slate-800 rounded-full overflow-hidden relative" style={{ height: barHeight }}>
+            <View className="bg-slate-800 rounded-full overflow-hidden relative h-5 md:h-8">
                 {/* Loss zone */}
                 <View
                     className="absolute left-0 top-0 bottom-0 bg-[#FB923C]/30"
@@ -306,16 +303,14 @@ export default function BreakEvenPage() {
         }
     };
 
-    const isSmall = Dimensions.get('window').width < 600;
-
     return (
         <ScrollView
             className="flex-1 bg-[#020617]"
-            contentContainerStyle={{ paddingHorizontal: isSmall ? 12 : 20, paddingVertical: isSmall ? 16 : 40 }}
+            contentContainerStyle={{ paddingHorizontal: 12, paddingVertical: 16 }}
         >
-            <View className="max-w-5xl mx-auto">
+            <View className="max-w-5xl mx-auto md:px-2 md:py-6">
                 {/* Top Navigation */}
-                <View className={`flex-row items-center justify-between ${isSmall ? 'mb-4' : 'mb-8'}`}>
+                <View className={`flex-row items-center justify-between mb-4 md:mb-8`}>
                     <Pressable
                         onPress={() => router.back()}
                         className="p-3 bg-white/10 rounded-full border border-white/20 active:scale-95 transition-transform"
@@ -326,7 +321,7 @@ export default function BreakEvenPage() {
                 </View>
 
                 {/* Header Title Section */}
-                <View className={isSmall ? 'mb-2' : 'mb-6'}>
+                <View className="mb-2 md:mb-6">
                     <SectionHeading
                         title={`⚖️ ${t('calculators.break_even.title')}`}
                         subtitle={t('calculators.break_even.subtitle')}
@@ -337,7 +332,7 @@ export default function BreakEvenPage() {
                     {/* Input Form */}
                     <View className="w-full">
                         <GlassCard>
-                            <Text className={`text-white font-semibold ${isSmall ? 'text-base mb-4' : 'text-lg mb-6'}`}>
+                            <Text className={`text-white font-semibold text-base mb-4 md:text-lg md:mb-6`}>
                                 {t('calculators.enter_data')}
                             </Text>
 
@@ -380,7 +375,7 @@ export default function BreakEvenPage() {
                         {result ? (
                             <>
                                 {/* Main Results */}
-                                <View className={`${isSmall ? 'gap-3' : 'flex-row flex-wrap gap-4'}`}>
+                                <View className={`gap-3 md:flex-row md:flex-wrap md:gap-4`}>
                                     <ResultCard
                                         label={t('calculators.break_even.break_even_units')}
                                         value={result.breakEvenUnits.toLocaleString()}
@@ -389,7 +384,7 @@ export default function BreakEvenPage() {
                                         large
                                     />
 
-                                    <View className={`${isSmall ? 'gap-3' : 'flex-row flex-wrap gap-4'}`}>
+                                    <View className={`gap-3 md:flex-row md:flex-wrap md:gap-4`}>
                                         <ResultCard
                                             label={t('calculators.break_even.break_even_revenue')}
                                             value={`$${result.breakEvenRevenue.toLocaleString()}`}
@@ -410,7 +405,7 @@ export default function BreakEvenPage() {
                                 {result.marginOfSafety !== undefined && (
                                     <GlassCard className={`border-2 ${result.isAboveBreakEven ? 'border-[#86EFAC]/50' : 'border-[#FB923C]/50'}`}>
                                         <View className="flex-row items-center gap-3">
-                                            <Text className={isSmall ? 'text-2xl' : 'text-3xl'}>{result.isAboveBreakEven ? '✅' : '⚠️'}</Text>
+                                            <Text className="text-2xl md:text-3xl">{result.isAboveBreakEven ? '✅' : '⚠️'}</Text>
                                             <View>
                                                 <Text className="text-white font-bold text-lg">
                                                     {result.isAboveBreakEven ? t('calculators.break_even.above_break_even') : t('calculators.break_even.below_break_even')}
@@ -445,7 +440,7 @@ export default function BreakEvenPage() {
                                 </GradientButton>
                             </>
                         ) : (
-                            <GlassCard className={`items-center ${isSmall ? 'py-6' : 'py-12'}`}>
+                            <GlassCard className={`items-center py-6 md:py-12`}>
                                 <Ionicons name="calculator" size={48} color="#6b7280" />
                                 <Text className="text-gray-400 mt-4 text-center">
                                     {t('calculators.no_data')}
