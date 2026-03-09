@@ -4,7 +4,7 @@
  */
 
 import React, { useState, useMemo } from 'react';
-import { View, Text, TextInput, Pressable, ScrollView, Alert, Dimensions } from 'react-native';
+import { View, Text, TextInput, Pressable, ScrollView, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {
     GlassCard,
@@ -55,24 +55,23 @@ function InputField({
 function CashFlowTimeline({ forecasts }: { forecasts: Array<{ month: number; netCash: number; balance: number }> }) {
     const { t } = useTranslation();
     const maxBalance = Math.max(...forecasts.map(f => Math.abs(f.balance)));
-    const small = Dimensions.get('window').width < 600;
 
     return (
         <GlassCard>
             <Text className="text-white font-semibold mb-4">{t('calculators.cash_flow.projection_12_months')}</Text>
 
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                <View className="flex-row gap-2 pb-4">
+                <View className="flex-row gap-2 pb-2">
                     {forecasts.map((forecast, index) => {
                         const height = Math.abs(forecast.balance) / maxBalance * 100;
                         const isPositive = forecast.balance >= 0;
 
                         return (
-                            <View key={index} className="items-center" style={{ width: small ? 48 : 64 }}>
+                            <View key={index} className="items-center" style={{ width: 44 }}>
                                 {/* Bar */}
                                 <View
                                     className="justify-end bg-slate-800 rounded-lg overflow-hidden"
-                                    style={{ height: small ? 56 : 128, width: small ? 20 : 32 }}
+                                    style={{ height: 48, width: 18 }}
                                 >
                                     <View
                                         className={`w-full rounded-t-lg ${isPositive ? 'bg-[#86EFAC]' : 'bg-[#FB923C]'}`}
@@ -80,7 +79,7 @@ function CashFlowTimeline({ forecasts }: { forecasts: Array<{ month: number; net
                                     />
                                 </View>
                                 {/* Month label */}
-                                <Text className="text-gray-400 text-xs mt-2">{t('calculators.cash_flow.month')} {forecast.month}</Text>
+                                <Text className="text-gray-400 text-xs mt-1">{forecast.month}</Text>
                                 {/* Value */}
                                 <Text className={`text-xs font-medium ${isPositive ? 'text-emerald-400' : 'text-rose-400'}`}>
                                     ${forecast.balance != null ? (forecast.balance / 1000).toFixed(0) : '0'}k
