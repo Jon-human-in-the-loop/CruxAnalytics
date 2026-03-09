@@ -79,20 +79,20 @@ function ResultCard({
     color: 'indigo' | 'emerald' | 'amber' | 'rose';
     large?: boolean;
 }) {
-    const colorMap = {
-        indigo: 'from-[#14B8A6] to-[#86EFAC]',
-        emerald: 'from-[#86EFAC] to-[#14B8A6]',
-        amber: 'from-[#FB923C] to-orange-500',
-        rose: 'from-[#FB923C] to-pink-500',
+    const bgColorMap = {
+        indigo: 'bg-[#14B8A6]',
+        emerald: 'bg-[#86EFAC]',
+        amber: 'bg-[#FB923C]',
+        rose: 'bg-rose-500',
     };
 
     return (
-        <GlassCard className={`${large ? 'col-span-2' : ''}`}>
+        <GlassCard className={large ? 'w-full' : 'flex-1 min-w-[140px]'}>
             <View className="flex-row items-center gap-3 mb-2">
-                <View className={`w-10 h-10 rounded-lg bg-gradient-to-br ${colorMap[color]} items-center justify-center`}>
+                <View className={`w-10 h-10 rounded-lg ${bgColorMap[color]} items-center justify-center`}>
                     <Text className="text-xl">{icon}</Text>
                 </View>
-                <Text className="text-gray-400 text-sm">{label}</Text>
+                <Text className="text-gray-400 text-sm flex-1">{label}</Text>
             </View>
             <Text className={`text-white font-bold ${large ? 'text-3xl' : 'text-2xl'}`}>
                 {value}

@@ -23,12 +23,14 @@ function InputField({
     value,
     onChange,
     prefix,
+    suffix,
     hint,
 }: {
     label: string;
     value: string;
     onChange: (val: string) => void;
     prefix?: string;
+    suffix?: string;
     hint?: string;
 }) {
     return (
@@ -43,6 +45,7 @@ function InputField({
                     placeholderTextColor="#6b7280"
                     keyboardType="numeric"
                 />
+                {suffix && <Text className="text-gray-500 pr-4">{suffix}</Text>}
             </View>
             {hint && <Text className="text-gray-500 text-xs mt-1">{hint}</Text>}
         </View>
@@ -271,7 +274,7 @@ export default function CashFlowPage() {
                                 label={t('calculators.cash_flow.expected_growth')}
                                 value={expectedGrowth}
                                 onChange={setExpectedGrowth}
-                                prefix="%"
+                                suffix="%"
                                 hint={t('calculators.cash_flow.expected_growth_hint')}
                             />
                         </GlassCard>
