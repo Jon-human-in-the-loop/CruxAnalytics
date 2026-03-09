@@ -66,20 +66,30 @@ export function ShareModal({ visible, project, onClose }: ShareModalProps) {
 
     try {
       const message = getShareMessage(project, shareLink, language);
-      
-      if (Platform.OS === 'web') {
-        // Web fallback: copy to clipboard
-        await Clipboard.setStringAsync(message);
-        Alert.alert(t('share.copied_title'), t('share.copied_message'));
-      } else {
-        // Native share
+
+      if (Platform.OS === 'web' && typeof navigator !== 'undefined' && navigator.share) {
+        // Web Share API (mobile browsers: Chrome Android, Safari iOS, etc.)
+        await navigator.share({
+          title: project.name,
+          text: message,
+          url: shareLink,
+        });
+      } else if (Platform.OS !== 'web') {
+        // React Native native share
         await RNShare.share({
           message,
           title: project.name,
         });
+      } else {
+        // Fallback: copy to clipboard
+        await Clipboard.setStringAsync(message);
+        Alert.alert(t('share.copied_title'), t('share.copied_message'));
       }
-    } catch (error) {
-      console.error('Error sharing:', error);
+    } catch (error: any) {
+      // User cancelled share — not an error
+      if (error?.name !== 'AbortError') {
+        console.error('Error sharing:', error);
+      }
     }
   };
 
