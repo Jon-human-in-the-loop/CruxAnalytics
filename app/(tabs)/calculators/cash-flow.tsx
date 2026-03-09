@@ -283,7 +283,7 @@ export default function CashFlowPage() {
                     </View>
 
                     {/* Results */}
-                    <View className="w-full gap-4">
+                    <View className={`w-full ${isSmall ? 'gap-3' : 'gap-4'}`}>
                         {result ? (
                             <>
                                 {/* Summary Cards */}
@@ -311,14 +311,14 @@ export default function CashFlowPage() {
                                 </View>
 
                                 {/* Health Status */}
-                                <GlassCard className={`border-2 ${result.isHealthy ? 'border-[#86EFAC]/50' : 'border-[#FB923C]/50'}`}>
+                                <GlassCard className={`border-2 ${isSmall ? 'p-3' : ''} ${result.isHealthy ? 'border-[#86EFAC]/50' : 'border-[#FB923C]/50'}`}>
                                     <View className="flex-row items-center gap-3">
                                         <Text className={isSmall ? 'text-2xl' : 'text-3xl'}>{result.isHealthy ? '🟢' : '🔴'}</Text>
-                                        <View>
-                                            <Text className="text-white font-bold text-lg">
+                                        <View className="flex-1">
+                                            <Text className={`text-white font-bold ${isSmall ? 'text-base' : 'text-lg'}`}>
                                                 {result.isHealthy ? t('calculators.cash_flow.healthy_cash_flow') : t('calculators.cash_flow.cash_flow_at_risk')}
                                             </Text>
-                                            <Text className={result.isHealthy ? 'text-emerald-400' : 'text-rose-400'}>
+                                            <Text className={`${isSmall ? 'text-sm' : ''} ${result.isHealthy ? 'text-emerald-400' : 'text-rose-400'}`}>
                                                 {result.isHealthy
                                                     ? t('calculators.cash_flow.sufficient_liquidity')
                                                     : t('calculators.cash_flow.run_out_warning', { months: String(result.monthsUntilDeficit ?? '?') })
