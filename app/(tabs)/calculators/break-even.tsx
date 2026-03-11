@@ -334,9 +334,9 @@ export default function BreakEvenPage() {
                     />
                 </View>
 
-                <View className="gap-6">
+                <View className={isSmall ? "gap-6" : "flex-row gap-8"}>
                     {/* Input Form */}
-                    <View className="w-full">
+                    <View className={isSmall ? "w-full" : "flex-1"}>
                         <GlassCard>
                             <Text className={`text-white font-semibold ${isSmall ? 'text-base mb-4' : 'text-lg mb-6'}`}>
                                 {t('calculators.enter_data')}
@@ -377,7 +377,7 @@ export default function BreakEvenPage() {
                     </View>
 
                     {/* Results */}
-                    <View className="w-full gap-4">
+                    <View className={isSmall ? "w-full gap-4" : "flex-1 gap-4"}>
                         {result ? (
                             <>
                                 {/* Main Results */}
