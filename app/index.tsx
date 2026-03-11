@@ -1,13 +1,13 @@
 /**
  * @fileoverview Landing Page for CruxAnalytics (Root Entry Point)
- * A stunning, professional landing page designed to convert visitors
- * and showcase the value of the SME financial analysis tool.
+ * Investor-grade landing page: traction, Vanguard metrics, business model, roadmap.
+ * Updated: feature/investor-landing
  */
 
-import React from 'react';
-import { View, Text, ScrollView, Pressable, Image, Platform, Linking } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, ScrollView, Pressable, Platform, Linking } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Link, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useColors } from '@/hooks/use-colors';
 import { LanguageSelector } from '@/components/language-selector';
@@ -21,7 +21,63 @@ import {
     SectionHeading,
     TestimonialCard,
     Badge,
+    TractionStat,
+    RoadmapCard,
+    PricingCard,
+    VanguardMetricCard,
 } from '@/components/landing/shared-components';
+
+// ============================================
+// NAV BAR (sticky)
+// ============================================
+function NavBar() {
+    const router = useRouter();
+    const { t } = useTranslation();
+    const [scrolled, setScrolled] = useState(false);
+
+    return (
+        <View
+            className="absolute top-0 left-0 right-0 z-50"
+            style={{
+                backgroundColor: scrolled ? 'rgba(10,10,10,0.92)' : 'transparent',
+                borderBottomWidth: scrolled ? 1 : 0,
+                borderBottomColor: 'rgba(255,255,255,0.08)',
+            }}
+        >
+            <View className="flex-row justify-between items-center px-6 py-4 max-w-6xl mx-auto w-full">
+                {/* Logo */}
+                <Text className="text-xl font-bold text-white">
+                    Crux<Text style={{ color: '#00C0D4' }}>Analytics</Text>
+                </Text>
+
+                {/* Nav links — hidden on mobile */}
+                <View className="hidden md:flex flex-row gap-8 items-center">
+                    <Text className="text-gray-400 text-sm hover:text-white transition-colors cursor-pointer">
+                        {t('landing.nav.features')}
+                    </Text>
+                    <Text className="text-gray-400 text-sm hover:text-white transition-colors cursor-pointer">
+                        {t('landing.nav.traction')}
+                    </Text>
+                    <Text className="text-gray-400 text-sm hover:text-white transition-colors cursor-pointer">
+                        {t('landing.nav.roadmap')}
+                    </Text>
+                </View>
+
+                {/* Right side */}
+                <View className="flex-row items-center gap-3">
+                    <LanguageSelector />
+                    <GradientButton
+                        size="sm"
+                        className="rounded-xl hidden md:flex"
+                        onPress={() => router.push('/(tabs)')}
+                    >
+                        {t('landing.nav.enter_app')}
+                    </GradientButton>
+                </View>
+            </View>
+        </View>
+    );
+}
 
 // ============================================
 // HERO SECTION
@@ -34,22 +90,29 @@ function HeroSection() {
     return (
         <View className="min-h-screen justify-center items-center px-6 py-20 relative overflow-hidden">
             {/* Background gradient orbs */}
-            <View className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-[#14B8A6]/20 blur-[120px]" />
-            <View className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-[#86EFAC]/20 blur-[120px]" />
+            <View className="absolute top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full opacity-20"
+                style={{ backgroundColor: '#00C0D4', filter: 'blur(120px)' } as any} />
+            <View className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full opacity-15"
+                style={{ backgroundColor: '#A7F3D0', filter: 'blur(120px)' } as any} />
 
             {/* Content */}
             <View className="max-w-4xl items-center z-10">
                 <Badge variant="success">
                     <View className="flex-row items-center gap-1.5">
                         <Ionicons name="sparkles" size={14} color={colors.success} />
-                        <Text className="text-success text-xs font-medium">{t('landing.hero.badge')}</Text>
+                        <Text style={{ color: '#A7F3D0', fontSize: 12, fontWeight: '500' }}>
+                            {t('landing.hero.badge')}
+                        </Text>
                     </View>
                 </Badge>
 
+                {/* Title */}
                 <Text className="text-4xl md:text-6xl lg:text-7xl font-bold text-white text-center mt-6 leading-tight">
-                    {t('landing.hero.title').split('está en riesgo')[0]}
-                    <Text className="bg-gradient-to-r from-[#14B8A6] to-[#86EFAC] bg-clip-text text-transparent">
-                        {t('landing.hero.title').includes('está en riesgo') ? 'está en riesgo' : 'is at risk'}
+                    {t('landing.hero.title').split(
+                        t('common.language_code') === 'es' ? 'está en riesgo' : 'is at risk'
+                    )[0]}
+                    <Text style={{ color: '#00C0D4' }}>
+                        {t('common.language_code') === 'es' ? 'está en riesgo' : 'is at risk'}
                     </Text>
                 </Text>
 
@@ -57,7 +120,7 @@ function HeroSection() {
                     {t('landing.hero.subtitle')}
                 </Text>
 
-                <View className="flex-row gap-4 mt-10">
+                <View className="flex-row flex-wrap gap-4 mt-10 justify-center">
                     <GradientButton
                         size="lg"
                         className="rounded-2xl"
@@ -65,6 +128,12 @@ function HeroSection() {
                     >
                         {t('landing.hero.cta')}
                     </GradientButton>
+                    <OutlineButton
+                        className="rounded-2xl"
+                        onPress={() => Linking.openURL('https://github.com/Jon-human-in-the-loop/CruxAnalytics')}
+                    >
+                        GitHub →
+                    </OutlineButton>
                 </View>
 
                 {/* Trust indicators */}
@@ -74,11 +143,11 @@ function HeroSection() {
                         <Text className="text-gray-400 text-sm">{t('landing.hero.privacy')}</Text>
                     </View>
                     <View className="flex-row items-center gap-2">
-                        <Ionicons name="flash" size={16} color={colors.primary} />
+                        <Ionicons name="flash" size={16} color="#00C0D4" />
                         <Text className="text-gray-400 text-sm">{t('landing.hero.results')}</Text>
                     </View>
                     <View className="flex-row items-center gap-2">
-                        <Ionicons name="bulb" size={16} color={colors.warning} />
+                        <Ionicons name="bulb" size={16} color="#FDBA74" />
                         <Text className="text-gray-400 text-sm">{t('landing.hero.ai')}</Text>
                     </View>
                 </View>
@@ -112,8 +181,9 @@ function ProblemSection() {
                 {/* Pain points */}
                 <View className="flex-row flex-wrap gap-6 mt-16 justify-center">
                     <GlassCard className="max-w-xs">
-                        <View className="w-16 h-16 rounded-full bg-warning/10 items-center justify-center mb-4">
-                            <Ionicons name="alert-circle" size={32} color="#FB923C" />
+                        <View className="w-16 h-16 rounded-full items-center justify-center mb-4"
+                            style={{ backgroundColor: 'rgba(253,186,116,0.1)' }}>
+                            <Ionicons name="alert-circle" size={32} color="#FDBA74" />
                         </View>
                         <Text className="text-white font-bold text-lg mb-2">
                             {t('landing.problem.pain1_title')}
@@ -124,8 +194,9 @@ function ProblemSection() {
                     </GlassCard>
 
                     <GlassCard className="max-w-xs">
-                        <View className="w-16 h-16 rounded-full bg-error/10 items-center justify-center mb-4">
-                            <Ionicons name="cash" size={32} color="#FB923C" />
+                        <View className="w-16 h-16 rounded-full items-center justify-center mb-4"
+                            style={{ backgroundColor: 'rgba(253,186,116,0.1)' }}>
+                            <Ionicons name="cash" size={32} color="#FDBA74" />
                         </View>
                         <Text className="text-white font-bold text-lg mb-2">
                             {t('landing.problem.pain2_title')}
@@ -136,8 +207,9 @@ function ProblemSection() {
                     </GlassCard>
 
                     <GlassCard className="max-w-xs">
-                        <View className="w-16 h-16 rounded-full bg-primary/10 items-center justify-center mb-4">
-                            <Ionicons name="help-circle" size={32} color="#14B8A6" />
+                        <View className="w-16 h-16 rounded-full items-center justify-center mb-4"
+                            style={{ backgroundColor: 'rgba(0,192,212,0.1)' }}>
+                            <Ionicons name="help-circle" size={32} color="#00C0D4" />
                         </View>
                         <Text className="text-white font-bold text-lg mb-2">
                             {t('landing.problem.pain3_title')}
@@ -166,61 +238,94 @@ function SolutionSection() {
                     <View className="flex-1 min-w-[300px]">
                         <Badge>{t('landing.solution.badge')}</Badge>
                         <Text className="text-3xl md:text-4xl font-bold text-white mt-4">
-                            {t('landing.solution.title').split('Gratis')[0]}
-                            <Text className="text-[#14B8A6]">{t('landing.solution.title').includes('Gratis') ? 'Gratis y en 2 minutos.' : 'Free and in 2 minutes.'}</Text>
+                            {t('landing.solution.title').split(
+                                t('common.language_code') === 'es' ? 'Gratis' : 'Free'
+                            )[0]}
+                            <Text style={{ color: '#00C0D4' }}>
+                                {t('common.language_code') === 'es' ? 'Gratis y en 2 minutos.' : 'Free and in 2 minutes.'}
+                            </Text>
                         </Text>
                         <Text className="text-gray-400 text-lg mt-6 leading-relaxed">
                             {t('landing.solution.subtitle')}
                         </Text>
 
                         <View className="mt-6 gap-4">
-                            <View className="flex-row items-center gap-3">
-                                <View className="w-8 h-8 rounded-full bg-emerald-500/20 items-center justify-center">
-                                    <Ionicons name="checkmark" size={18} color="#10b981" />
+                            {[
+                                t('landing.solution.feature1'),
+                                t('landing.solution.feature2'),
+                                t('landing.solution.feature3'),
+                                t('landing.solution.feature4'),
+                            ].map((feat, i) => (
+                                <View key={i} className="flex-row items-center gap-3">
+                                    <View className="w-8 h-8 rounded-full items-center justify-center"
+                                        style={{ backgroundColor: 'rgba(167,243,208,0.2)' }}>
+                                        <Ionicons name="checkmark" size={18} color="#A7F3D0" />
+                                    </View>
+                                    <Text className="text-white">{feat}</Text>
                                 </View>
-                                <Text className="text-white">{t('landing.solution.feature1')}</Text>
-                            </View>
-                            <View className="flex-row items-center gap-3">
-                                <View className="w-8 h-8 rounded-full bg-emerald-500/20 items-center justify-center">
-                                    <Ionicons name="checkmark" size={18} color="#10b981" />
-                                </View>
-                                <Text className="text-white">{t('landing.solution.feature2')}</Text>
-                            </View>
-                            <View className="flex-row items-center gap-3">
-                                <View className="w-8 h-8 rounded-full bg-emerald-500/20 items-center justify-center">
-                                    <Ionicons name="checkmark" size={18} color="#10b981" />
-                                </View>
-                                <Text className="text-white">{t('landing.solution.feature3')}</Text>
-                            </View>
-                            <View className="flex-row items-center gap-3">
-                                <View className="w-8 h-8 rounded-full bg-emerald-500/20 items-center justify-center">
-                                    <Ionicons name="checkmark" size={18} color="#10b981" />
-                                </View>
-                                <Text className="text-white">{t('landing.solution.feature4')}</Text>
-                            </View>
+                            ))}
                         </View>
                     </View>
 
-                    {/* Visual */}
+                    {/* Visual mock */}
                     <View className="flex-1 min-w-[300px]">
                         <GlassCard gradient className="p-8">
                             <View className="bg-slate-900 rounded-xl p-6">
                                 <View className="flex-row items-center gap-2 mb-2">
-                                    <Ionicons name="checkmark-circle" size={20} color="#86EFAC" />
-                                    <Text className="text-success text-sm font-bold mb-2">{t('landing.solution.visual_status')}</Text>
+                                    <Ionicons name="checkmark-circle" size={20} color="#A7F3D0" />
+                                    <Text className="text-sm font-bold"
+                                        style={{ color: '#A7F3D0' }}>
+                                        {t('landing.solution.visual_status')}
+                                    </Text>
                                 </View>
-                                <Text className="text-white text-2xl font-bold">{t('landing.solution.visual_health')}</Text>
+                                <Text className="text-white text-2xl font-bold">
+                                    {t('landing.solution.visual_health')}
+                                </Text>
 
                                 <View className="flex-row gap-4 mt-6">
-                                    <View className="flex-1 bg-slate-800 rounded-lg p-4">
-                                        <Text className="text-gray-400 text-xs">{t('landing.solution.visual_breakeven')}</Text>
+                                    <View className="flex-1 rounded-lg p-4"
+                                        style={{ backgroundColor: 'rgba(255,255,255,0.05)' }}>
+                                        <Text className="text-gray-400 text-xs">
+                                            {t('landing.solution.visual_breakeven')}
+                                        </Text>
                                         <Text className="text-white text-xl font-bold">$8,500</Text>
-                                        <Text className="text-emerald-400 text-xs">{t('landing.solution.visual_margin')}</Text>
+                                        <Text style={{ color: '#A7F3D0', fontSize: 12 }}>
+                                            {t('landing.solution.visual_margin')}
+                                        </Text>
                                     </View>
-                                    <View className="flex-1 bg-slate-800 rounded-lg p-4">
-                                        <Text className="text-gray-400 text-xs">{t('landing.solution.visual_runway')}</Text>
-                                        <Text className="text-white text-xl font-bold">{t('landing.solution.visual_runway_val')}</Text>
-                                        <Text className="text-emerald-400 text-xs">{t('landing.solution.visual_health')}</Text>
+                                    <View className="flex-1 rounded-lg p-4"
+                                        style={{ backgroundColor: 'rgba(255,255,255,0.05)' }}>
+                                        <Text className="text-gray-400 text-xs">
+                                            {t('landing.solution.visual_runway')}
+                                        </Text>
+                                        <Text className="text-white text-xl font-bold">
+                                            {t('landing.solution.visual_runway_val')}
+                                        </Text>
+                                        <Text style={{ color: '#A7F3D0', fontSize: 12 }}>
+                                            {t('landing.solution.visual_health')}
+                                        </Text>
+                                    </View>
+                                </View>
+
+                                {/* Vanguard metrics mini preview */}
+                                <View className="mt-4 pt-4"
+                                    style={{ borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.08)' }}>
+                                    <Text className="text-gray-500 text-xs mb-3 uppercase tracking-wider">
+                                        Vanguard Crux Metrics
+                                    </Text>
+                                    <View className="flex-row gap-3">
+                                        {[
+                                            { label: 'OFI', value: '12%', color: '#00C0D4' },
+                                            { label: 'TFDI', value: '8%', color: '#A7F3D0' },
+                                            { label: 'SER', value: '2.4x', color: '#FDBA74' },
+                                        ].map(m => (
+                                            <View key={m.label} className="flex-1 items-center">
+                                                <Text style={{ color: m.color, fontSize: 16, fontWeight: '700' }}>
+                                                    {m.value}
+                                                </Text>
+                                                <Text className="text-gray-500 text-xs">{m.label}</Text>
+                                            </View>
+                                        ))}
                                     </View>
                                 </View>
                             </View>
@@ -296,13 +401,243 @@ function FeaturesSection() {
 }
 
 // ============================================
+// TRACTION SECTION (NEW — investor-grade)
+// ============================================
+function TractionSection() {
+    const { t } = useTranslation();
+
+    return (
+        <View className="px-6 py-20">
+            <View className="max-w-6xl mx-auto">
+                <View className="items-center mb-4">
+                    <Badge variant="success">{t('landing.traction.badge')}</Badge>
+                </View>
+                <SectionHeading
+                    title={t('landing.traction.title')}
+                    subtitle={t('landing.traction.subtitle')}
+                    centered
+                />
+
+                {/* Stats grid */}
+                <View className="flex-row flex-wrap gap-4 mt-12 justify-center">
+                    <TractionStat
+                        value={t('landing.traction.stat1_value')}
+                        label={t('landing.traction.stat1_label')}
+                        color="teal"
+                    />
+                    <TractionStat
+                        value={t('landing.traction.stat2_value')}
+                        label={t('landing.traction.stat2_label')}
+                        color="mint"
+                    />
+                    <TractionStat
+                        value={t('landing.traction.stat3_value')}
+                        label={t('landing.traction.stat3_label')}
+                        color="coral"
+                    />
+                    <TractionStat
+                        value={t('landing.traction.stat4_value')}
+                        label={t('landing.traction.stat4_label')}
+                        color="teal"
+                    />
+                </View>
+
+                {/* Founder quote */}
+                <View className="mt-12 max-w-2xl mx-auto">
+                    <GlassCard gradient className="items-center p-8">
+                        <Text className="text-2xl text-center font-bold text-white mb-4">
+                            "{t('landing.traction.quote')}"
+                        </Text>
+                        <Text className="text-gray-400 text-sm">
+                            — {t('landing.traction.quote_author')}
+                        </Text>
+                    </GlassCard>
+                </View>
+            </View>
+        </View>
+    );
+}
+
+// ============================================
+// VANGUARD METRICS SECTION (NEW — differentiator)
+// ============================================
+function VanguardMetricsSection() {
+    const { t } = useTranslation();
+
+    return (
+        <View className="px-6 py-20"
+            style={{ backgroundColor: 'rgba(0,192,212,0.03)' }}>
+            <View className="max-w-6xl mx-auto">
+                <View className="items-center mb-4">
+                    <Badge>{t('landing.vanguard_section.badge')}</Badge>
+                </View>
+                <SectionHeading
+                    title={t('landing.vanguard_section.title')}
+                    subtitle={t('landing.vanguard_section.subtitle')}
+                    centered
+                />
+
+                <View className="flex-row flex-wrap gap-6 mt-12 justify-center">
+                    <VanguardMetricCard
+                        acronym="OFI"
+                        title={t('landing.vanguard_section.m1_title')}
+                        description={t('landing.vanguard_section.m1_desc')}
+                        badge={t('landing.vanguard_section.m1_badge')}
+                        color="teal"
+                    />
+                    <VanguardMetricCard
+                        acronym="TFDI"
+                        title={t('landing.vanguard_section.m2_title')}
+                        description={t('landing.vanguard_section.m2_desc')}
+                        badge={t('landing.vanguard_section.m2_badge')}
+                        color="mint"
+                    />
+                    <VanguardMetricCard
+                        acronym="SER"
+                        title={t('landing.vanguard_section.m3_title')}
+                        description={t('landing.vanguard_section.m3_desc')}
+                        badge={t('landing.vanguard_section.m3_badge')}
+                        color="coral"
+                    />
+                </View>
+            </View>
+        </View>
+    );
+}
+
+// ============================================
+// BUSINESS MODEL SECTION (NEW — investor-grade)
+// ============================================
+function BusinessModelSection() {
+    const { t } = useTranslation();
+
+    const tiers = [
+        {
+            name: t('landing.business_model.tier1_name'),
+            price: t('landing.business_model.tier1_price'),
+            description: t('landing.business_model.tier1_desc'),
+            features: [
+                t('landing.business_model.tier1_f1'),
+                t('landing.business_model.tier1_f2'),
+                t('landing.business_model.tier1_f3'),
+                t('landing.business_model.tier1_f4'),
+            ],
+            highlighted: false,
+        },
+        {
+            name: t('landing.business_model.tier2_name'),
+            price: t('landing.business_model.tier2_price'),
+            description: t('landing.business_model.tier2_desc'),
+            badge: t('landing.business_model.tier2_badge'),
+            features: [
+                t('landing.business_model.tier2_f1'),
+                t('landing.business_model.tier2_f2'),
+                t('landing.business_model.tier2_f3'),
+                t('landing.business_model.tier2_f4'),
+            ],
+            highlighted: true,
+        },
+        {
+            name: t('landing.business_model.tier3_name'),
+            price: t('landing.business_model.tier3_price'),
+            description: t('landing.business_model.tier3_desc'),
+            badge: t('landing.business_model.tier3_badge'),
+            features: [
+                t('landing.business_model.tier3_f1'),
+                t('landing.business_model.tier3_f2'),
+                t('landing.business_model.tier3_f3'),
+                t('landing.business_model.tier3_f4'),
+            ],
+            highlighted: false,
+        },
+    ];
+
+    return (
+        <View className="px-6 py-20 bg-gradient-to-b from-transparent to-slate-900/50">
+            <View className="max-w-6xl mx-auto">
+                <View className="items-center mb-4">
+                    <Badge variant="warning">{t('landing.business_model.badge')}</Badge>
+                </View>
+                <SectionHeading
+                    title={t('landing.business_model.title')}
+                    subtitle={t('landing.business_model.subtitle')}
+                    centered
+                />
+
+                <View className="flex-row flex-wrap gap-6 mt-16 justify-center">
+                    {tiers.map((tier, i) => (
+                        <PricingCard key={i} {...tier} />
+                    ))}
+                </View>
+            </View>
+        </View>
+    );
+}
+
+// ============================================
+// ROADMAP SECTION (NEW — investor-grade)
+// ============================================
+function RoadmapSection() {
+    const { t } = useTranslation();
+
+    const steps = [
+        {
+            quarter: t('landing.roadmap.q1_label'),
+            title: t('landing.roadmap.q1_title'),
+            description: t('landing.roadmap.q1_desc'),
+            status: 'completed' as const,
+        },
+        {
+            quarter: t('landing.roadmap.q2_label'),
+            title: t('landing.roadmap.q2_title'),
+            description: t('landing.roadmap.q2_desc'),
+            status: 'in_progress' as const,
+        },
+        {
+            quarter: t('landing.roadmap.q3_label'),
+            title: t('landing.roadmap.q3_title'),
+            description: t('landing.roadmap.q3_desc'),
+            status: 'planned' as const,
+        },
+        {
+            quarter: t('landing.roadmap.q4_label'),
+            title: t('landing.roadmap.q4_title'),
+            description: t('landing.roadmap.q4_desc'),
+            status: 'planned' as const,
+            isLast: true,
+        },
+    ];
+
+    return (
+        <View className="px-6 py-20">
+            <View className="max-w-6xl mx-auto">
+                <View className="items-center mb-4">
+                    <Badge>{t('landing.roadmap.badge')}</Badge>
+                </View>
+                <SectionHeading
+                    title={t('landing.roadmap.title')}
+                    subtitle={t('landing.roadmap.subtitle')}
+                    centered
+                />
+
+                <View className="max-w-2xl mx-auto mt-12">
+                    {steps.map((step, i) => (
+                        <RoadmapCard key={i} {...step} />
+                    ))}
+                </View>
+            </View>
+        </View>
+    );
+}
+
+// ============================================
 // TESTIMONIALS SECTION
 // ============================================
 function TestimonialsSection() {
     const { t } = useTranslation();
 
     return (
-        <View className="px-6 py-20">
+        <View className="px-6 py-20 bg-gradient-to-b from-slate-900/50 to-transparent">
             <View className="max-w-6xl mx-auto">
                 <SectionHeading
                     title={t('landing.testimonials.title')}
@@ -373,11 +708,12 @@ function Footer() {
     const { t } = useTranslation();
 
     return (
-        <View className="px-6 py-12 border-t border-white/10">
+        <View className="px-6 py-12"
+            style={{ borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.08)' }}>
             <View className="max-w-6xl mx-auto flex-row flex-wrap justify-between items-center gap-6">
                 <View>
                     <Text className="text-2xl font-bold text-white">
-                        Crux<Text className="text-[#14B8A6]">Analytics</Text>
+                        Crux<Text style={{ color: '#00C0D4' }}>Analytics</Text>
                     </Text>
                     <Text className="text-gray-500 text-sm mt-1">
                         {t('landing.footer.description')}
@@ -385,12 +721,16 @@ function Footer() {
                 </View>
 
                 <View className="flex-row gap-8">
-                    <Pressable onPress={() => Linking.openURL('https://github.com/Jon-ai-tech/CruxAnalytics')}>
+                    <Pressable
+                        onPress={() => Linking.openURL('https://github.com/Jon-human-in-the-loop/CruxAnalytics')}
+                    >
                         <Text className="text-gray-400 text-sm hover:text-white transition-colors">
                             {t('landing.footer.github')}
                         </Text>
                     </Pressable>
-                    <Pressable onPress={() => Linking.openURL('https://www.vanguardcrux.com/')}>
+                    <Pressable
+                        onPress={() => Linking.openURL('https://www.vanguardcrux.com/')}
+                    >
                         <Text className="text-gray-400 text-sm hover:text-white transition-colors">
                             {t('landing.footer.contact')}
                         </Text>
@@ -398,7 +738,7 @@ function Footer() {
                 </View>
 
                 <Text className="text-gray-600 text-sm">
-                    © 2026 CruxAnalytics. Open Source & Free Forever.
+                    {t('landing.footer.copyright')}
                 </Text>
             </View>
         </View>
@@ -414,18 +754,16 @@ export default function LandingPage() {
             className="flex-1 bg-slate-950"
             contentContainerStyle={{ flexGrow: 1 }}
         >
-            {/* Navigation */}
-            <View className="absolute top-0 left-0 right-0 z-50 flex-row justify-between items-center px-6 py-4">
-                <Text className="text-xl font-bold text-white">
-                    Crux<Text className="text-[#14B8A6]">Analytics</Text>
-                </Text>
-                <LanguageSelector />
-            </View>
+            <NavBar />
 
             <HeroSection />
             <ProblemSection />
             <SolutionSection />
             <FeaturesSection />
+            <TractionSection />
+            <VanguardMetricsSection />
+            <BusinessModelSection />
+            <RoadmapSection />
             <TestimonialsSection />
             <CTASection />
             <Footer />
