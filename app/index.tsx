@@ -48,7 +48,6 @@ function useIsSmall() {
 // NAVIGATION BAR
 // ============================================
 function NavBar() {
-    const router = useRouter();
     const { t } = useTranslation();
 
     return (
@@ -82,20 +81,7 @@ function NavBar() {
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 16 }}>
                     <LanguageSelector />
-                    <Pressable
-                        onPress={() => router.push('/(tabs)')}
-                        style={({ pressed }) => ({
-                            backgroundColor: '#FFFFFF',
-                            paddingHorizontal: 20,
-                            paddingVertical: 12,
-                            borderRadius: 100,
-                            opacity: pressed ? 0.8 : 1,
-                        })}
-                    >
-                        <Text style={{ color: BG, fontWeight: '800', fontSize: 14, fontFamily: 'Inter-Bold' }}>
-                            {t('landing.nav.enter_app')}
-                        </Text>
-                    </Pressable>
+                    {/* Botón eliminado a petición del usuario */}
                 </View>
             </View>
         </View>
@@ -222,12 +208,16 @@ function FeaturesSection() {
                 />
                 
                 <View style={{
-                    flexDirection: isSmall ? 'column' : 'row',
+                    flexDirection: 'row',
                     flexWrap: 'wrap',
-                    gap: 24,
+                    gap: isSmall ? 16 : 32,
+                    justifyContent: 'space-between',
                 }}>
                     {features.map((f, i) => (
-                        <View key={i} style={{ flex: isSmall ? 1 : 0.3 }}>
+                        <View key={i} style={{ 
+                            width: isSmall ? '100%' : 'calc(33.333% - 22px)',
+                            marginBottom: isSmall ? 0 : 8,
+                        }}>
                             <FeatureCard {...f} />
                         </View>
                     ))}
@@ -266,6 +256,85 @@ function VanguardSection() {
                         </GlassCard>
                     ))}
                 </View>
+            </View>
+        </View>
+    );
+}
+
+// ============================================
+// TESTIMONIALS SECTION
+// ============================================
+function TestimonialsSection() {
+    const { t } = useTranslation();
+    const isSmall = useIsSmall();
+
+    const testimonials = [
+        { quote: t('landing.testimonials.t1_quote'), author: t('landing.testimonials.t1_author'), role: t('landing.testimonials.t1_role') },
+        { quote: t('landing.testimonials.t2_quote'), author: t('landing.testimonials.t2_author'), role: t('landing.testimonials.t2_role') },
+        { quote: t('landing.testimonials.t3_quote'), author: t('landing.testimonials.t3_author'), role: t('landing.testimonials.t3_role') },
+    ];
+
+    return (
+        <View style={{ paddingHorizontal: 24, paddingVertical: 120 }}>
+            <View style={{ maxWidth: 1200, marginHorizontal: 'auto', width: '100%' }}>
+                <SectionHeading 
+                    title={t('landing.testimonials.title')}
+                    badge="Testimonials"
+                />
+                
+                <View style={{ flexDirection: isSmall ? 'column' : 'row', gap: 24 }}>
+                    {testimonials.map((test, i) => (
+                        <GlassCard key={i} style={{ flex: 1 }}>
+                            <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 16, lineHeight: 26, marginBottom: 24, fontStyle: 'italic', fontFamily: 'Inter-Regular' }}>
+                                "{test.quote}"
+                            </Text>
+                            <View>
+                                <Text style={{ color: '#FFFFFF', fontSize: 16, fontWeight: '700', fontFamily: 'Inter-Bold' }}>{test.author}</Text>
+                                <Text style={{ color: ACCENT, fontSize: 14, fontFamily: 'Inter-Medium' }}>{test.role}</Text>
+                            </View>
+                        </GlassCard>
+                    ))}
+                </View>
+            </View>
+        </View>
+    );
+}
+
+// ============================================
+// CTA SECTION
+// ============================================
+function CTASection() {
+    const router = useRouter();
+    const { t } = useTranslation();
+    const isSmall = useIsSmall();
+
+    return (
+        <View style={{ paddingHorizontal: 24, paddingVertical: 120, backgroundColor: 'rgba(0,192,212,0.05)' }}>
+            <View style={{ maxWidth: 800, marginHorizontal: 'auto', width: '100%', alignItems: 'center' }}>
+                <Text style={{
+                    fontSize: isSmall ? 32 : 56,
+                    fontWeight: '800',
+                    color: '#FFFFFF',
+                    textAlign: 'center',
+                    fontFamily: 'PlayfairDisplay-Bold',
+                    marginBottom: 24,
+                    letterSpacing: -1,
+                }}>
+                    {t('landing.cta.title')}
+                </Text>
+                <Text style={{
+                    fontSize: 18,
+                    color: 'rgba(255,255,255,0.6)',
+                    textAlign: 'center',
+                    lineHeight: 28,
+                    marginBottom: 48,
+                    fontFamily: 'Inter-Regular',
+                }}>
+                    {t('landing.cta.subtitle')}
+                </Text>
+                <GradientButton size="lg" onPress={() => router.push('/(tabs)')}>
+                    {t('landing.cta.button')}
+                </GradientButton>
             </View>
         </View>
     );
@@ -335,6 +404,8 @@ export default function LandingPage() {
             <HeroSection />
             <FeaturesSection />
             <VanguardSection />
+            <TestimonialsSection />
+            <CTASection />
             <Footer />
         </ScrollView>
     );

@@ -138,20 +138,21 @@ export function SectionHeading({ title, subtitle, badge }: { title: string, subt
 }
 
 export function FeatureCard({ icon, title, description }: { icon: string, title: string, description: string }) {
+    const isSmall = useIsSmall();
     return (
-        <GlassCard style={{ flex: 1, minWidth: 280, marginBottom: 24 }}>
+        <GlassCard style={{ height: '100%' }}>
             <View style={{
-                width: 48, height: 48, borderRadius: 12,
+                width: 56, height: 56, borderRadius: 16,
                 backgroundColor: 'rgba(0, 192, 212, 0.1)',
                 alignItems: 'center', justifyContent: 'center',
-                marginBottom: 24,
+                marginBottom: 28,
             }}>
-                <Ionicons name={icon as any} size={24} color={ACCENT} />
+                <Ionicons name={icon as any} size={28} color={ACCENT} />
             </View>
-            <Text style={{ color: '#FFFFFF', fontSize: 20, fontWeight: '700', marginBottom: 12, fontFamily: 'Inter-Bold' }}>
+            <Text style={{ color: '#FFFFFF', fontSize: isSmall ? 18 : 20, fontWeight: '700', marginBottom: 16, fontFamily: 'Inter-Bold', lineHeight: 28 }}>
                 {title}
             </Text>
-            <Text style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: 15, lineHeight: 24, fontFamily: 'Inter-Regular' }}>
+            <Text style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: isSmall ? 14 : 15, lineHeight: 26, fontFamily: 'Inter-Regular' }}>
                 {description}
             </Text>
         </GlassCard>
