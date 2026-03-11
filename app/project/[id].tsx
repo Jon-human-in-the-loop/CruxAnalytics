@@ -11,6 +11,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 
 import { ScreenContainer } from '@/components/screen-container';
+import { IconLabel } from '@/components/ui/icon-label';
 import { MetricCard } from '@/components/business/metric-card';
 import { CashFlowChart } from '@/components/business/cash-flow-chart';
 import { AIInsightCard } from '@/components/business/ai-insight-card';
@@ -322,7 +323,7 @@ export default function ProjectDetailsScreen() {
               className={`text-center font-semibold ${activeTab === 'overview' ? 'text-background' : 'text-foreground'
                 }`}
             >
-              📊 {t('sensitivity.overview')}
+              {t('sensitivity.overview')}
             </Text>
           </TouchableOpacity>
 
@@ -342,7 +343,7 @@ export default function ProjectDetailsScreen() {
               className={`text-center font-semibold ${activeTab === 'sensitivity' ? 'text-background' : 'text-foreground'
                 }`}
             >
-              🎯 {t('sensitivity.title')}
+              {t('sensitivity.title')}
             </Text>
           </TouchableOpacity>
 
@@ -362,7 +363,7 @@ export default function ProjectDetailsScreen() {
               className={`text-center font-semibold ${activeTab === 'advanced' ? 'text-background' : 'text-foreground'
                 }`}
             >
-              🚀 {t('results.advanced_title')}
+              {t('results.advanced_title')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -573,7 +574,7 @@ export default function ProjectDetailsScreen() {
                   className="flex-1 bg-surface border border-primary py-4 rounded-xl active:opacity-80"
                 >
                   <Text className="text-center text-primary font-semibold text-base">
-                    📋 {t('common.duplicate')}
+                    {t('common.duplicate')}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -617,7 +618,7 @@ export default function ProjectDetailsScreen() {
                   className="flex-1 bg-surface border border-primary py-4 rounded-xl active:opacity-80"
                 >
                   <Text className="text-center text-primary font-semibold text-base">
-                    📊 {t('snapshots.view_history')}
+                    {t('snapshots.view_history')}
                   </Text>
                 </TouchableOpacity>
 

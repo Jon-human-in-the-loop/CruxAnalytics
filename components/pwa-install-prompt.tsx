@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Platform } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Haptics from 'expo-haptics';
 
+import { IconLabel } from '@/components/ui/icon-label';
 import { usePWAInstall } from '@/hooks/use-pwa-install';
 import { useTranslation } from '@/lib/i18n-context';
 import { useColors } from '@/hooks/use-colors';
@@ -73,7 +74,7 @@ export function PWAInstallPrompt() {
       <View className="flex-row items-center justify-between gap-3">
         <View className="flex-1">
           <View className="flex-row items-center gap-2 mb-1">
-            <Text className="text-2xl">📱</Text>
+            <IconLabel icon="phone" size={22} />
             <Text className="text-base font-bold text-foreground">
               {t('pwa.install_title')}
             </Text>

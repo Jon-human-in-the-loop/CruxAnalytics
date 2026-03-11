@@ -4,6 +4,7 @@ import * as Haptics from 'expo-haptics';
 import { router } from 'expo-router';
 
 import { ScreenContainer } from '@/components/screen-container';
+import { IconLabel } from '@/components/ui/icon-label';
 import { SkeletonProjectCard } from '@/components/business/skeleton-project-card';
 import { useTranslation } from '@/lib/i18n-context';
 import { getAllProjects } from '@/lib/project-storage';
@@ -179,7 +180,7 @@ export default function DashboardScreen() {
           {t('dashboard.title')}
         </Text>
         <View className="flex-1 items-center justify-center">
-          <Text className="text-6xl mb-4">📊</Text>
+          <View className="mb-4"><IconLabel icon="chart" size={56} contained /></View>
           <Text className="text-lg font-semibold text-foreground mb-2 text-center">
             {t('dashboard.no_projects')}
           </Text>

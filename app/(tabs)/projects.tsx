@@ -164,7 +164,7 @@ export default function ProjectsScreen() {
                   className="mt-2 px-6 py-3 bg-primary/10 border border-primary/30 rounded-xl active:opacity-70"
                 >
                   <Text className="text-primary font-semibold text-base text-center">
-                    {loadingDemo ? t('demo.loading') : `✨ ${t('demo.load_demo')}`}
+                    {loadingDemo ? t('demo.loading') : t('demo.load_demo')}
                   </Text>
                   <Text className="text-xs text-muted text-center mt-0.5">
                     {t('demo.load_demo_desc')}

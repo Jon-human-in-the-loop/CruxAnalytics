@@ -13,6 +13,7 @@ import {
     SectionHeading,
     Badge,
 } from '@/components/landing/shared-components';
+import { IconLabel } from '@/components/ui/icon-label';
 import { router } from 'expo-router';
 import { BreakEvenCalculator } from '@/lib/infrastructure/calculators/BreakEvenCalculator';
 import { useTranslation } from '@/lib/i18n-context';
@@ -92,7 +93,7 @@ function ResultCard({
         <GlassCard className={large ? 'w-full' : (isSmall ? '' : 'flex-1 min-w-[140px]')}>
             <View className="flex-row items-center gap-3 mb-2">
                 <View className={`w-10 h-10 rounded-lg ${bgColorMap[color]} items-center justify-center`}>
-                    <Text className="text-xl">{icon}</Text>
+                    <IconLabel icon={icon} size={22} color="white" />
                 </View>
                 <Text className="text-gray-400 text-sm flex-1">{label}</Text>
             </View>
@@ -160,15 +161,15 @@ function BreakEvenChart({
             {/* Labels */}
             <View className="flex-row justify-between mt-2">
                 <View>
-                    <Text className="text-rose-400 text-xs">🔴 {t('calculators.break_even.loss')}</Text>
+                    <View className="flex-row items-center gap-1"><IconLabel icon="dot-red" size={10} /><Text className="text-rose-400 text-xs">{t('calculators.break_even.loss')}</Text></View>
                     <Text className="text-gray-500 text-xs">0 - {breakEvenUnits.toLocaleString()} {t('calculators.units')}</Text>
                 </View>
                 <View className="items-center">
-                    <Text className="text-white text-xs font-bold">⚡ {t('calculators.break_even.break_even')}</Text>
+                    <View className="flex-row items-center gap-1"><IconLabel icon="flash" size={14} color="#FDBA74" /><Text className="text-white text-xs font-bold">{t('calculators.break_even.break_even')}</Text></View>
                     <Text className="text-gray-500 text-xs">{breakEvenUnits.toLocaleString()} {t('calculators.units')}</Text>
                 </View>
                 <View className="items-end">
-                    <Text className="text-emerald-400 text-xs">🟢 {t('calculators.break_even.profit')}</Text>
+                    <View className="flex-row items-center gap-1"><IconLabel icon="dot-green" size={10} /><Text className="text-emerald-400 text-xs">{t('calculators.break_even.profit')}</Text></View>
                     <Text className="text-gray-500 text-xs">{breakEvenUnits.toLocaleString()}+ {t('calculators.units')}</Text>
                 </View>
             </View>
@@ -384,7 +385,7 @@ export default function BreakEvenPage() {
                                     <ResultCard
                                         label={t('calculators.break_even.break_even_units')}
                                         value={result.breakEvenUnits.toLocaleString()}
-                                        icon="🎯"
+                                        icon="target"
                                         color="indigo"
                                         large
                                     />
@@ -393,14 +394,14 @@ export default function BreakEvenPage() {
                                         <ResultCard
                                             label={t('calculators.break_even.break_even_revenue')}
                                             value={`$${result.breakEvenRevenue.toLocaleString()}`}
-                                            icon="💰"
+                                            icon="money"
                                             color="emerald"
                                         />
 
                                         <ResultCard
                                             label={t('calculators.break_even.contribution_margin')}
                                             value={result.contributionMarginPerUnit != null ? `$${result.contributionMarginPerUnit.toFixed(2)}` : '$0.00'}
-                                            icon="📊"
+                                            icon="chart"
                                             color="amber"
                                         />
                                     </View>
@@ -410,7 +411,7 @@ export default function BreakEvenPage() {
                                 {result.marginOfSafety !== undefined && (
                                     <GlassCard className={`border-2 ${result.isAboveBreakEven ? 'border-[#86EFAC]/50' : 'border-[#FB923C]/50'}`}>
                                         <View className="flex-row items-center gap-3">
-                                            <Text className={isSmall ? 'text-2xl' : 'text-3xl'}>{result.isAboveBreakEven ? '✅' : '⚠️'}</Text>
+                                            <IconLabel icon={result.isAboveBreakEven ? 'success' : 'warning'} size={isSmall ? 28 : 34} />
                                             <View>
                                                 <Text className="text-white font-bold text-lg">
                                                     {result.isAboveBreakEven ? t('calculators.break_even.above_break_even') : t('calculators.break_even.below_break_even')}

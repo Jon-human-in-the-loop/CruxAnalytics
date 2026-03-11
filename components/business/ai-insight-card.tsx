@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, ActivityIndicator, TouchableOpacity } from 'react-native';
+import { IconLabel } from '@/components/ui/icon-label';
 import { useColors } from '@/hooks/use-colors';
 import { useTranslation } from '@/lib/i18n-context';
 import * as Haptics from 'expo-haptics';
@@ -33,7 +34,7 @@ export function AIInsightCard({
       <View className="flex-row items-center justify-between mb-4">
         <View className="flex-row items-center gap-3">
           <View className="w-10 h-10 rounded-full bg-primary/20 items-center justify-center">
-            <Text className="text-2xl">🤖</Text>
+            <IconLabel icon="ai" size={22} />
           </View>
           <View>
             <Text className="text-lg font-bold text-foreground">

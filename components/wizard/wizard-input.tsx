@@ -99,7 +99,7 @@ export function WizardInput({
       {helpText && (
         <View className="bg-accent-mint/10 rounded-lg p-3">
           <Text className="text-xs text-foreground leading-relaxed font-body">
-            💡 {helpText}
+            {helpText}
           </Text>
         </View>
       )}

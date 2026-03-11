@@ -11,6 +11,7 @@ import { router, useLocalSearchParams } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 
 import { ScreenContainer } from '@/components/screen-container';
+import { IconLabel } from '@/components/ui/icon-label';
 import { MetricCard } from '@/components/business/metric-card';
 import { useTranslation } from '@/lib/i18n-context';
 import {
@@ -232,7 +233,7 @@ export default function SnapshotsHistoryScreen() {
         {/* Scenarios List */}
         {scenarios.length === 0 ? (
           <View className="flex-1 justify-center items-center py-12">
-            <Text className="text-6xl mb-4">📊</Text>
+            <View className="mb-4"><IconLabel icon="chart" size={56} contained /></View>
             <Text className="text-xl font-bold text-foreground mb-2">
               {t('snapshots.no_snapshots')}
             </Text>

@@ -136,7 +136,7 @@ export function ShareModal({ visible, project, onClose }: ShareModalProps) {
               className="bg-surface border border-border rounded-xl py-4 items-center active:opacity-70"
             >
               <Text className="text-foreground font-semibold text-base">
-                📋 {t('share.copy_link')}
+                {t('share.copy_link')}
               </Text>
             </TouchableOpacity>
 

@@ -12,6 +12,7 @@ import {
     SectionHeading,
     Badge,
 } from '@/components/landing/shared-components';
+import { IconLabel } from '@/components/ui/icon-label';
 import { router } from 'expo-router';
 import { MarketingROICalculator } from '@/lib/infrastructure/calculators/MarketingROICalculator';
 import { useTranslation } from '@/lib/i18n-context';
@@ -45,12 +46,12 @@ function InputField({
 
 function ChannelSelector({ selected, onSelect, t }: { selected: string; onSelect: (channel: string) => void, t: any }) {
     const channels = [
-        { id: 'facebook', label: t('calculators.marketing_roi.channels.facebook'), icon: '📘', color: 'bg-blue-500/20 border-blue-500' },
-        { id: 'google', label: t('calculators.marketing_roi.channels.google'), icon: '🔍', color: 'bg-green-500/20 border-green-500' },
-        { id: 'instagram', label: t('calculators.marketing_roi.channels.instagram'), icon: '📸', color: 'bg-pink-500/20 border-pink-500' },
-        { id: 'email', label: t('calculators.marketing_roi.channels.email'), icon: '✉️', color: 'bg-[#FB923C]/20 border-[#FB923C]' },
-        { id: 'referral', label: t('calculators.marketing_roi.channels.referral'), icon: '🤝', color: 'bg-[#86EFAC]/20 border-[#86EFAC]' },
-        { id: 'other', label: t('calculators.marketing_roi.channels.other'), icon: '📊', color: 'bg-gray-500/20 border-gray-500' },
+        { id: 'facebook', label: t('calculators.marketing_roi.channels.facebook'), icon: 'globe', color: 'bg-blue-500/20 border-blue-500' },
+        { id: 'google', label: t('calculators.marketing_roi.channels.google'), icon: 'globe', color: 'bg-green-500/20 border-green-500' },
+        { id: 'instagram', label: t('calculators.marketing_roi.channels.instagram'), icon: 'phone', color: 'bg-pink-500/20 border-pink-500' },
+        { id: 'email', label: t('calculators.marketing_roi.channels.email'), icon: 'clipboard', color: 'bg-[#FB923C]/20 border-[#FB923C]' },
+        { id: 'referral', label: t('calculators.marketing_roi.channels.referral'), icon: 'people', color: 'bg-[#86EFAC]/20 border-[#86EFAC]' },
+        { id: 'other', label: t('calculators.marketing_roi.channels.other'), icon: 'chart', color: 'bg-gray-500/20 border-gray-500' },
     ];
 
     return (
@@ -82,7 +83,7 @@ function FunnelVisual({ impressions, clicks, conversions, t }: { impressions?: n
 
     return (
         <GlassCard>
-            <Text className="text-white font-semibold mb-4">📊 {t('calculators.marketing_roi.funnel_title')}</Text>
+            <View className="flex-row items-center gap-2 mb-4"><IconLabel icon="chart" size={18} /><Text className="text-white font-semibold">{t('calculators.marketing_roi.funnel_title')}</Text></View>
 
             <View className="gap-3">
                 {impressions && (
@@ -311,7 +312,7 @@ export default function MarketingPage() {
                                 {/* Profit/Loss */}
                                 <GlassCard className={`border-2 ${result.isProfitable ? 'border-[#86EFAC]/50' : 'border-[#FB923C]/50'}`}>
                                     <View className="flex-row items-center gap-3">
-                                        <Text className="text-4xl">{result.isProfitable ? '💰' : '📉'}</Text>
+                                        <IconLabel icon={result.isProfitable ? 'money' : 'chart-down'} size={36} />
                                         <View>
                                             <Text className="text-white font-bold text-lg">
                                                 {result.isProfitable
@@ -374,7 +375,7 @@ export default function MarketingPage() {
                                 {/* LTV/CAC */}
                                 {result.lifetimeValueToCAC && (
                                     <GlassCard>
-                                        <Text className="text-white font-semibold mb-2">📈 LTV/CAC Ratio</Text>
+                                        <View className="flex-row items-center gap-2 mb-2"><IconLabel icon="chart-up" size={18} /><Text className="text-white font-semibold">LTV/CAC Ratio</Text></View>
                                         <View className="flex-row items-center gap-4">
                                             <Text className={`text-3xl font-bold ${result.lifetimeValueToCAC >= 3 ? 'text-emerald-400' : result.lifetimeValueToCAC >= 1 ? 'text-amber-400' : 'text-rose-400'}`}>
                                                 {result.lifetimeValueToCAC != null ? result.lifetimeValueToCAC.toFixed(1) : '0.0'}x
@@ -394,7 +395,7 @@ export default function MarketingPage() {
                                 {/* Recommendations */}
                                 {recommendations.length > 0 && (
                                     <GlassCard>
-                                        <Text className="text-white font-semibold mb-4">💡 {t('calculators.recommendations')}</Text>
+                                        <View className="flex-row items-center gap-2 mb-4"><IconLabel icon="bulb" size={18} /><Text className="text-white font-semibold">{t('calculators.recommendations')}</Text></View>
                                         <View className="gap-2">
                                             {recommendations.map((rec, i) => (
                                                 <Text key={i} className="text-gray-300">• {rec}</Text>

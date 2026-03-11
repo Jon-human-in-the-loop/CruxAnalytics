@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Alert, Platform } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, router } from 'expo-router';
 import * as Haptics from 'expo-haptics';
 
@@ -102,7 +103,7 @@ export default function SharedProjectScreen() {
   if (!project) {
     return (
       <ScreenContainer className="justify-center items-center p-6">
-        <Text className="text-2xl mb-2">❌</Text>
+        <View className="mb-2"><Ionicons name="close-circle" size={28} color="#EF4444" /></View>
         <Text className="text-lg font-bold text-foreground mb-2">
           {t('share.not_found_title')}
         </Text>
@@ -121,7 +122,7 @@ export default function SharedProjectScreen() {
         {/* Read-Only Banner */}
         <View className="bg-primary/10 border-l-4 border-primary px-4 py-3 mb-4">
           <Text className="text-sm font-semibold text-primary">
-            🔒 {t('share.read_only_banner')}
+            {t('share.read_only_banner')}
           </Text>
           <Text className="text-xs text-muted mt-1">
             {t('share.read_only_description')}

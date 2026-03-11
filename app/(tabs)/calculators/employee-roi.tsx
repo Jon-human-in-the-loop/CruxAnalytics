@@ -12,6 +12,7 @@ import {
     SectionHeading,
     Badge,
 } from '@/components/landing/shared-components';
+import { IconLabel } from '@/components/ui/icon-label';
 import { router } from 'expo-router';
 import { EmployeeROICalculator } from '@/lib/infrastructure/calculators/EmployeeROICalculator';
 import { useTranslation } from '@/lib/i18n-context';
@@ -45,10 +46,10 @@ function InputField({
 
 function RoleSelector({ selected, onSelect, t }: { selected: string; onSelect: (role: string) => void, t: any }) {
     const roles = [
-        { id: 'sales', label: t('calculators.employee_roi.roles.sales'), icon: '💼' },
-        { id: 'operations', label: t('calculators.employee_roi.roles.operations'), icon: '⚙️' },
-        { id: 'technical', label: t('calculators.employee_roi.roles.technical'), icon: '💻' },
-        { id: 'administrative', label: t('calculators.employee_roi.roles.administrative'), icon: '📋' },
+        { id: 'sales', label: t('calculators.employee_roi.roles.sales'), icon: 'briefcase' },
+        { id: 'operations', label: t('calculators.employee_roi.roles.operations'), icon: 'settings' },
+        { id: 'technical', label: t('calculators.employee_roi.roles.technical'), icon: 'ai' },
+        { id: 'administrative', label: t('calculators.employee_roi.roles.administrative'), icon: 'clipboard' },
     ];
 
     return (
@@ -64,7 +65,7 @@ function RoleSelector({ selected, onSelect, t }: { selected: string; onSelect: (
                             : 'bg-slate-800 border-white/10'
                             }`}
                     >
-                        <Text className="text-white">{role.icon} {role.label}</Text>
+                        <View className="flex-row items-center gap-2"><IconLabel icon={role.icon} size={16} color="white" /><Text className="text-white">{role.label}</Text></View>
                     </Pressable>
                 ))}
             </View>
@@ -212,7 +213,7 @@ export default function EmployeeROIPage() {
                 {/* Header Title Section */}
                 <View className="mb-6">
                     <SectionHeading
-                        title={`👥 ${t('calculators.employee_roi.title')}`}
+                        title={t('calculators.employee_roi.title')}
                         subtitle={t('calculators.employee_roi.subtitle')}
                     />
                 </View>
@@ -308,7 +309,7 @@ export default function EmployeeROIPage() {
 
                                 {/* Productivity */}
                                 <GlassCard>
-                                    <Text className="text-white font-semibold mb-4">📊 {t('calculators.employee_roi.productivity_title')}</Text>
+                                    <View className="flex-row items-center gap-2 mb-4"><IconLabel icon="chart" size={18} /><Text className="text-white font-semibold">{t('calculators.employee_roi.productivity_title')}</Text></View>
                                     <View className="flex-row justify-between">
                                         <View className="items-center flex-1">
                                             <Text className="text-gray-400 text-xs">{t('calculators.employee_roi.cost_per_hour')}</Text>
@@ -338,7 +339,7 @@ export default function EmployeeROIPage() {
                                 {result.paybackMonths && (
                                     <GlassCard>
                                         <View className="flex-row items-center gap-3">
-                                            <Text className="text-3xl">⏱️</Text>
+                                            <IconLabel icon="flash" size={28} color="#00C0D4" />
                                             <View>
                                                 <Text className="text-white font-bold">{t('calculators.employee_roi.payback')}</Text>
                                                 <Text className="text-indigo-400">
@@ -352,7 +353,7 @@ export default function EmployeeROIPage() {
                                 {/* Recommendations */}
                                 {recommendations.length > 0 && (
                                     <GlassCard>
-                                        <Text className="text-white font-semibold mb-4">💡 {t('calculators.recommendations')}</Text>
+                                        <View className="flex-row items-center gap-2 mb-4"><IconLabel icon="bulb" size={18} /><Text className="text-white font-semibold">{t('calculators.recommendations')}</Text></View>
                                         <View className="gap-2">
                                             {recommendations.map((rec, i) => (
                                                 <Text key={i} className="text-gray-300">• {rec}</Text>

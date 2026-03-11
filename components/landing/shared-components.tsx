@@ -1,6 +1,7 @@
 /**
  * @fileoverview Shared UI components for the landing page and app.
  * Premium, glassmorphism-styled components with animations.
+ * Updated: investor-grade components added (TractionStat, RoadmapCard, PricingCard)
  */
 
 import React from 'react';
@@ -36,7 +37,7 @@ export function GlassCard({
             {gradient && (
                 <View className="absolute inset-0 rounded-2xl overflow-hidden opacity-20">
                     <LinearGradient
-                        colors={['#14B8A6', '#86EFAC', '#FB923C']}
+                        colors={['#00C0D4', '#A7F3D0', '#FDBA74']}
                         start={{ x: 0, y: 0 }}
                         end={{ x: 1, y: 1 }}
                         style={{ flex: 1 }}
@@ -79,7 +80,7 @@ export function GradientButton({
       `}
         >
             <LinearGradient
-                colors={['#14B8A6', '#86EFAC']}
+                colors={['#00C0D4', '#A7F3D0']}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 className={`${sizeClasses[size]} items-center justify-center`}
@@ -137,9 +138,9 @@ export function MetricCard({
     color?: 'indigo' | 'emerald' | 'amber' | 'rose';
 }) {
     const colorClasses = {
-        indigo: 'from-[#14B8A6] to-[#86EFAC]',
-        emerald: 'from-[#86EFAC] to-teal-500',
-        amber: 'from-[#FB923C] to-orange-500',
+        indigo: 'from-[#00C0D4] to-[#A7F3D0]',
+        emerald: 'from-[#A7F3D0] to-teal-500',
+        amber: 'from-[#FDBA74] to-orange-500',
         rose: 'from-rose-500 to-pink-500',
     };
 
@@ -214,9 +215,9 @@ export function Badge({
     className?: string;
 }) {
     const variantClasses = {
-        default: 'bg-[#14B8A6]/20 text-[#14B8A6] border-[#14B8A6]/30',
-        success: 'bg-[#86EFAC]/20 text-[#86EFAC] border-[#86EFAC]/30',
-        warning: 'bg-[#FB923C]/20 text-[#FB923C] border-[#FB923C]/30',
+        default: 'bg-[#00C0D4]/20 text-[#00C0D4] border-[#00C0D4]/30',
+        success: 'bg-[#A7F3D0]/20 text-[#A7F3D0] border-[#A7F3D0]/30',
+        warning: 'bg-[#FDBA74]/20 text-[#FDBA74] border-[#FDBA74]/30',
         danger: 'bg-rose-500/20 text-rose-300 border-rose-500/30',
     };
 
@@ -247,9 +248,9 @@ export function FeatureCard({
     return (
         <GlassCard
             gradient={highlight}
-            className={`flex-1 min-w-[280px] ${highlight ? 'border-indigo-500/50' : ''}`}
+            className={`flex-1 min-w-[280px] ${highlight ? 'border-[#00C0D4]/50' : ''}`}
         >
-            <View className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#14B8A6] to-[#86EFAC] items-center justify-center mb-4">
+            <View className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#00C0D4] to-[#A7F3D0] items-center justify-center mb-4">
                 {icon}
             </View>
             <Text className="text-white text-xl font-bold mb-2">{title}</Text>
@@ -281,7 +282,7 @@ export function StatNumber({
 }
 
 /**
- * Testimonial card
+ * Testimonial card — with avatar initials
  */
 export function TestimonialCard({
     quote,
@@ -294,15 +295,228 @@ export function TestimonialCard({
     role: string;
     avatar?: string;
 }) {
+    // Generate initials from author name
+    const initials = author
+        .split(' ')
+        .map(n => n[0])
+        .slice(0, 2)
+        .join('')
+        .toUpperCase();
+
     return (
         <GlassCard className="max-w-md">
-            <Text className="text-gray-300 text-lg italic mb-4">"{quote}"</Text>
+            {/* Stars */}
+            <View className="flex-row gap-1 mb-3">
+                {[1, 2, 3, 4, 5].map(i => (
+                    <Text key={i} style={{ color: '#FDBA74', fontSize: 14 }}>★</Text>
+                ))}
+            </View>
+            <Text className="text-gray-300 text-base leading-relaxed mb-4">"{quote}"</Text>
             <View className="flex-row items-center gap-3">
-                <View className="w-10 h-10 rounded-full bg-gradient-to-br from-[#14B8A6] to-[#86EFAC]" />
+                <View
+                    className="w-10 h-10 rounded-full items-center justify-center"
+                    style={{ background: 'linear-gradient(135deg, #00C0D4, #A7F3D0)' }}
+                >
+                    <LinearGradient
+                        colors={['#00C0D4', '#A7F3D0']}
+                        style={{ width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <Text style={{ color: '#0A0A0A', fontWeight: '700', fontSize: 14 }}>{initials}</Text>
+                    </LinearGradient>
+                </View>
                 <View>
                     <Text className="text-white font-semibold">{author}</Text>
                     <Text className="text-gray-500 text-sm">{role}</Text>
                 </View>
+            </View>
+        </GlassCard>
+    );
+}
+
+/**
+ * Traction stat card — for investor section
+ */
+export function TractionStat({
+    value,
+    label,
+    color = 'teal',
+}: {
+    value: string;
+    label: string;
+    color?: 'teal' | 'mint' | 'coral';
+}) {
+    const colorMap = {
+        teal: '#00C0D4',
+        mint: '#A7F3D0',
+        coral: '#FDBA74',
+    };
+
+    return (
+        <GlassCard className="flex-1 min-w-[140px] items-center p-6">
+            <Text
+                className="text-3xl md:text-4xl font-bold text-center"
+                style={{ color: colorMap[color] }}
+            >
+                {value}
+            </Text>
+            <Text className="text-gray-400 text-sm text-center mt-2">{label}</Text>
+        </GlassCard>
+    );
+}
+
+/**
+ * Roadmap step card
+ */
+export function RoadmapCard({
+    quarter,
+    title,
+    description,
+    status,
+    isLast = false,
+}: {
+    quarter: string;
+    title: string;
+    description: string;
+    status: 'completed' | 'in_progress' | 'planned';
+    isLast?: boolean;
+}) {
+    const statusConfig = {
+        completed: { color: '#A7F3D0', label: '✓', bg: 'bg-[#A7F3D0]/20 border-[#A7F3D0]/40' },
+        in_progress: { color: '#00C0D4', label: '→', bg: 'bg-[#00C0D4]/20 border-[#00C0D4]/40' },
+        planned: { color: '#6b7280', label: '○', bg: 'bg-white/5 border-white/10' },
+    };
+
+    const config = statusConfig[status];
+
+    return (
+        <View className="flex-row gap-4 mb-6">
+            {/* Timeline */}
+            <View className="items-center" style={{ width: 40 }}>
+                <View
+                    className={`w-10 h-10 rounded-full border-2 items-center justify-center ${config.bg}`}
+                >
+                    <Text style={{ color: config.color, fontWeight: '700', fontSize: 16 }}>
+                        {config.label}
+                    </Text>
+                </View>
+                {!isLast && (
+                    <View
+                        className="flex-1 w-0.5 mt-2"
+                        style={{ backgroundColor: status === 'completed' ? '#A7F3D0' : '#374151', minHeight: 32 }}
+                    />
+                )}
+            </View>
+
+            {/* Content */}
+            <View className="flex-1 pb-4">
+                <Text className="text-xs font-mono uppercase tracking-wider mb-1"
+                    style={{ color: config.color }}>
+                    {quarter}
+                </Text>
+                <Text className="text-white font-bold text-lg mb-1">{title}</Text>
+                <Text className="text-gray-400 text-sm leading-relaxed">{description}</Text>
+            </View>
+        </View>
+    );
+}
+
+/**
+ * Pricing tier card for business model section
+ */
+export function PricingCard({
+    name,
+    price,
+    description,
+    features,
+    badge,
+    highlighted = false,
+}: {
+    name: string;
+    price: string;
+    description: string;
+    features: string[];
+    badge?: string;
+    highlighted?: boolean;
+}) {
+    return (
+        <GlassCard
+            gradient={highlighted}
+            className={`flex-1 min-w-[240px] max-w-[320px] relative ${highlighted ? 'border-[#00C0D4]/60' : ''}`}
+        >
+            {badge && (
+                <View
+                    className="absolute -top-3 left-1/2 px-3 py-1 rounded-full"
+                    style={{
+                        transform: [{ translateX: -40 }],
+                        backgroundColor: highlighted ? '#00C0D4' : '#374151',
+                    }}
+                >
+                    <Text style={{ color: highlighted ? '#0A0A0A' : '#9ca3af', fontSize: 11, fontWeight: '700' }}>
+                        {badge}
+                    </Text>
+                </View>
+            )}
+
+            <Text className="text-gray-400 text-sm mb-1">{name}</Text>
+            <Text className="text-white text-3xl font-bold mb-1">{price}</Text>
+            <Text className="text-gray-500 text-sm mb-5">{description}</Text>
+
+            <View className="gap-2">
+                {features.map((feature, i) => (
+                    <View key={i} className="flex-row items-center gap-2">
+                        <Text style={{ color: '#A7F3D0', fontSize: 14 }}>✓</Text>
+                        <Text className="text-gray-300 text-sm">{feature}</Text>
+                    </View>
+                ))}
+            </View>
+        </GlassCard>
+    );
+}
+
+/**
+ * Vanguard metric showcase card
+ */
+export function VanguardMetricCard({
+    acronym,
+    title,
+    description,
+    badge,
+    color = 'teal',
+}: {
+    acronym: string;
+    title: string;
+    description: string;
+    badge: string;
+    color?: 'teal' | 'mint' | 'coral';
+}) {
+    const colorMap = {
+        teal: { primary: '#00C0D4', bg: 'bg-[#00C0D4]/10', border: 'border-[#00C0D4]/30' },
+        mint: { primary: '#A7F3D0', bg: 'bg-[#A7F3D0]/10', border: 'border-[#A7F3D0]/30' },
+        coral: { primary: '#FDBA74', bg: 'bg-[#FDBA74]/10', border: 'border-[#FDBA74]/30' },
+    };
+
+    const c = colorMap[color];
+
+    return (
+        <GlassCard className={`flex-1 min-w-[260px] border ${c.border}`}>
+            {/* Acronym badge */}
+            <View className={`w-14 h-14 rounded-2xl ${c.bg} items-center justify-center mb-4`}>
+                <Text style={{ color: c.primary, fontSize: 20, fontWeight: '900', fontFamily: 'monospace' }}>
+                    {acronym}
+                </Text>
+            </View>
+
+            <View className="flex-row items-center gap-2 mb-2">
+                <Text className="text-white font-bold text-lg">{title}</Text>
+            </View>
+
+            <Text className="text-gray-400 text-sm leading-relaxed mb-4">{description}</Text>
+
+            <View
+                className="px-2 py-1 rounded-md self-start"
+                style={{ backgroundColor: `${c.primary}20`, borderWidth: 1, borderColor: `${c.primary}40` }}
+            >
+                <Text style={{ color: c.primary, fontSize: 11, fontWeight: '700' }}>{badge}</Text>
             </View>
         </GlassCard>
     );

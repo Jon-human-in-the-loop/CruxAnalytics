@@ -687,7 +687,7 @@ export default function NewProjectScreen() {
           {saveError && (
             <View style={{ backgroundColor: '#fee2e2', borderRadius: 8, margin: 16, padding: 12 }}>
               <Text style={{ color: '#b91c1c', fontWeight: '600', fontSize: 14 }}>
-                ⚠️ {saveError}
+                {saveError}
               </Text>
             </View>
           )}

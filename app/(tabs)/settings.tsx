@@ -14,6 +14,7 @@ import * as Haptics from 'expo-haptics';
 import Constants from 'expo-constants';
 
 import { ScreenContainer } from '@/components/screen-container';
+import { IconLabel } from '@/components/ui/icon-label';
 import { OnboardingTutorial } from '@/components/onboarding-tutorial';
 import { useTranslation } from '@/lib/i18n-context';
 import { exportAllProjects, importProjects, getAllProjects } from '@/lib/project-storage';
@@ -626,7 +627,7 @@ export default function SettingsScreen() {
             {/* App Icon and Name */}
             <View className="items-center mb-6">
               <View className="w-20 h-20 rounded-2xl bg-primary/20 items-center justify-center mb-3">
-                <Text className="text-4xl">📊</Text>
+                <IconLabel icon="chart" size={36} />
               </View>
               <Text className="text-xl font-bold text-foreground mb-1">
                 {appName}

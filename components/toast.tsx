@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { View, Text, Animated, Platform } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useColors } from '@/hooks/use-colors';
 import * as Haptics from 'expo-haptics';
@@ -82,26 +83,26 @@ export function Toast({ visible, message, type = 'success', duration = 3000, onH
     return null;
   }
 
-  const config = {
+  const config: Record<ToastType, { icon: keyof typeof Ionicons.glyphMap; bgColor: string }> = {
     success: {
-      emoji: '✅',
+      icon: 'checkmark-circle',
       bgColor: colors.success,
     },
     error: {
-      emoji: '❌',
+      icon: 'close-circle',
       bgColor: colors.error,
     },
     info: {
-      emoji: 'ℹ️',
+      icon: 'information-circle',
       bgColor: colors.primary,
     },
     warning: {
-      emoji: '⚠️',
+      icon: 'warning',
       bgColor: colors.warning,
     },
   };
 
-  const { emoji, bgColor } = config[type];
+  const { icon, bgColor } = config[type];
 
   return (
     <Animated.View
@@ -129,7 +130,9 @@ export function Toast({ visible, message, type = 'success', duration = 3000, onH
           elevation: 8,
         }}
       >
-        <Text style={{ fontSize: 20, marginRight: 12 }}>{emoji}</Text>
+        <View style={{ marginRight: 12 }}>
+          <Ionicons name={icon} size={22} color="#FFFFFF" />
+        </View>
         <Text
           style={{
             flex: 1,

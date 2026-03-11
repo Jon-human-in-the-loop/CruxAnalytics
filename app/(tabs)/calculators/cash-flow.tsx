@@ -12,6 +12,7 @@ import {
     SectionHeading,
     Badge,
 } from '@/components/landing/shared-components';
+import { IconLabel } from '@/components/ui/icon-label';
 import { router } from 'expo-router';
 import { CashFlowForecastCalculator } from '@/lib/infrastructure/calculators/CashFlowForecastCalculator';
 import { useTranslation } from '@/lib/i18n-context';
@@ -101,7 +102,7 @@ function AlertsPanel({ alerts }: { alerts?: string[] }) {
         return (
             <GlassCard className="border border-[#86EFAC]/30">
                 <View className="flex-row items-center gap-3">
-                    <Text className="text-2xl">✅</Text>
+                    <IconLabel icon="success" size={24} />
                     <View>
                         <Text className="text-emerald-400 font-bold">{t('calculators.cash_flow.no_critical_alerts')}</Text>
                         <Text className="text-gray-400 text-sm">{t('calculators.cash_flow.cash_flow_healthy_desc')}</Text>
@@ -313,7 +314,7 @@ export default function CashFlowPage() {
                                 {/* Health Status */}
                                 <GlassCard className={`border-2 ${isSmall ? 'p-3' : ''} ${result.isHealthy ? 'border-[#86EFAC]/50' : 'border-[#FB923C]/50'}`}>
                                     <View className="flex-row items-center gap-3">
-                                        <Text className={isSmall ? 'text-2xl' : 'text-3xl'}>{result.isHealthy ? '🟢' : '🔴'}</Text>
+                                        <IconLabel icon={result.isHealthy ? 'dot-green' : 'dot-red'} size={isSmall ? 24 : 30} />
                                         <View className="flex-1">
                                             <Text className={`text-white font-bold ${isSmall ? 'text-base' : 'text-lg'}`}>
                                                 {result.isHealthy ? t('calculators.cash_flow.healthy_cash_flow') : t('calculators.cash_flow.cash_flow_at_risk')}

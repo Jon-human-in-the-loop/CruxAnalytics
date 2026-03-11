@@ -12,6 +12,7 @@ import {
     SectionHeading,
     Badge,
 } from '@/components/landing/shared-components';
+import { IconLabel } from '@/components/ui/icon-label';
 import { router } from 'expo-router';
 import { LoanCalculator } from '@/lib/infrastructure/calculators/LoanCalculator';
 import { useTranslation } from '@/lib/i18n-context';
@@ -49,7 +50,7 @@ function AmortizationPreview({ schedule, t }: { schedule: Array<{ month: number;
 
     return (
         <GlassCard>
-            <Text className="text-white font-semibold mb-4">📋 {t('calculators.loan.amortization_title')}</Text>
+            <View className="flex-row items-center gap-2 mb-4"><IconLabel icon="clipboard" size={18} /><Text className="text-white font-semibold">{t('calculators.loan.amortization_title')}</Text></View>
 
             <View className="bg-slate-800 rounded-lg overflow-hidden">
                 {/* Header */}
@@ -287,9 +288,7 @@ export default function LoanPage() {
                                 {result.affordability.isAffordable !== null && (
                                     <GlassCard className={`border-2 ${result.affordability.isAffordable ? 'border-[#86EFAC]/50' : 'border-[#FB923C]/50'}`}>
                                         <View className="flex-row items-center gap-3">
-                                            <Text className="text-3xl">
-                                                {result.affordability.isAffordable ? '✅' : '⚠️'}
-                                            </Text>
+                                            <IconLabel icon={result.affordability.isAffordable ? 'success' : 'warning'} size={30} />
                                             <View className="flex-1">
                                                 <Text className="text-white font-bold text-lg">
                                                     {result.affordability.isAffordable
@@ -323,7 +322,7 @@ export default function LoanPage() {
                                 {/* Recommendations */}
                                 {recommendations.length > 0 && (
                                     <GlassCard>
-                                        <Text className="text-white font-semibold mb-4">💡 {t('calculators.recommendations')}</Text>
+                                        <View className="flex-row items-center gap-2 mb-4"><IconLabel icon="bulb" size={18} /><Text className="text-white font-semibold">{t('calculators.recommendations')}</Text></View>
                                         <View className="gap-2">
                                             {recommendations.map((rec, i) => (
                                                 <Text key={i} className="text-gray-300">• {rec}</Text>
