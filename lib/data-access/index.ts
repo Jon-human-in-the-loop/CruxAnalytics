@@ -1,8 +1,3 @@
-/**
- * @fileoverview Data access module exports
- * Provides repository pattern and logging capabilities
- */
-
 export type {
   Entity,
   QueryOptions,

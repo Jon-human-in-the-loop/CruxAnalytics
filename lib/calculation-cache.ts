@@ -73,7 +73,7 @@ class CalculationCache {
    */
   invalidate(prefix: string): void {
     const keysToDelete: string[] = [];
-    
+
     this.cache.forEach((entry, key) => {
       if (key.startsWith(prefix)) {
         keysToDelete.push(key);

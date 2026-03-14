@@ -1,8 +1,3 @@
-/**
- * @fileoverview Financial calculation core with strategy pattern
- * Implements ROI, NPV, IRR, and Payback calculations with XAI support
- */
-
 import type { XAIResult, XAIScenarioResult, XAIContextConfig } from '../xai/types';
 import { generateFinancialMetricsContext } from '../xai/context-generator';
 import {
@@ -33,9 +28,6 @@ export interface FinancialStrategy {
   getName(): string;
 }
 
-/**
- * Input parameters for financial calculations
- */
 export interface FinancialInputs {
   /** Initial investment amount */
   investment: number;
@@ -91,7 +83,7 @@ export class NPVStrategy implements FinancialStrategy {
     validatePositiveNumber(inputs.timeHorizon, 'timeHorizon');
 
     const cashFlows = inputs.cashFlows || Array(inputs.timeHorizon).fill(inputs.savings);
-    
+
     let npv = -inputs.investment;
     for (let t = 1; t <= cashFlows.length; t++) {
       const discountFactor = Math.pow(1 + inputs.discountRate, t);
@@ -121,7 +113,7 @@ export class IRRStrategy implements FinancialStrategy {
     validatePositiveNumber(inputs.timeHorizon, 'timeHorizon');
 
     const cashFlows = [-inputs.investment, ...(inputs.cashFlows || Array(inputs.timeHorizon).fill(inputs.savings))];
-    
+
     const irr = this.calculateIRR(cashFlows);
 
     return {
@@ -174,7 +166,7 @@ export class PaybackStrategy implements FinancialStrategy {
     validatePositiveNumber(inputs.timeHorizon, 'timeHorizon');
 
     const annualSavings = inputs.cashFlows?.[0] ?? inputs.savings;
-    
+
     if (annualSavings <= 0) {
       return {
         name: 'Payback',
@@ -231,13 +223,6 @@ export class FinancialCalculatorFactory {
   }
 }
 
-/**
- * Calculate financial metrics with XAI context
- * 
- * @param inputs - Financial calculation inputs
- * @param config - XAI configuration
- * @returns Financial metrics with strategic context
- */
 export async function calculateFinancialMetricsXAI(
   inputs: FinancialInputs,
   config?: XAIContextConfig
@@ -284,13 +269,6 @@ export interface ScenarioInputs {
   worst: FinancialInputs;
 }
 
-/**
- * Calculate scenario analysis with XAI context
- * 
- * @param scenarios - Best, expected, and worst case scenarios
- * @param config - XAI configuration
- * @returns Scenario analysis results with XAI context
- */
 export async function calculateScenarioAnalysisXAI(
   scenarios: ScenarioInputs,
   config?: XAIContextConfig

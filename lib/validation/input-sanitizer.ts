@@ -1,8 +1,3 @@
-/**
- * @fileoverview Input sanitization utilities with DOMPurify
- * Provides robust XSS protection and input cleaning for all user inputs
- */
-
 import DOMPurify from 'isomorphic-dompurify';
 
 /**
@@ -18,7 +13,7 @@ export function sanitizeString(input: string, maxLength: number = 1000): string 
     ALLOWED_ATTR: [], // No attributes allowed
     KEEP_CONTENT: true, // Keep text content
   });
-  
+
   // Trim and limit length
   return sanitized.trim().substring(0, maxLength);
 }
@@ -31,24 +26,17 @@ export function sanitizeString(input: string, maxLength: number = 1000): string 
  */
 export function sanitizeProjectName(name: string): string {
   const sanitized = sanitizeString(name, 200);
-  
+
   // Allow alphanumeric, spaces, and common punctuation
   const safe = sanitized.replace(/[^a-zA-Z0-9\sáéíóúñÁÉÍÓÚÑ\-_(),.]/g, '');
-  
+
   if (safe.length === 0) {
     throw new Error('Project name contains only invalid characters');
   }
-  
+
   return safe;
 }
 
-/**
- * Sanitizes and validates a number input
- * @param input - Number input (string or number)
- * @param options - Validation options
- * @returns Sanitized and validated number
- * @throws {Error} If number is invalid or out of range
- */
 export function sanitizeNumber(
   input: string | number,
   options?: {
@@ -71,7 +59,7 @@ export function sanitizeNumber(
     .replace(/[^\d.-]/g, ''); // Keep only digits, dot, and minus
 
   const num = parseFloat(cleaned);
-  
+
   if (isNaN(num)) {
     throw new Error('Invalid number format');
   }
@@ -131,7 +119,7 @@ export function sanitizeInteger(
     ...options,
     decimals: 0,
   });
-  
+
   return Math.floor(num);
 }
 

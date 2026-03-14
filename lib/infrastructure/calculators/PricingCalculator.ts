@@ -1,42 +1,11 @@
-/**
- * @fileoverview Pricing calculator for small businesses.
- * Helps determine optimal pricing for products and services.
- * 
- * @module infrastructure/calculators/PricingCalculator
- * 
- * @example
- * ```typescript
- * const calculator = new PricingCalculator();
- * const result = calculator.calculate({
- *   costPerUnit: 15,
- *   desiredMargin: 40,
- *   competitorPrice: 30,
- *   targetVolume: 1000
- * });
- * ```
- */
-
 import { BaseCalculator } from './BaseCalculator';
 import type { PricingInput } from '@/types/project';
 
-/**
- * Calculator for optimal product/service pricing.
- * Helps small business owners set profitable prices.
- * 
- * @class PricingCalculator
- * @extends BaseCalculator
- */
 export class PricingCalculator extends BaseCalculator {
     constructor() {
         super('PricingCalculator');
     }
 
-    /**
-     * Calculates optimal pricing and related metrics.
-     * 
-     * @param input - Pricing input data
-     * @returns Pricing analysis results
-     */
     calculate(input: PricingInput): {
         minimumPrice: number;
         targetMarginPrice: number;
@@ -127,11 +96,6 @@ export class PricingCalculator extends BaseCalculator {
         };
     }
 
-    /**
-     * Calculates the recommended price based on cost, margin, and competitors.
-     * 
-     * @private
-     */
     private calculateRecommendedPrice(
         targetMarginPrice: number,
         competitorPrice?: number,
@@ -153,12 +117,6 @@ export class PricingCalculator extends BaseCalculator {
         return this.round(recommendedPrice, 2);
     }
 
-    /**
-     * Validates pricing input data.
-     * 
-     * @protected
-     * @override
-     */
     protected override validate(input: PricingInput): void {
         super.validate(input);
 
@@ -178,13 +136,6 @@ export class PricingCalculator extends BaseCalculator {
         }
     }
 
-    /**
-     * Generates recommendations based on pricing analysis.
-     * 
-     * @param result - Calculation results
-     * @param input - Original input for context
-     * @returns Array of recommendation strings
-     */
     generateRecommendations(
         result: ReturnType<typeof this.calculate>,
         input: PricingInput

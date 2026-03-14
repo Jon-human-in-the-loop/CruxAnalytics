@@ -43,12 +43,12 @@ export function isSnapshotsLimitReached(project: ProjectData): boolean {
  */
 export async function getOldestProjects(count: number): Promise<ProjectData[]> {
   const projects = await getAllProjects();
-  
+
   // Sort by updatedAt (oldest first)
   const sorted = projects.sort((a, b) => {
     return new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime();
   });
-  
+
   return sorted.slice(0, count);
 }
 
@@ -58,11 +58,11 @@ export async function getOldestProjects(count: number): Promise<ProjectData[]> {
 export async function cleanOldProjects(count: number = 10): Promise<number> {
   try {
     const oldestProjects = await getOldestProjects(count);
-    
+
     for (const project of oldestProjects) {
       await deleteProject(project.id);
     }
-    
+
     return oldestProjects.length;
   } catch (error) {
     console.error('Error cleaning old projects:', error);
@@ -75,16 +75,16 @@ export async function cleanOldProjects(count: number = 10): Promise<number> {
  */
 export function cleanOldSnapshots(project: ProjectData, keepCount: number = 10): ProjectData {
   const projectWithSnapshots = project as any;
-  
+
   if (!projectWithSnapshots.snapshots || projectWithSnapshots.snapshots.length <= keepCount) {
     return project;
   }
-  
+
   // Sort by timestamp (newest first) and keep only the most recent
   const sorted = [...projectWithSnapshots.snapshots].sort((a: any, b: any) => {
     return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
   });
-  
+
   projectWithSnapshots.snapshots = sorted.slice(0, keepCount);
   return project;
 }
@@ -94,12 +94,12 @@ export function cleanOldSnapshots(project: ProjectData, keepCount: number = 10):
  */
 export async function getStorageStats() {
   const projects = await getAllProjects();
-  
+
   const totalSnapshots = projects.reduce((sum, p) => {
     const projectWithSnapshots = p as any;
     return sum + (projectWithSnapshots.snapshots?.length || 0);
   }, 0);
-  
+
   return {
     projectCount: projects.length,
     projectLimit: LIMITS.MAX_PROJECTS,

@@ -1,8 +1,3 @@
-/**
- * @fileoverview Tests for SME-focused calculators
- * Comprehensive tests for Break-even, Cash Flow, Pricing, and Loan calculators
- */
-
 import { describe, it, expect } from 'vitest';
 import { BreakEvenCalculator } from '../lib/infrastructure/calculators/BreakEvenCalculator';
 import { CashFlowForecastCalculator } from '../lib/infrastructure/calculators/CashFlowForecastCalculator';

@@ -1,8 +1,3 @@
-/**
- * @fileoverview Pricing Calculator Page
- * Helps determine optimal pricing with competitor comparison
- */
-
 import React, { useState, useMemo } from 'react';
 import { View, Text, TextInput, Pressable, ScrollView, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';

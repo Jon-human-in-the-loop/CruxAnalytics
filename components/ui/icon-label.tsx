@@ -1,8 +1,3 @@
-/**
- * @fileoverview Professional icon component that replaces emoji usage
- * Maps semantic icon names to Ionicons for a professional enterprise look.
- */
-
 import React from 'react';
 import { View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';

@@ -224,7 +224,6 @@ export default function NewProjectScreen() {
     return true;
   };
 
-
   // Quick suggestion values
   const investmentSuggestions: QuickSuggestion[] = [
     { label: '$50,000', value: '50000' },
@@ -579,7 +578,6 @@ export default function NewProjectScreen() {
         currentBurnRate: opCosts || 0,
         previousBurnRate: parseFloat(prevBurnRate) || (opCosts || 0) * 0.9,
       };
-
 
       const vanguardResults = await calculationService.calculateVanguard(vanguardInput);
 

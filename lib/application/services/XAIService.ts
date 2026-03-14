@@ -1,10 +1,3 @@
-/**
- * @fileoverview XAI Service for generating structured context for LLM interpretation.
- * Implements Strategy pattern to generate context for different metrics.
- * 
- * @module application/services/XAIService
- */
-
 import type { IContextStrategy } from '@/application/strategies/IContextStrategy';
 import { Metric } from '@/lib/domain/entities/Metric';
 import type { ProjectData } from '@/types/project';
@@ -13,7 +6,6 @@ import type { ProjectData } from '@/types/project';
  * Service for generating XAI (Explainable AI) context for metrics.
  * Uses Strategy pattern to delegate context generation to appropriate strategies.
  * 
- * @class XAIService
  * 
  * @example
  * ```typescript
@@ -31,9 +23,6 @@ import type { ProjectData } from '@/types/project';
 export class XAIService {
   private strategies: Map<string, IContextStrategy> = new Map();
 
-  /**
-   * Creates a new XAIService instance
-   */
   constructor() {
     // Strategies will be registered externally or in a factory
   }

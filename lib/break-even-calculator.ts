@@ -13,9 +13,6 @@ export interface BreakEvenData {
   months: number[];
 }
 
-/**
- * Calculate break-even analysis for a project
- */
 export function calculateBreakEven(project: ProjectData): BreakEvenData {
   const {
     initialInvestment,

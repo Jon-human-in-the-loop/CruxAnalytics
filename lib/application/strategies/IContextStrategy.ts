@@ -1,10 +1,3 @@
-/**
- * @fileoverview Strategy interface for generating metric context.
- * Follows Strategy pattern for different metric interpretation approaches.
- * 
- * @module application/strategies/IContextStrategy
- */
-
 import type { MetricContext } from '@/types/project';
 
 /**

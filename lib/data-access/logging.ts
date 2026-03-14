@@ -1,9 +1,4 @@
 /**
- * @fileoverview Structured logging system
- * Provides leveled logging with multiple output targets
- */
-
-/**
  * Log levels in order of severity
  */
 export enum LogLevel {
@@ -72,7 +67,7 @@ export class ConsoleLogOutput implements LogOutput {
     const levelName = LogLevel[entry.level];
     const timestamp = entry.timestamp.toISOString();
     const prefix = `[${timestamp}] [${levelName}] [${entry.logger}]`;
-    
+
     let message = `${prefix} ${entry.message}`;
 
     if (this.colorize) {

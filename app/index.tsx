@@ -1,9 +1,3 @@
-/**
- * @fileoverview Landing Page for CruxAnalytics
- * Aesthetic: Tendril Studio inspired — Playfair Display, Glass-cards, smooth layout
- * Dark theme with sophisticated typography and translucent elements
- */
-
 import React, { useEffect, useState } from 'react';
 import {
     View,
@@ -33,20 +27,18 @@ const BG = '#000000';
 
 function useIsSmall() {
     const [isSmall, setIsSmall] = useState(Dimensions.get('window').width < 768);
-    
+
     useEffect(() => {
         const subscription = Dimensions.addEventListener('change', ({ window }) => {
             setIsSmall(window.width < 768);
         });
         return () => subscription.remove();
     }, []);
-    
+
     return isSmall;
 }
 
-// ============================================
 // NAVIGATION BAR
-// ============================================
 function NavBar() {
     const { t } = useTranslation();
 
@@ -88,9 +80,7 @@ function NavBar() {
     );
 }
 
-// ============================================
 // HERO SECTION
-// ============================================
 function HeroSection() {
     const router = useRouter();
     const { t } = useTranslation();
@@ -182,9 +172,7 @@ function HeroSection() {
     );
 }
 
-// ============================================
 // FEATURES SECTION
-// ============================================
 function FeaturesSection() {
     const { t } = useTranslation();
     const isSmall = useIsSmall();
@@ -206,7 +194,7 @@ function FeaturesSection() {
                     subtitle={t('landing.features.subtitle')}
                     badge="Features"
                 />
-                
+
                 <View style={{
                     flexDirection: 'row',
                     flexWrap: 'wrap',
@@ -227,9 +215,7 @@ function FeaturesSection() {
     );
 }
 
-// ============================================
 // VANGUARD SECTION
-// ============================================
 function VanguardSection() {
     const { t } = useTranslation();
     const isSmall = useIsSmall();
@@ -261,9 +247,7 @@ function VanguardSection() {
     );
 }
 
-// ============================================
 // TESTIMONIALS SECTION
-// ============================================
 function TestimonialsSection() {
     const { t } = useTranslation();
     const isSmall = useIsSmall();
@@ -281,7 +265,7 @@ function TestimonialsSection() {
                     title={t('landing.testimonials.title')}
                     badge="Testimonials"
                 />
-                
+
                 <View style={{ flexDirection: isSmall ? 'column' : 'row', gap: 24 }}>
                     {testimonials.map((test, i) => (
                         <GlassCard key={i} style={{ flex: 1 }}>
@@ -300,9 +284,7 @@ function TestimonialsSection() {
     );
 }
 
-// ============================================
 // CTA SECTION
-// ============================================
 function CTASection() {
     const router = useRouter();
     const { t } = useTranslation();
@@ -340,9 +322,7 @@ function CTASection() {
     );
 }
 
-// ============================================
 // FOOTER
-// ============================================
 function Footer() {
     const { t } = useTranslation();
     const isSmall = useIsSmall();
@@ -385,9 +365,7 @@ function Footer() {
     );
 }
 
-// ============================================
 // MAIN LANDING PAGE
-// ============================================
 export default function LandingPage() {
     const { isReady } = useTranslation();
 

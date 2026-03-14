@@ -1,19 +1,3 @@
-/**
- * @fileoverview Encryption utilities for sensitive data protection.
- * Provides AES-256-GCM encryption and SHA-256 hashing for sensitive data at rest.
- * 
- * @module security/encryption
- * 
- * @example
- * ```typescript
- * import { encrypt, decrypt, generateEncryptionKey } from '@/lib/security/encryption';
- * 
- * const key = generateEncryptionKey();
- * const encrypted = encrypt('sensitive data', key);
- * const decrypted = decrypt(encrypted, key);
- * ```
- */
-
 import * as crypto from 'crypto';
 
 /**

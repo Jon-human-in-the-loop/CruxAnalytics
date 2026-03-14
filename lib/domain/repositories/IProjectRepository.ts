@@ -1,10 +1,3 @@
-/**
- * @fileoverview Repository interface for Project persistence following Repository pattern.
- * Defines the contract for project data access without implementation details.
- * 
- * @module domain/repositories/IProjectRepository
- */
-
 import type { ProjectData } from '@/types/project';
 
 /**

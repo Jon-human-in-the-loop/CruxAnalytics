@@ -17,7 +17,7 @@ export const appRouter = router({
       } as const;
     }),
   }),
-  
+
   // Projects API
   projects: projectsRouter,
 

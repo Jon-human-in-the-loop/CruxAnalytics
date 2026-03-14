@@ -1,49 +1,12 @@
-/**
- * @fileoverview Standard financial metrics calculator.
- * Implements ROI, NPV, IRR, and Payback Period calculations.
- * Uses existing calculation logic from financial-calculator.ts.
- * 
- * @module infrastructure/calculators/StandardMetricsCalculator
- */
-
 import { BaseCalculator } from './BaseCalculator';
 import { Metric } from '@/lib/domain/entities/Metric';
 import type { FinancialCalculationInput } from '@/types/project';
 
-/**
- * Calculator for standard financial metrics.
- * Provides ROI, NPV, IRR, and Payback Period calculations.
- * 
- * @class StandardMetricsCalculator
- * @extends BaseCalculator
- * 
- * @example
- * ```typescript
- * const calculator = new StandardMetricsCalculator();
- * const metrics = calculator.calculate({
- *   initialInvestment: 100000,
- *   discountRate: 10,
- *   projectDuration: 36,
- *   yearlyRevenue: 150000,
- *   revenueGrowth: 5,
- *   operatingCosts: 30000,
- *   maintenanceCosts: 10000
- * });
- * ```
- */
 export class StandardMetricsCalculator extends BaseCalculator {
   constructor() {
     super('StandardMetricsCalculator');
   }
 
-  /**
-   * Calculates all standard financial metrics.
-   * 
-   * @param input - Financial calculation input data
-   * @returns Object containing calculated values (without XAI context)
-   * 
-   * @throws {Error} If validation fails
-   */
   calculate(input: FinancialCalculationInput): {
     roi: number;
     npv: number;
@@ -107,58 +70,33 @@ export class StandardMetricsCalculator extends BaseCalculator {
     };
   }
 
-  /**
-   * Validates financial calculation input.
-   * 
-   * @protected
-   * @override
-   */
   protected override validate(input: FinancialCalculationInput): void {
     super.validate(input);
 
     this.assertFinite(input.initialInvestment, 'initialInvestment');
     if (input.initialInvestment < 0) throw new Error(`${this.calculatorName}: initialInvestment must be non-negative`);
-    
+
     this.assertRange(input.discountRate, 0, 100, 'discountRate');
     this.assertRange(input.projectDuration, 1, 600, 'projectDuration');
-    
+
     this.assertFinite(input.yearlyRevenue, 'yearlyRevenue');
     if (input.yearlyRevenue < 0) throw new Error(`${this.calculatorName}: yearlyRevenue must be non-negative`);
-    
+
     this.assertRange(input.revenueGrowth, -100, 1000, 'revenueGrowth');
-    
+
     this.assertFinite(input.operatingCosts, 'operatingCosts');
     if (input.operatingCosts < 0) throw new Error(`${this.calculatorName}: operatingCosts must be non-negative`);
-    
+
     this.assertFinite(input.maintenanceCosts, 'maintenanceCosts');
     if (input.maintenanceCosts < 0) throw new Error(`${this.calculatorName}: maintenanceCosts must be non-negative`);
   }
 
-  /**
-   * Calculates Return on Investment (ROI).
-   * Formula: ((Total Revenue - Initial Investment) / Initial Investment) × 100
-   * 
-   * @private
-   * @param initialInvestment - Initial investment amount
-   * @param cashFlows - Monthly cash flows
-   * @returns ROI as percentage
-   */
   private calculateROI(initialInvestment: number, cashFlows: number[]): number {
     const totalRevenue = cashFlows.reduce((sum, cf) => sum + cf, 0);
     const roi = ((totalRevenue - initialInvestment) / initialInvestment) * 100;
     return this.round(roi, 2);
   }
 
-  /**
-   * Calculates Net Present Value (NPV).
-   * Discounts future cash flows to present value.
-   * 
-   * @private
-   * @param initialInvestment - Initial investment amount
-   * @param cashFlows - Monthly cash flows
-   * @param discountRate - Annual discount rate (as decimal, e.g., 0.10 for 10%)
-   * @returns NPV amount
-   */
   private calculateNPV(
     initialInvestment: number,
     cashFlows: number[],
@@ -176,15 +114,6 @@ export class StandardMetricsCalculator extends BaseCalculator {
     return this.round(npv, 2);
   }
 
-  /**
-   * Calculates Payback Period.
-   * Time required to recover initial investment.
-   * 
-   * @private
-   * @param initialInvestment - Initial investment amount
-   * @param cashFlows - Monthly cash flows
-   * @returns Payback period in months
-   */
   private calculatePaybackPeriod(
     initialInvestment: number,
     cashFlows: number[]
@@ -206,17 +135,6 @@ export class StandardMetricsCalculator extends BaseCalculator {
     return cashFlows.length;
   }
 
-  /**
-   * Calculates Internal Rate of Return (IRR).
-   * Uses Newton-Raphson method for convergence.
-   * 
-   * @private
-   * @param initialInvestment - Initial investment amount
-   * @param cashFlows - Monthly cash flows
-   * @param maxIterations - Maximum iterations for convergence (default: 100)
-   * @param tolerance - Convergence tolerance (default: 0.0001)
-   * @returns IRR as annual percentage
-   */
   private calculateIRR(
     initialInvestment: number,
     cashFlows: number[],

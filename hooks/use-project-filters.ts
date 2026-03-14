@@ -58,7 +58,7 @@ export function useProjectFilters(projects: ProjectData[]) {
 
   const counts = useMemo(() => {
     const projectsWithResults = projects.filter((p) => p.results);
-    
+
     return {
       all: projects.length,
       viable: projectsWithResults.filter((p) => 

@@ -14,7 +14,7 @@ export function PWAInstallPrompt() {
   const { t } = useTranslation();
   const colors = useColors();
   const { isInstallable, isInstalled, promptInstall } = usePWAInstall();
-  
+
   const [isDismissed, setIsDismissed] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 

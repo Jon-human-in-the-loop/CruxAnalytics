@@ -1,19 +1,6 @@
-/**
- * @fileoverview Context strategy for TFDI (Tech-Debt Financial Drag Index) metric.
- * Vanguard Crux proprietary methodology for quantifying technical debt impact.
- * 
- * @module infrastructure/strategies/TFDIContextStrategy
- */
-
 import type { IContextStrategy } from '@/lib/application/strategies/IContextStrategy';
 import type { MetricContext } from '@/types/project';
 
-/**
- * Strategy for generating XAI context for TFDI metric.
- * Vanguard Crux proprietary metric for technical debt analysis.
- * 
- * @implements {IContextStrategy}
- */
 export class TFDIContextStrategy implements IContextStrategy {
   generateContext(value: number, projectData: any): MetricContext {
     const interpretation = this.interpretValue(value);

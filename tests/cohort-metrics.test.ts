@@ -1,8 +1,3 @@
-/**
- * @fileoverview Tests for CohortMetricsCalculator
- * Verifies cohort contribution margin calculations
- */
-
 import { describe, it, expect } from 'vitest';
 import { CohortMetricsCalculator } from '../lib/infrastructure/calculators/CohortMetricsCalculator';
 

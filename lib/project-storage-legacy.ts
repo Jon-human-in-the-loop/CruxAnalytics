@@ -46,24 +46,24 @@ export async function saveProject(project: ProjectData): Promise<void> {
   try {
     // Update timestamp
     project.updatedAt = new Date().toISOString();
-    
+
     // Compress and save the project data
     const compressed = compressData(project);
     await AsyncStorage.setItem(
       `${PROJECT_PREFIX}${project.id}`,
       compressed
     );
-    
+
     // Update the projects index
     const projects = await getAllProjects();
     const existingIndex = projects.findIndex(p => p.id === project.id);
-    
+
     if (existingIndex >= 0) {
       projects[existingIndex] = project;
     } else {
       projects.push(project);
     }
-    
+
     await AsyncStorage.setItem(PROJECTS_KEY, JSON.stringify(projects));
   } catch (error) {
     console.error('Error saving project:', error);
@@ -108,7 +108,7 @@ export async function deleteProject(id: string): Promise<void> {
   try {
     // Remove the project data
     await AsyncStorage.removeItem(`${PROJECT_PREFIX}${id}`);
-    
+
     // Update the projects index
     const projects = await getAllProjects();
     const filteredProjects = projects.filter(p => p.id !== id);
@@ -128,7 +128,7 @@ export async function duplicateProject(id: string): Promise<ProjectData | null> 
     if (!original) {
       return null;
     }
-    
+
     const duplicate: ProjectData = {
       ...original,
       id: generateId(),
@@ -137,7 +137,7 @@ export async function duplicateProject(id: string): Promise<ProjectData | null> 
       updatedAt: new Date().toISOString(),
       scenarios: [], // Don't copy scenarios
     };
-    
+
     await saveProject(duplicate);
     return duplicate;
   } catch (error) {
@@ -180,13 +180,13 @@ export async function saveScenarioSnapshot(
     if (!project) {
       throw new Error('Project not found');
     }
-    
+
     const newScenario: ScenarioSnapshot = {
       ...scenario,
       id: generateId(),
       createdAt: new Date().toISOString(),
     };
-    
+
     // If this is marked as base, unmark all other scenarios
     if (newScenario.isBase && project.scenarios) {
       project.scenarios = project.scenarios.map(s => ({
@@ -194,10 +194,10 @@ export async function saveScenarioSnapshot(
         isBase: false,
       }));
     }
-    
+
     project.scenarios = project.scenarios || [];
     project.scenarios.push(newScenario);
-    
+
     await saveProject(project);
   } catch (error) {
     console.error('Error saving scenario:', error);
@@ -216,7 +216,7 @@ export async function getBaseScenario(
     if (!project || !project.scenarios) {
       return null;
     }
-    
+
     return project.scenarios.find(s => s.isBase) || null;
   } catch (error) {
     console.error('Error getting base scenario:', error);
@@ -236,7 +236,7 @@ export async function deleteScenario(
     if (!project || !project.scenarios) {
       return;
     }
-    
+
     project.scenarios = project.scenarios.filter(s => s.id !== scenarioId);
     await saveProject(project);
   } catch (error) {
@@ -277,7 +277,7 @@ export async function exportAllProjects(): Promise<string> {
 export async function importProjects(jsonData: string): Promise<{ imported: number; skipped: number }> {
   try {
     const data = JSON.parse(jsonData);
-    
+
     // Validate structure
     if (!data.projects || !Array.isArray(data.projects)) {
       throw new Error('Invalid import format: missing projects array');
@@ -324,7 +324,7 @@ export async function searchProjects(query: string): Promise<ProjectData[]> {
   try {
     const allProjects = await getAllProjects();
     const lowerQuery = query.toLowerCase();
-    
+
     return allProjects.filter(project =>
       project.name.toLowerCase().includes(lowerQuery)
     );
@@ -342,18 +342,18 @@ export async function filterProjectsByViability(
 ): Promise<ProjectData[]> {
   try {
     const allProjects = await getAllProjects();
-    
+
     if (filter === 'all') {
       return allProjects;
     }
-    
+
     return allProjects.filter(project => {
       if (!project.results) {
         return false;
       }
-      
+
       const isViable = project.results.roi > 0 && project.results.npv > 0;
-      
+
       if (filter === 'viable') {
         return isViable;
       } else {
@@ -475,7 +475,7 @@ export async function restoreScenarioAsBase(
 export async function getRecentProjects(limit: number = 5): Promise<ProjectData[]> {
   try {
     const allProjects = await getAllProjects();
-    
+
     return allProjects
       .sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
       .slice(0, limit);

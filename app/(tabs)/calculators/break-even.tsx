@@ -1,8 +1,3 @@
-/**
- * @fileoverview Break-Even Calculator Page
- * Interactive calculator with visual results and recommendations
- */
-
 import React, { useState, useMemo } from 'react';
 import { View, Text, TextInput, Pressable, ScrollView, Alert, Dimensions, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -20,9 +15,7 @@ import { useTranslation } from '@/lib/i18n-context';
 import { LanguageSelector } from '@/components/language-selector';
 import { generateBreakEvenPDF, printPDF } from '@/lib/export/pdf-generator';
 
-// ============================================
 // INPUT FIELD COMPONENT
-// ============================================
 function InputField({
     label,
     value,
@@ -64,9 +57,7 @@ function InputField({
     );
 }
 
-// ============================================
 // RESULT CARD COMPONENT
-// ============================================
 function ResultCard({
     label,
     value,
@@ -104,9 +95,7 @@ function ResultCard({
     );
 }
 
-// ============================================
 // BREAK-EVEN CHART (Simplified)
-// ============================================
 function BreakEvenChart({
     breakEvenUnits,
     currentUnits,
@@ -177,9 +166,7 @@ function BreakEvenChart({
     );
 }
 
-// ============================================
 // RECOMMENDATIONS COMPONENT
-// ============================================
 function Recommendations({ items }: { items: string[] }) {
     const { t } = useTranslation();
     return (
@@ -199,9 +186,7 @@ function Recommendations({ items }: { items: string[] }) {
     );
 }
 
-// ============================================
 // MAIN PAGE
-// ============================================
 export default function BreakEvenPage() {
     const { t } = useTranslation();
     const [exporting, setExporting] = useState(false);

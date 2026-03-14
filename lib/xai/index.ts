@@ -1,8 +1,3 @@
-/**
- * @fileoverview XAI (Explainable AI) module exports
- * Provides explainable analytics capabilities for CruxAnalytics
- */
-
 export type {
   StrategicContext,
   XAIResult,

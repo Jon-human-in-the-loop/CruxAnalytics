@@ -1,9 +1,3 @@
-/**
- * @fileoverview Font loading configuration for CruxAnalytics
- * Playfair Display: Headlines (Tendril style)
- * Inter: Body text and UI elements
- */
-
 export const fonts = {
   'PlayfairDisplay-Bold': 'https://fonts.gstatic.com/s/playfairdisplay/v37/nuFvD7K3dQYfV7GuSEI6n297oAfJ2Teuv97AZUzZ.ttf',
   'PlayfairDisplay-Regular': 'https://fonts.gstatic.com/s/playfairdisplay/v37/nuFvD7K3dQYfV7GuSEI6n297oAfJ2Teuv97AZUzZ.ttf',

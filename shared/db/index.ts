@@ -35,4 +35,3 @@ export const db = process.env.DATABASE_URL
   : null as any; // Will throw runtime error if accessed without DATABASE_URL
 
 export * from './schema';
-

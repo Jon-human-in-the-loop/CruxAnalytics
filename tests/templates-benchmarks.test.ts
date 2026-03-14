@@ -1,7 +1,3 @@
-/**
- * @fileoverview Tests for business templates and industry benchmarks
- */
-
 import { describe, it, expect } from 'vitest';
 import {
     BUSINESS_TEMPLATES,

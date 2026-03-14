@@ -1,33 +1,6 @@
-/**
- * @fileoverview Marketing ROI calculator for small businesses.
- * Calculates the return on investment for marketing campaigns by channel.
- * 
- * @module infrastructure/calculators/MarketingROICalculator
- * 
- * @example
- * ```typescript
- * const calculator = new MarketingROICalculator();
- * const result = calculator.calculate({
- *   totalSpend: 5000,
- *   conversions: 100,
- *   revenuePerConversion: 150,
- *   channel: 'facebook',
- *   impressions: 50000,
- *   clicks: 2000
- * });
- * ```
- */
-
 import { BaseCalculator } from './BaseCalculator';
 import type { MarketingROIInput } from '@/types/project';
 
-/**
- * Calculator for marketing ROI by channel.
- * Helps small businesses evaluate marketing effectiveness.
- * 
- * @class MarketingROICalculator
- * @extends BaseCalculator
- */
 export class MarketingROICalculator extends BaseCalculator {
     /**
      * Industry benchmark CAC by channel
@@ -45,12 +18,6 @@ export class MarketingROICalculator extends BaseCalculator {
         super('MarketingROICalculator');
     }
 
-    /**
-     * Calculates marketing ROI and performance metrics.
-     * 
-     * @param input - Marketing ROI input data
-     * @returns Marketing ROI analysis results
-     */
     calculate(input: MarketingROIInput): {
         roiPercentage: number;
         roas: number;
@@ -207,12 +174,6 @@ export class MarketingROICalculator extends BaseCalculator {
         return { cacVsBenchmark, conversionVsBenchmark };
     }
 
-    /**
-     * Validates marketing ROI input data.
-     * 
-     * @protected
-     * @override
-     */
     protected override validate(input: MarketingROIInput): void {
         super.validate(input);
 
@@ -229,13 +190,6 @@ export class MarketingROICalculator extends BaseCalculator {
         }
     }
 
-    /**
-     * Generates recommendations based on marketing ROI analysis.
-     * 
-     * @param result - Calculation results
-     * @param input - Original input for context
-     * @returns Array of recommendation strings
-     */
     generateRecommendations(
         result: ReturnType<typeof this.calculate>,
         input: MarketingROIInput

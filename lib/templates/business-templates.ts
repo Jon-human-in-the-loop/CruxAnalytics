@@ -1,28 +1,11 @@
-/**
- * @fileoverview Business templates for common industries.
- * Pre-configured settings and benchmarks for different business types.
- * 
- * @module templates/business-templates
- * 
- * @example
- * ```typescript
- * import { getBusinessTemplate, BUSINESS_TEMPLATES } from '@/lib/templates/business-templates';
- * 
- * const restaurantTemplate = getBusinessTemplate('restaurant');
- * console.log(restaurantTemplate.benchmarks.grossMargin.optimal); // 65
- * ```
- */
-
 import type { BusinessTemplate, BreakEvenInput, PricingInput } from '@/types/project';
 
 /**
  * Pre-configured business templates by industry
  */
 export const BUSINESS_TEMPLATES: BusinessTemplate[] = [
-    // ============================================
-    // RESTAURANT TEMPLATE
-    // ============================================
-    {
+        // RESTAURANT TEMPLATE
+        {
         id: 'restaurant',
         name: 'Restaurante / Café',
         industry: 'restaurant',
@@ -40,10 +23,8 @@ export const BUSINESS_TEMPLATES: BusinessTemplate[] = [
         },
     },
 
-    // ============================================
-    // E-COMMERCE TEMPLATE
-    // ============================================
-    {
+        // E-COMMERCE TEMPLATE
+        {
         id: 'ecommerce',
         name: 'E-commerce / Tienda Online',
         industry: 'ecommerce',
@@ -61,10 +42,8 @@ export const BUSINESS_TEMPLATES: BusinessTemplate[] = [
         },
     },
 
-    // ============================================
-    // PROFESSIONAL SERVICES TEMPLATE
-    // ============================================
-    {
+        // PROFESSIONAL SERVICES TEMPLATE
+        {
         id: 'services',
         name: 'Servicios Profesionales',
         industry: 'services',
@@ -82,10 +61,8 @@ export const BUSINESS_TEMPLATES: BusinessTemplate[] = [
         },
     },
 
-    // ============================================
-    // RETAIL STORE TEMPLATE
-    // ============================================
-    {
+        // RETAIL STORE TEMPLATE
+        {
         id: 'retail',
         name: 'Tienda Minorista',
         industry: 'retail',
@@ -103,10 +80,8 @@ export const BUSINESS_TEMPLATES: BusinessTemplate[] = [
         },
     },
 
-    // ============================================
-    // MANUFACTURING TEMPLATE
-    // ============================================
-    {
+        // MANUFACTURING TEMPLATE
+        {
         id: 'manufacturing',
         name: 'Manufactura / Producción',
         industry: 'manufacturing',

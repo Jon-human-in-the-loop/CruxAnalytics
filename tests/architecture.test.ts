@@ -1,8 +1,3 @@
-/**
- * @fileoverview Architecture validation test
- * Tests the modular architecture components
- */
-
 import { describe, it, expect } from 'vitest';
 import { calculateOFI, calculateTFDI, calculateSER } from '../lib/business-logic/business-intelligence';
 import { calculateFinancialMetricsXAI, ROIStrategy, NPVStrategy } from '../lib/business-logic/financial-core';
@@ -32,7 +27,7 @@ describe('CruxAnalytics Modular Architecture', () => {
   describe('Business Intelligence Layer', () => {
     it('should calculate OFI with XAI context', async () => {
       const result = await calculateOFI(40, 160, 1.5);
-      
+
       expect(result.value.ofi).toBeGreaterThan(0);
       expect(result.context.interpretation).toBeDefined();
       expect(result.context.recommendations).toBeInstanceOf(Array);
@@ -42,7 +37,7 @@ describe('CruxAnalytics Modular Architecture', () => {
 
     it('should calculate TFDI with financial impact', async () => {
       const result = await calculateTFDI(100, 50, 10000, 12);
-      
+
       expect(result.value.totalCost).toBe(60000);
       expect(result.value.netSavings).toBe(50000);
       expect(result.value.breakEvenPoint).toBeCloseTo(2, 1);
@@ -51,7 +46,7 @@ describe('CruxAnalytics Modular Architecture', () => {
 
     it('should calculate SER sustainability metric', async () => {
       const result = await calculateSER(50, 24, 5000, 10000);
-      
+
       expect(result.value.ser).toBeGreaterThan(0);
       expect(result.context.interpretation).toContain('Sustainability');
       expect(result.metadata.version).toBe('1.0.0');
@@ -98,7 +93,7 @@ describe('CruxAnalytics Modular Architecture', () => {
       expect(result.npv.value.name).toBe('NPV');
       expect(result.irr.value.name).toBe('IRR');
       expect(result.payback.value.name).toBe('Payback');
-      
+
       expect(result.roi.context.recommendations.length).toBeGreaterThan(0);
     });
   });

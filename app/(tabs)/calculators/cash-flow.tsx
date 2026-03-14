@@ -1,8 +1,3 @@
-/**
- * @fileoverview Cash Flow Forecast Calculator Page
- * 12-month projection with visual timeline and alert system
- */
-
 import React, { useState, useMemo } from 'react';
 import { View, Text, TextInput, Pressable, ScrollView, Alert, Dimensions, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';

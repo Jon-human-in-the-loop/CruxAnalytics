@@ -1,13 +1,5 @@
-/**
- * @fileoverview PDF Export Utilities for CruxAnalytics
- * Generates professional PDF reports from calculator results
- */
-
 import { Platform } from 'react-native';
 
-/**
- * Generates HTML content for a Break-Even Analysis PDF
- */
 export function generateBreakEvenPDF(data: {
     inputs: {
         fixedCosts: number;
@@ -42,7 +34,7 @@ export function generateBreakEvenPDF(data: {
       min-height: 100vh;
     }
     .container { max-width: 800px; margin: 0 auto; }
-    
+
     .header {
       text-align: center;
       margin-bottom: 40px;
@@ -52,13 +44,13 @@ export function generateBreakEvenPDF(data: {
     .logo { font-size: 28px; font-weight: bold; }
     .logo span { color: #818cf8; }
     .date { color: #9ca3af; font-size: 14px; margin-top: 8px; }
-    
+
     .title {
       font-size: 32px;
       margin: 30px 0;
       text-align: center;
     }
-    
+
     .card {
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.1);
@@ -72,7 +64,7 @@ export function generateBreakEvenPDF(data: {
       margin-bottom: 16px;
       color: #a5b4fc;
     }
-    
+
     .metric-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -89,7 +81,7 @@ export function generateBreakEvenPDF(data: {
     .metric-value.success { color: #10b981; }
     .metric-value.warning { color: #f59e0b; }
     .metric-value.danger { color: #ef4444; }
-    
+
     .highlight-box {
       background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
       border: 1px solid rgba(99, 102, 241, 0.3);
@@ -100,7 +92,7 @@ export function generateBreakEvenPDF(data: {
     }
     .highlight-label { color: #a5b4fc; font-size: 16px; }
     .highlight-value { font-size: 48px; font-weight: bold; margin-top: 8px; }
-    
+
     .status-box {
       padding: 20px;
       border-radius: 12px;
@@ -115,7 +107,7 @@ export function generateBreakEvenPDF(data: {
     .status-text { flex: 1; }
     .status-title { font-weight: 600; }
     .status-subtitle { color: #9ca3af; font-size: 14px; }
-    
+
     .recommendations { list-style: none; }
     .recommendations li {
       padding: 12px 0;
@@ -135,7 +127,7 @@ export function generateBreakEvenPDF(data: {
       font-size: 12px;
       color: #a5b4fc;
     }
-    
+
     .footer {
       margin-top: 40px;
       padding-top: 20px;
@@ -154,9 +146,9 @@ export function generateBreakEvenPDF(data: {
         year: 'numeric', month: 'long', day: 'numeric'
     })}</div>
     </div>
-    
+
     <h1 class="title">📈 Análisis de Punto de Equilibrio</h1>
-    
+
     <!-- Main Results -->
     <div class="highlight-box">
       <div class="highlight-label">Para no perder dinero, necesitas vender</div>
@@ -165,7 +157,7 @@ export function generateBreakEvenPDF(data: {
         equivalente a $${results.breakEvenRevenue.toLocaleString()} en ingresos
       </div>
     </div>
-    
+
     ${results.marginOfSafety !== undefined ? `
     <div class="status-box ${results.isAboveBreakEven ? 'success' : 'danger'}">
       <div class="status-icon">${results.isAboveBreakEven ? '✅' : '⚠️'}</div>
@@ -179,7 +171,7 @@ export function generateBreakEvenPDF(data: {
       </div>
     </div>
     ` : ''}
-    
+
     <!-- Input Data -->
     <div class="card">
       <div class="card-title">📊 Datos de Entrada</div>
@@ -202,7 +194,7 @@ export function generateBreakEvenPDF(data: {
         </div>
       </div>
     </div>
-    
+
     <!-- Recommendations -->
     <div class="card">
       <div class="card-title">💡 Recomendaciones</div>
@@ -215,7 +207,7 @@ export function generateBreakEvenPDF(data: {
         `).join('')}
       </ul>
     </div>
-    
+
     <div class="footer">
       <p>CruxAnalytics - Análisis financiero para emprendedores</p>
       <p>Este reporte es solo informativo y no constituye asesoría financiera profesional.</p>
@@ -272,7 +264,7 @@ export function generateCashFlowPDF(data: {
     recommendations: string[];
 }): string {
     const { inputs, results, recommendations } = data;
-    
+
     return `
 <!DOCTYPE html>
 <html>
@@ -323,9 +315,9 @@ export function generateCashFlowPDF(data: {
       <div class="logo">Crux<span>Analytics</span></div>
       <div class="date">Generado el ${new Date().toLocaleDateString('es-ES')}</div>
     </div>
-    
+
     <h1 class="title">💰 Análisis de Flujo de Caja</h1>
-    
+
     <div class="card">
       <div class="card-title">📊 Resultados</div>
       <div class="metric-grid">
@@ -339,14 +331,14 @@ export function generateCashFlowPDF(data: {
         </div>
       </div>
     </div>
-    
+
     <div class="card">
       <div class="card-title">💡 Recomendaciones</div>
       <ul class="recommendations">
         ${recommendations.map(rec => `<li>${rec}</li>`).join('')}
       </ul>
     </div>
-    
+
     <div class="footer">
       <p>CruxAnalytics - Análisis financiero para emprendedores</p>
       <p>Este reporte es solo informativo y no constituye asesoría financiera profesional.</p>
@@ -366,7 +358,7 @@ export function generatePricingPDF(data: {
     recommendations: string[];
 }): string {
     const { inputs, results, recommendations } = data;
-    
+
     return `
 <!DOCTYPE html>
 <html>
@@ -437,7 +429,7 @@ export function generateLoanPDF(data: {
     recommendations: string[];
 }): string {
     const { inputs, results, recommendations } = data;
-    
+
     return `
 <!DOCTYPE html>
 <html>
@@ -509,7 +501,7 @@ export function generateEmployeeROIPDF(data: {
     recommendations: string[];
 }): string {
     const { inputs, results, recommendations } = data;
-    
+
     return `
 <!DOCTYPE html>
 <html>
@@ -581,7 +573,7 @@ export function generateMarketingROIPDF(data: {
     recommendations: string[];
 }): string {
     const { inputs, results, recommendations } = data;
-    
+
     return `
 <!DOCTYPE html>
 <html>

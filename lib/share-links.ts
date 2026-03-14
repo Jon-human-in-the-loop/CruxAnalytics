@@ -24,9 +24,8 @@ export function generateShareableLink(project: ProjectData): string {
     // Encode to base64
     const jsonString = JSON.stringify(shareData);
     const base64 = btoa(encodeURIComponent(jsonString));
-    
+
     // Generate shareable URL
-    // In production, this would be your app's domain
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
     return `${baseUrl}/shared/${base64}`;
   } catch (error) {
@@ -70,9 +69,6 @@ export function decodeSharedProject(shareId: string): ProjectData | null {
   }
 }
 
-/**
- * Validates if a share ID is valid
- */
 export function isValidShareId(shareId: string): boolean {
   try {
     const project = decodeSharedProject(shareId);
@@ -88,7 +84,7 @@ export function isValidShareId(shareId: string): boolean {
 export function getShareMessage(project: ProjectData, link: string, language: 'es' | 'en'): string {
   const roi = project.results?.roi || 0;
   const npv = project.results?.npv || 0;
-  
+
   if (language === 'es') {
     return `📊 *${project.name}*\n\nTe comparto este análisis financiero realizado con Business Case Analyzer Pro.\n\n💰 Inversión Inicial: $${project.initialInvestment.toLocaleString()}\n📈 ROI: ${roi.toFixed(1)}%\n💵 NPV: $${npv.toLocaleString()}\n\n🔗 Ver análisis completo:\n${link}`;
   } else {

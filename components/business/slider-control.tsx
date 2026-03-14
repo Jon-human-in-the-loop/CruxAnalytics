@@ -40,7 +40,7 @@ export function SliderControl({
           {formatValue(value)}
         </Text>
       </View>
-      
+
       <Slider
         value={value}
         onValueChange={onValueChange}
@@ -51,7 +51,7 @@ export function SliderControl({
         maximumTrackTintColor={colors.border}
         thumbTintColor={colors.primary}
       />
-      
+
       <View className="flex-row items-center justify-between mt-1">
         <Text className="text-xs text-muted">{formatValue(min)}</Text>
         <Text className="text-xs text-muted">{formatValue(max)}</Text>

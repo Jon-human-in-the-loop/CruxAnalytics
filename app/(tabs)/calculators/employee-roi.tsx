@@ -1,8 +1,3 @@
-/**
- * @fileoverview Employee ROI Calculator Page
- * Evaluates if hiring decisions make financial sense
- */
-
 import React, { useState, useMemo } from 'react';
 import { View, Text, TextInput, Pressable, ScrollView, Alert, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';

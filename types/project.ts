@@ -129,9 +129,6 @@ export interface CashFlowData {
   cumulativeCashFlow: number;
 }
 
-/**
- * Vanguard Crux Proprietary Metrics Input
- */
 export interface VanguardInput {
   // OFI inputs
   manualProcessHoursPerWeek: number;
@@ -151,9 +148,6 @@ export interface VanguardInput {
   previousBurnRate: number;
 }
 
-/**
- * SaaS-specific metrics input
- */
 export interface SaaSInput {
   averageRevenuePerUser: number;
   churnRate: number; // monthly %

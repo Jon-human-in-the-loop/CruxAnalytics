@@ -1,10 +1,3 @@
-/**
- * @fileoverview Calculation service orchestrating all calculators.
- * Coordinates calculator execution and results aggregation.
- * 
- * @module application/services/CalculationService
- */
-
 import { StandardMetricsCalculator } from '@/lib/infrastructure/calculators/StandardMetricsCalculator';
 import { VanguardMetricsCalculator } from '@/lib/infrastructure/calculators/VanguardMetricsCalculator';
 import { SaaSMetricsCalculator } from '@/lib/infrastructure/calculators/SaaSMetricsCalculator';
@@ -21,7 +14,6 @@ import type {
  * Service for orchestrating all metric calculations.
  * Provides unified interface for calculating standard, vanguard, SaaS, and risk metrics.
  * 
- * @class CalculationService
  * 
  * @example
  * ```typescript
@@ -47,25 +39,6 @@ export class CalculationService {
     this.riskCalculator = new RiskMetricsCalculator();
   }
 
-  /**
-   * Calculates standard financial metrics (ROI, NPV, IRR, Payback).
-   * 
-   * @param input - Financial calculation input
-   * @returns Promise resolving to standard metrics
-   * 
-   * @example
-   * ```typescript
-   * const results = await service.calculateStandard({
-   *   initialInvestment: 100000,
-   *   discountRate: 10,
-   *   projectDuration: 36,
-   *   yearlyRevenue: 150000,
-   *   revenueGrowth: 5,
-   *   operatingCosts: 30000,
-   *   maintenanceCosts: 10000
-   * });
-   * ```
-   */
   async calculateStandard(input: FinancialCalculationInput): Promise<{
     roi: number;
     npv: number;
@@ -77,12 +50,6 @@ export class CalculationService {
     return Promise.resolve(this.standardCalculator.calculate(input));
   }
 
-  /**
-   * Calculates Vanguard Crux proprietary metrics (OFI, TFDI, SER).
-   * 
-   * @param input - Vanguard-specific input
-   * @returns Promise resolving to Vanguard metrics
-   */
   async calculateVanguard(input: VanguardInput): Promise<{
     ofi: number;
     tfdi: number;
@@ -91,12 +58,6 @@ export class CalculationService {
     return Promise.resolve(this.vanguardCalculator.calculate(input));
   }
 
-  /**
-   * Calculates SaaS-specific metrics (LTV/CAC, NRR, Rule of 40).
-   * 
-   * @param input - SaaS-specific input
-   * @returns Promise resolving to SaaS metrics
-   */
   async calculateSaaS(input: SaaSInput): Promise<{
     ltv: number;
     cac: number;
@@ -108,12 +69,6 @@ export class CalculationService {
     return Promise.resolve(this.saasCalculator.calculate(input));
   }
 
-  /**
-   * Calculates risk metrics (Runway, Zero Cash Date, Churn Impact).
-   * 
-   * @param input - Risk-specific input
-   * @returns Promise resolving to risk metrics
-   */
   async calculateRisk(input: RiskInput): Promise<{
     runway_months: number;
     zero_cash_date: string;
@@ -122,22 +77,6 @@ export class CalculationService {
     return Promise.resolve(this.riskCalculator.calculate(input));
   }
 
-  /**
-   * Calculates all available metrics based on project data.
-   * Determines which calculators to run based on available input data.
-   * 
-   * @param projectData - Complete project data
-   * @returns Promise resolving to object with all calculated metrics
-   * 
-   * @example
-   * ```typescript
-   * const allMetrics = await service.calculateAll(projectData);
-   * console.log(allMetrics.standard); // ROI, NPV, IRR, Payback
-   * console.log(allMetrics.vanguard); // OFI, TFDI, SER (if input provided)
-   * console.log(allMetrics.saas); // LTV/CAC, NRR, Rule of 40 (if input provided)
-   * console.log(allMetrics.risk); // Runway, Churn Impact (if input provided)
-   * ```
-   */
   async calculateAll(projectData: ProjectData): Promise<{
     standard: ReturnType<StandardMetricsCalculator['calculate']>;
     vanguard?: ReturnType<VanguardMetricsCalculator['calculate']>;

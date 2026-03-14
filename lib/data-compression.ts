@@ -27,11 +27,11 @@ export function decompressData<T>(compressed: string): T | null {
   try {
     // Try to decompress
     const decompressed = LZString.decompressFromBase64(compressed);
-    
+
     if (decompressed) {
       return JSON.parse(decompressed) as T;
     }
-    
+
     // Fallback: try to parse as uncompressed JSON
     try {
       return JSON.parse(compressed) as T;

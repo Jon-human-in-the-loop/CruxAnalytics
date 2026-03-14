@@ -1,8 +1,3 @@
-/**
- * @fileoverview Usage examples for CruxAnalytics modular architecture
- * Demonstrates how to use each layer of the architecture
- */
-
 import { businessIntelligence } from '../lib/business-logic';
 import { LoggerFactory, LogLevel } from '../lib/data-access';
 import { validatePercentage, validatePositiveNumber } from '../lib/validation/input-validator';

@@ -1,9 +1,3 @@
-/**
- * Vanguard Crux Color System
- * Based on "Clarity in Complexity" design philosophy
- * Inspired by AKQA, Clay, and Active Theory
- */
-
 const tintColorLight = '#00C0D4'; // Vanguard Teal
 const tintColorDark = '#A7F3D0';  // Vanguard Mint
 

@@ -80,7 +80,7 @@ export async function areNotificationsEnabled(): Promise<boolean> {
 export async function setNotificationsEnabled(enabled: boolean): Promise<void> {
   try {
     await AsyncStorage.setItem(NOTIFICATIONS_ENABLED_KEY, enabled.toString());
-    
+
     if (!enabled) {
       // Cancel all scheduled notifications
       await Notifications.cancelAllScheduledNotificationsAsync();
@@ -164,7 +164,7 @@ export async function scheduleProjectReminder(
     // Save reminder configuration
     const reminders = await getAllReminders();
     const existingIndex = reminders.findIndex((r) => r.projectId === projectId);
-    
+
     const reminder: ProjectReminder = {
       projectId,
       projectName,

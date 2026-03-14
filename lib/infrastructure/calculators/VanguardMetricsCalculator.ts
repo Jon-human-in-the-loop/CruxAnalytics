@@ -1,52 +1,11 @@
-/**
- * @fileoverview Vanguard Crux proprietary metrics calculator.
- * Implements OFI (Operational Friction Index), TFDI (Tech-Debt Financial Drag Index),
- * and SER (Strategic Efficiency Ratio) - exclusive Vanguard Crux methodologies.
- * 
- * @module infrastructure/calculators/VanguardMetricsCalculator
- */
-
 import { BaseCalculator } from './BaseCalculator';
 import type { VanguardInput } from '@/types/project';
 
-/**
- * Calculator for Vanguard Crux proprietary business intelligence metrics.
- * These metrics represent Vanguard Crux's unique analytical framework.
- * 
- * @class VanguardMetricsCalculator
- * @extends BaseCalculator
- * 
- * @example
- * ```typescript
- * const calculator = new VanguardMetricsCalculator();
- * const metrics = calculator.calculate({
- *   manualProcessHoursPerWeek: 20,
- *   averageHourlyCost: 50,
- *   automationPotential: 80,
- *   maintenanceHoursPerSprint: 40,
- *   totalDevHoursPerSprint: 160,
- *   devTeamAnnualCost: 500000,
- *   incidentCostPerMonth: 5000,
- *   currentRevenue: 1000000,
- *   previousRevenue: 800000,
- *   currentBurnRate: 100000,
- *   previousBurnRate: 90000
- * });
- * ```
- */
 export class VanguardMetricsCalculator extends BaseCalculator {
   constructor() {
     super('VanguardMetricsCalculator');
   }
 
-  /**
-   * Calculates all Vanguard Crux proprietary metrics.
-   * 
-   * @param input - Vanguard-specific input data
-   * @returns Object containing OFI, TFDI, and SER values
-   * 
-   * @throws {Error} If validation fails
-   */
   calculate(input: VanguardInput): {
     ofi: number;
     tfdi: number;
@@ -65,12 +24,6 @@ export class VanguardMetricsCalculator extends BaseCalculator {
     return { ofi, tfdi, ser };
   }
 
-  /**
-   * Validates Vanguard input data.
-   * 
-   * @protected
-   * @override
-   */
   protected override validate(input: VanguardInput): void {
     super.validate(input);
 
@@ -92,7 +45,7 @@ export class VanguardMetricsCalculator extends BaseCalculator {
     }
     this.assertFinite(input.totalDevHoursPerSprint, 'totalDevHoursPerSprint');
     if (input.totalDevHoursPerSprint <= 0) input.totalDevHoursPerSprint = 1;
-    
+
     this.assertFinite(input.devTeamAnnualCost, 'devTeamAnnualCost');
     if (input.devTeamAnnualCost <= 0) input.devTeamAnnualCost = 1;
 
@@ -104,7 +57,7 @@ export class VanguardMetricsCalculator extends BaseCalculator {
     this.assertFinite(input.previousRevenue, 'previousRevenue');
     this.assertFinite(input.currentBurnRate, 'currentBurnRate');
     this.assertFinite(input.previousBurnRate, 'previousBurnRate');
-    
+
     if (input.currentRevenue < 0) throw new Error(`${this.calculatorName}: currentRevenue must be non-negative`);
     if (input.previousRevenue < 0) throw new Error(`${this.calculatorName}: previousRevenue must be non-negative`);
     if (input.currentBurnRate < 0) throw new Error(`${this.calculatorName}: currentBurnRate must be non-negative`);
@@ -118,24 +71,6 @@ export class VanguardMetricsCalculator extends BaseCalculator {
     }
   }
 
-  /**
-   * Calculates OFI (Operational Friction Index).
-   * 
-   * **Vanguard Crux Proprietary Methodology**
-   * 
-   * Measures the financial burden of manual operational processes.
-   * Formula: (Manual Process Hours × Cost × 52) / Annual Revenue
-   * 
-   * Interpretation:
-   * - < 0.03: Optimal operational efficiency
-   * - 0.03-0.08: Acceptable, but improvement opportunities exist
-   * - > 0.08: High friction, automation strongly recommended
-   * - Industry average: 0.10
-   * 
-   * @private
-   * @param input - Vanguard input data
-   * @returns OFI value (0-1 scale, lower is better)
-   */
   private calculateOFI(input: VanguardInput): number {
     const {
       manualProcessHoursPerWeek,
@@ -152,25 +87,6 @@ export class VanguardMetricsCalculator extends BaseCalculator {
     return this.round(ofi, 4);
   }
 
-  /**
-   * Calculates TFDI (Tech-Debt Financial Drag Index).
-   * 
-   * **Vanguard Crux Proprietary Methodology**
-   * 
-   * Quantifies the financial impact of technical debt and legacy systems.
-   * Formula: (Maintenance Hours / Total Hours) × Team Cost + (Incident Costs × 12)
-   * Normalized as percentage of engineering budget.
-   * 
-   * Interpretation:
-   * - < 0.15: Optimal tech health
-   * - 0.15-0.25: Acceptable, monitor closely
-   * - > 0.25: High drag, refactoring priority
-   * - Industry average: 0.30
-   * 
-   * @private
-   * @param input - Vanguard input data
-   * @returns TFDI value (0-1 scale, lower is better)
-   */
   private calculateTFDI(input: VanguardInput): number {
     const {
       maintenanceHoursPerSprint,
@@ -201,25 +117,6 @@ export class VanguardMetricsCalculator extends BaseCalculator {
     return this.round(tfdi, 4);
   }
 
-  /**
-   * Calculates SER (Strategic Efficiency Ratio).
-   * 
-   * **Vanguard Crux Proprietary Methodology**
-   * 
-   * Measures how efficiently resources convert to business outcomes.
-   * Formula: (Revenue Growth Rate) / (Burn Rate Increase)
-   * 
-   * Interpretation:
-   * - > 1.5: Excellent efficiency, sustainable growth
-   * - 1.0-1.5: Good efficiency, stable trajectory
-   * - 0.8-1.0: Acceptable, watch for trends
-   * - < 0.8: Concerning, cost optimization needed
-   * - Industry target: 1.2
-   * 
-   * @private
-   * @param input - Vanguard input data
-   * @returns SER value (ratio, higher is better)
-   */
   private calculateSER(input: VanguardInput): number {
     const {
       currentRevenue,
@@ -255,11 +152,6 @@ export class VanguardMetricsCalculator extends BaseCalculator {
     return this.round(ser, 4);
   }
 
-  /**
-   * Gets benchmark values for OFI.
-   * 
-   * @returns Benchmark object
-   */
   getOFIBenchmarks(): { optimal: number; acceptable: number; industry: number } {
     return {
       optimal: 0.03,
@@ -268,11 +160,6 @@ export class VanguardMetricsCalculator extends BaseCalculator {
     };
   }
 
-  /**
-   * Gets benchmark values for TFDI.
-   * 
-   * @returns Benchmark object
-   */
   getTFDIBenchmarks(): { optimal: number; acceptable: number; industry: number } {
     return {
       optimal: 0.15,
@@ -281,11 +168,6 @@ export class VanguardMetricsCalculator extends BaseCalculator {
     };
   }
 
-  /**
-   * Gets benchmark values for SER.
-   * 
-   * @returns Benchmark object
-   */
   getSERBenchmarks(): { optimal: number; acceptable: number; industry: number } {
     return {
       optimal: 2.0,

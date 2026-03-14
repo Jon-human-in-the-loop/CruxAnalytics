@@ -17,9 +17,7 @@ import { useColors } from '@/hooks/use-colors';
 import { useProjectFilters } from '@/hooks/use-project-filters';
 import { OnboardingTutorial } from '@/components/onboarding-tutorial';
 
-// ============================================
 // HEALTH SCORE HELPERS
-// ============================================
 function calculateHealthScore(projects: ProjectData[]): number | null {
   if (projects.length < 3) return null;
 
@@ -40,9 +38,7 @@ function getScoreLabel(score: number, t: (key: string) => string): string {
   return t('dashboard.needs_attention');
 }
 
-// ============================================
 // HEALTH SCORE GAUGE COMPONENT
-// ============================================
 function HealthScoreGauge({ score, colors, t }: { score: number | null; colors: any; t: (key: string) => string }) {
   return (
     <View className="bg-surface border border-border rounded-3xl p-5">
@@ -75,9 +71,7 @@ function HealthScoreGauge({ score, colors, t }: { score: number | null; colors: 
   );
 }
 
-// ============================================
 // MINI CHART COMPONENTS
-// ============================================
 function BreakEvenChart({ color }: { color: string }) {
   return (
     <Svg width="100%" height="52" viewBox="0 0 120 52">
@@ -152,9 +146,7 @@ const CHART_COMPONENTS: Record<string, React.ComponentType<{ color: string }>> =
   'marketing': MarketingROIChart,
 };
 
-// ============================================
 // TOOL CARDS DATA & COMPONENT
-// ============================================
 function getToolCards(t: (key: string) => string) {
   return [
     {

@@ -10,13 +10,6 @@ const insightRequestSchema = z.object({
   systemPrompt: z.string().optional(),
 });
 
-/**
- * Generate AI insights for business case analysis
- * POST /api/ai/insights
- * 
- * Requires authentication and checks BOTH user subscription AND device limits
- * to prevent abuse via multiple account creation.
- */
 router.post('/insights', async (req, res) => {
   try {
     const { prompt, language, systemPrompt } = insightRequestSchema.parse(req.body);
@@ -31,8 +24,6 @@ router.post('/insights', async (req, res) => {
     });
   } catch (error) {
     console.error('Error generating AI insights:', error);
-
-    // Return detailed error for debugging
     res.status(500).json({
       error: 'Failed to generate AI insights',
       message: error instanceof Error ? error.message : 'Unknown error',
@@ -41,10 +32,6 @@ router.post('/insights', async (req, res) => {
   }
 });
 
-/**
- * Check OpenAI API connection status
- * GET /api/ai/status
- */
 router.get('/status', async (req, res) => {
   try {
     const status = await checkOpenAIStatus();
@@ -66,10 +53,6 @@ router.get('/status', async (req, res) => {
   }
 });
 
-/**
- * Get available OpenAI models
- * GET /api/ai/models
- */
 router.get('/models', (req, res) => {
   res.json({
     models: getAvailableModels(),

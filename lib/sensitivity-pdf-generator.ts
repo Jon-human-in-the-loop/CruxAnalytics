@@ -304,7 +304,7 @@ function generateSensitivityHTML(
       padding: 0;
       box-sizing: border-box;
     }
-    
+
     body {
       font-family: 'Latin Modern Roman', 'Computer Modern Roman', 'Computer Modern', Georgia, 'Times New Roman', Times, serif;
       font-size: 11pt;
@@ -315,52 +315,52 @@ function generateSensitivityHTML(
       margin: 0 auto;
       background: #fff;
     }
-    
+
     .header {
       text-align: center;
       margin-bottom: 40px;
       padding-top: 20px;
     }
-    
+
     h1 {
       font-size: 20pt;
       font-weight: bold;
       color: #000;
       margin-bottom: 15px;
     }
-    
+
     h2 {
       font-size: 14pt;
       font-weight: bold;
       color: #000;
       margin: 30px 0 15px;
     }
-    
+
     h3 {
       font-size: 12pt;
       color: #000;
       margin: 20px 0 10px;
       font-weight: bold;
     }
-    
+
     .subtitle {
       font-size: 12pt;
       color: #333;
       margin-bottom: 5px;
     }
-    
+
     .date {
       font-size: 11pt;
       color: #000;
       font-style: italic;
     }
-    
+
     .description {
       padding: 10px 0;
       margin-bottom: 30px;
       font-style: italic;
     }
-    
+
     .matrix-table {
       width: 100%;
       border-collapse: collapse;
@@ -368,34 +368,34 @@ function generateSensitivityHTML(
       border-top: 2px solid #000;
       border-bottom: 2px solid #000;
     }
-    
+
     .matrix-table th,
     .matrix-table td {
       border: none;
       padding: 8px 4px;
       text-align: center;
     }
-    
+
     .matrix-table th {
       border-bottom: 1px solid #000;
       color: #000;
       font-weight: bold;
     }
-    
+
     .matrix-table th.base-case {
       font-weight: bold;
     }
-    
+
     .matrix-table td.base-case {
       font-weight: bold;
       background: #f5f5f5;
     }
-    
+
     .matrix-table .variable-name {
       text-align: left;
       font-weight: bold;
     }
-    
+
     .legend {
       display: flex;
       justify-content: center;
@@ -403,42 +403,42 @@ function generateSensitivityHTML(
       margin: 20px 0;
       font-size: 12px;
     }
-    
+
     .legend-item {
       display: flex;
       align-items: center;
       gap: 8px;
     }
-    
+
     .legend-box {
       width: 20px;
       height: 20px;
       border-radius: 4px;
       border: 1px solid #ddd;
     }
-    
+
     .tornado-chart {
       margin: 20px 0;
       border: 1px solid #000;
       padding: 20px;
     }
-    
+
     .tornado-row {
       margin-bottom: 15px;
     }
-    
+
     .tornado-label {
       font-weight: bold;
       margin-bottom: 5px;
       font-size: 10pt;
     }
-    
+
     .tornado-bars {
       display: flex;
       align-items: center;
       height: 30px;
     }
-    
+
     .tornado-negative,
     .tornado-positive {
       height: 100%;
@@ -449,37 +449,37 @@ function generateSensitivityHTML(
       color: #000;
       font-weight: bold;
     }
-    
+
     .tornado-negative {
       background: #e5e5e5;
       border-right: 1px solid #000;
       justify-content: flex-end;
       padding-right: 10px;
     }
-    
+
     .tornado-positive {
       background: #d4d4d4;
       justify-content: flex-start;
       padding-left: 10px;
     }
-    
+
     .tornado-center {
       width: 2px;
       height: 100%;
       background: #000;
     }
-    
+
     .recommendations {
       margin: 20px 0;
     }
-    
+
     .recommendation-card {
       background: #fff;
       border: 1px solid #000;
       padding: 15px;
       margin-bottom: 15px;
     }
-    
+
     .recommendation-card h4 {
       color: #000;
       margin-bottom: 8px;
@@ -487,14 +487,14 @@ function generateSensitivityHTML(
       border-bottom: 1px solid #e5e5e5;
       padding-bottom: 5px;
     }
-    
+
     .badges {
       display: flex;
       gap: 15px;
       margin-bottom: 10px;
       font-size: 10pt;
     }
-    
+
     .badge {
       display: inline-block;
       padding: 2px 6px;
@@ -503,13 +503,13 @@ function generateSensitivityHTML(
       color: #000;
       background: #fff;
     }
-    
+
     .recommendation-card p {
       font-size: 10pt;
       line-height: 1.6;
       color: #000;
     }
-    
+
     .footer {
       text-align: center;
       margin-top: 40px;
@@ -519,12 +519,12 @@ function generateSensitivityHTML(
       color: #000;
       font-style: italic;
     }
-    
+
     @media print {
       body {
         padding: 20px;
       }
-      
+
       .recommendation-card {
         page-break-inside: avoid;
       }
@@ -537,20 +537,20 @@ function generateSensitivityHTML(
     <div class="subtitle">${t('subtitle')}</div>
     <div class="date">${t('date')}</div>
   </div>
-  
+
   <div class="description">
     ${t('description')}
   </div>
-  
+
   <h2>${t('matrix_title')}</h2>
   ${matrixHTML}
-  
+
   <h2>${t('tornado_title')}</h2>
   ${tornadoHTML}
-  
+
   <h2>${t('recommendations_title')}</h2>
   ${recommendationsHTML}
-  
+
   <div class="footer">
     ${t('footer')}
   </div>

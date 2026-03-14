@@ -1,11 +1,4 @@
 /**
- * @fileoverview Domain entity for Project with validation rules and business logic.
- * Pure domain entity with no external dependencies.
- * 
- * @module domain/entities/Project
- */
-
-/**
  * Business model enumeration
  */
 export enum BusinessModel {
@@ -36,20 +29,20 @@ export interface ProjectProperties {
   status: ProjectStatus;
   createdAt: Date;
   updatedAt: Date;
-  
+
   // Financial inputs
   initialInvestment: number;
   discountRate: number;
   projectDuration: number; // in months
-  
+
   // Revenue projections
   yearlyRevenue: number;
   revenueGrowth: number; // percentage
-  
+
   // Costs
   operatingCosts: number;
   maintenanceCosts: number;
-  
+
   // Scenario multipliers
   bestCaseMultiplier: number;
   worstCaseMultiplier: number;
@@ -59,7 +52,6 @@ export interface ProjectProperties {
  * Domain entity for Project.
  * Encapsulates business rules and validation logic for project data.
  * 
- * @class Project
  * 
  * @example
  * ```typescript
@@ -87,22 +79,11 @@ export interface ProjectProperties {
 export class Project {
   private readonly properties: ProjectProperties;
 
-  /**
-   * Creates a new Project instance
-   * 
-   * @param props - Project properties
-   * @throws {Error} If validation fails
-   */
   constructor(props: ProjectProperties) {
     this.properties = { ...props };
     this.validate();
   }
 
-  /**
-   * Validates all project properties according to business rules
-   * 
-   * @throws {Error} If any validation rule fails
-   */
   validate(): void {
     const errors: string[] = [];
 
@@ -239,13 +220,6 @@ export class Project {
     return { ...this.properties };
   }
 
-  /**
-   * Creates a new Project with updated properties
-   * 
-   * @param updates - Partial properties to update
-   * @returns New Project instance with updated properties
-   * @throws {Error} If validation fails with updated properties
-   */
   update(updates: Partial<ProjectProperties>): Project {
     return new Project({
       ...this.properties,
@@ -266,11 +240,6 @@ export class Project {
     return this.properties.yearlyRevenue > yearlyCosts;
   }
 
-  /**
-   * Calculates the annual return rate (simple calculation)
-   * 
-   * @returns Annual return rate as a percentage
-   */
   getAnnualReturnRate(): number {
     const yearlyCosts = this.properties.operatingCosts + this.properties.maintenanceCosts;
     const yearlyProfit = this.properties.yearlyRevenue - yearlyCosts;

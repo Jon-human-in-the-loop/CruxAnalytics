@@ -1,10 +1,3 @@
-/**
- * @fileoverview Context strategy for NPV metric.
- * Generates XAI context for Net Present Value calculations.
- * 
- * @module infrastructure/strategies/NPVContextStrategy
- */
-
 import type { IContextStrategy } from '@/lib/application/strategies/IContextStrategy';
 import type { MetricContext } from '@/types/project';
 
