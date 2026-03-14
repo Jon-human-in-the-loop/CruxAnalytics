@@ -1,8 +1,3 @@
-/**
- * @fileoverview Input validation utilities using Zod
- * Provides type-safe validation for all inputs to business logic
- */
-
 import { z } from 'zod';
 import {
   sanitizeString as sanitizeStringRaw,
@@ -10,14 +5,6 @@ import {
   sanitizeProjectName as sanitizeProjectNameRaw,
 } from './input-sanitizer';
 
-/**
- * Validates a number is within specified range
- * @param value - Number to validate
- * @param min - Minimum allowed value
- * @param max - Maximum allowed value
- * @param fieldName - Name of field for error messages
- * @throws {Error} If value is outside range
- */
 export function validateNumber(
   value: number,
   min: number,
@@ -25,7 +12,7 @@ export function validateNumber(
   fieldName = 'value'
 ): number {
   const schema = z.number().min(min).max(max);
-  
+
   try {
     return schema.parse(value);
   } catch (error) {
@@ -35,25 +22,13 @@ export function validateNumber(
   }
 }
 
-/**
- * Validates a percentage value (0-100)
- * @param value - Percentage to validate
- * @param fieldName - Name of field for error messages
- * @throws {Error} If value is not a valid percentage
- */
 export function validatePercentage(value: number, fieldName = 'percentage'): number {
   return validateNumber(value, 0, 100, fieldName);
 }
 
-/**
- * Validates a positive number (> 0)
- * @param value - Number to validate
- * @param fieldName - Name of field for error messages
- * @throws {Error} If value is not positive
- */
 export function validatePositiveNumber(value: number, fieldName = 'value'): number {
   const schema = z.number().positive();
-  
+
   try {
     return schema.parse(value);
   } catch (error) {
@@ -61,18 +36,12 @@ export function validatePositiveNumber(value: number, fieldName = 'value'): numb
   }
 }
 
-/**
- * Validates a non-negative number (>= 0)
- * @param value - Number to validate
- * @param fieldName - Name of field for error messages
- * @throws {Error} If value is negative
- */
 export function validateNonNegativeNumber(
   value: number,
   fieldName = 'value'
 ): number {
   const schema = z.number().nonnegative();
-  
+
   try {
     return schema.parse(value);
   } catch (error) {
@@ -180,13 +149,6 @@ export function assertRange(
   }
 }
 
-/**
- * Validates an object against a schema and returns typed result
- * @param schema - Zod schema to validate against
- * @param data - Data to validate
- * @returns Validated and typed data
- * @throws {Error} If validation fails
- */
 export function validateSchema<T extends z.ZodType>(
   schema: T,
   data: unknown
@@ -202,20 +164,10 @@ export function validateSchema<T extends z.ZodType>(
   }
 }
 
-/**
- * Validates financial inputs for calculations
- * @param data - Financial input data
- * @returns Validated financial inputs
- */
 export function validateFinancialInputs(data: unknown): FinancialInput {
   return validateSchema(financialInputSchema, data);
 }
 
-/**
- * Validates business intelligence inputs
- * @param data - Business intelligence input data
- * @returns Validated business intelligence inputs
- */
 export function validateBusinessIntelligenceInputs(
   data: unknown
 ): Partial<BusinessIntelligenceInput> {

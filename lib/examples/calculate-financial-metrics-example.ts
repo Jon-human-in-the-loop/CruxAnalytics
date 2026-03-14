@@ -1,8 +1,3 @@
-/**
- * @fileoverview Example demonstrating the new modular architecture.
- * Shows how to use the CalculateFinancialMetrics use case with XAI enrichment.
- */
-
 import { CalculateFinancialMetrics } from '@/lib/application/use-cases/CalculateFinancialMetrics';
 import type { ProjectData } from '@/types/project';
 

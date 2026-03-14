@@ -1,10 +1,3 @@
-/**
- * @fileoverview Context strategy for ROI metric.
- * Generates XAI context for Return on Investment calculations.
- * 
- * @module infrastructure/strategies/ROIContextStrategy
- */
-
 import type { IContextStrategy } from '@/lib/application/strategies/IContextStrategy';
 import type { MetricContext } from '@/types/project';
 
@@ -69,11 +62,6 @@ export class ROIContextStrategy implements IContextStrategy {
     return 'neutral';
   }
 
-  /**
-   * Generates actionable recommendations based on ROI value.
-   * 
-   * @private
-   */
   private generateRecommendations(value: number, projectData: any): string[] {
     const recommendations: string[] = [];
 

@@ -1,19 +1,4 @@
 /**
- * @fileoverview Industry benchmarks for comparative analysis.
- * Provides industry-specific KPIs and performance standards.
- * 
- * @module benchmarks/industry-benchmarks
- * 
- * @example
- * ```typescript
- * import { getIndustryBenchmarks, compareToIndustry } from '@/lib/benchmarks/industry-benchmarks';
- * 
- * const benchmarks = getIndustryBenchmarks('restaurant');
- * const comparison = compareToIndustry('restaurant', 'grossMargin', 62);
- * ```
- */
-
-/**
  * Industry benchmark data structure
  */
 export interface IndustryBenchmark {
@@ -43,10 +28,8 @@ export interface IndustryBenchmark {
  * Comprehensive industry benchmark database
  */
 export const INDUSTRY_BENCHMARKS: Record<string, IndustryBenchmark> = {
-    // ============================================
-    // RESTAURANT / FOOD SERVICE
-    // ============================================
-    restaurant: {
+        // RESTAURANT / FOOD SERVICE
+        restaurant: {
         industry: 'restaurant',
         displayName: 'Restaurant / Food Service',
         metrics: {
@@ -70,10 +53,8 @@ export const INDUSTRY_BENCHMARKS: Record<string, IndustryBenchmark> = {
         ],
     },
 
-    // ============================================
-    // E-COMMERCE
-    // ============================================
-    ecommerce: {
+        // E-COMMERCE
+        ecommerce: {
         industry: 'ecommerce',
         displayName: 'E-commerce / Online Retail',
         metrics: {
@@ -98,10 +79,8 @@ export const INDUSTRY_BENCHMARKS: Record<string, IndustryBenchmark> = {
         ],
     },
 
-    // ============================================
-    // PROFESSIONAL SERVICES
-    // ============================================
-    services: {
+        // PROFESSIONAL SERVICES
+        services: {
         industry: 'services',
         displayName: 'Professional Services / Consulting',
         metrics: {
@@ -125,10 +104,8 @@ export const INDUSTRY_BENCHMARKS: Record<string, IndustryBenchmark> = {
         ],
     },
 
-    // ============================================
-    // RETAIL
-    // ============================================
-    retail: {
+        // RETAIL
+        retail: {
         industry: 'retail',
         displayName: 'Retail Store / Physical Shop',
         metrics: {
@@ -152,10 +129,8 @@ export const INDUSTRY_BENCHMARKS: Record<string, IndustryBenchmark> = {
         ],
     },
 
-    // ============================================
-    // MANUFACTURING
-    // ============================================
-    manufacturing: {
+        // MANUFACTURING
+        manufacturing: {
         industry: 'manufacturing',
         displayName: 'Manufacturing / Production',
         metrics: {

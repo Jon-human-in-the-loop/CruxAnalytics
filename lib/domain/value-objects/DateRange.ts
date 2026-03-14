@@ -1,15 +1,7 @@
 /**
- * @fileoverview Value object for date ranges with validation.
- * Follows value object pattern with immutability.
- * 
- * @module domain/value-objects/DateRange
- */
-
-/**
  * Value object for date ranges.
  * Ensures startDate is before endDate and provides duration calculations.
  * 
- * @class DateRange
  * 
  * @example
  * ```typescript
@@ -26,14 +18,6 @@ export class DateRange {
   private readonly _startDate: Date;
   private readonly _endDate: Date;
 
-  /**
-   * Creates a new DateRange instance
-   * 
-   * @param startDate - The start date
-   * @param endDate - The end date
-   * 
-   * @throws {Error} If startDate is after endDate or dates are invalid
-   */
   constructor(startDate: Date, endDate: Date) {
     if (!(startDate instanceof Date) || isNaN(startDate.getTime())) {
       throw new Error('Start date must be a valid Date object');

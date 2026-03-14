@@ -1,8 +1,3 @@
-/**
- * @fileoverview Strategic context generator for XAI
- * Generates human-readable interpretations and recommendations for metrics
- */
-
 import type {
   StrategicContext,
   XAIContextConfig,
@@ -56,9 +51,6 @@ const LOCALIZED_CONTENT = {
   },
 };
 
-/**
- * Determines performance level based on value and thresholds
- */
 function determinePerformanceLevel(
   value: number,
   thresholds: MetricThresholds,
@@ -85,16 +77,13 @@ function determinePerformanceLevel(
   return 'critical';
 }
 
-/**
- * Calculates confidence level based on data quality indicators
- */
 function calculateConfidence(indicators: {
   dataCompleteness: number;
   inputVariability: number;
   calculationComplexity: number;
 }): number {
   const { dataCompleteness, inputVariability, calculationComplexity } = indicators;
-  
+
   const weights = {
     dataCompleteness: 0.5,
     inputVariability: 0.3,
@@ -112,9 +101,6 @@ function calculateConfidence(indicators: {
   return Math.max(0, Math.min(1, confidence));
 }
 
-/**
- * Generates strategic context for operational friction metrics
- */
 export function generateOperationalFrictionContext(
   ofi: number,
   inputs: {
@@ -135,7 +121,7 @@ export function generateOperationalFrictionContext(
   };
 
   const level = determinePerformanceLevel(ofi, thresholds, true);
-  
+
   const interpretation = generateInterpretation(ofi, level, 'OFI', lang);
   const recommendations = generateOFIRecommendations(ofi, level, lang);
   const warnings = generateOFIWarnings(ofi, level, lang);
@@ -161,9 +147,6 @@ export function generateOperationalFrictionContext(
   };
 }
 
-/**
- * Generates strategic context for tech debt financial impact
- */
 export function generateTechDebtContext(
   tfdi: { totalCost: number; breakEvenPoint: number; netSavings: number },
   inputs: {
@@ -185,7 +168,7 @@ export function generateTechDebtContext(
   };
 
   const level = determinePerformanceLevel(roiPercentage, thresholds, false);
-  
+
   const interpretation = `Tech-debt financial impact analysis shows ${level} ROI potential. ` +
     `Break-even point at ${tfdi.breakEvenPoint.toFixed(1)} months with net savings of $${tfdi.netSavings.toFixed(0)} over ${inputs.timeHorizonMonths} months.`;
 
@@ -229,9 +212,6 @@ export function generateTechDebtContext(
   };
 }
 
-/**
- * Generates strategic context for sustainability efficiency
- */
 export function generateSustainabilityContext(
   ser: number,
   inputs: {
@@ -253,7 +233,7 @@ export function generateSustainabilityContext(
   };
 
   const level = determinePerformanceLevel(ser, thresholds, false);
-  
+
   const interpretation = `Sustainability Efficiency Ratio of ${ser.toFixed(2)} indicates ${level} long-term value creation. ` +
     `For every dollar invested, ${ser.toFixed(2)} dollars of value are generated over the solution's lifetime.`;
 
@@ -301,9 +281,6 @@ export function generateSustainabilityContext(
   };
 }
 
-/**
- * Generates strategic context for financial metrics (ROI, NPV, IRR, Payback)
- */
 export function generateFinancialMetricsContext(
   metricName: string,
   value: number,
@@ -383,9 +360,6 @@ export function generateFinancialMetricsContext(
   };
 }
 
-/**
- * Helper: Generate interpretation text
- */
 function generateInterpretation(
   value: number,
   level: PerformanceLevel,
@@ -395,9 +369,6 @@ function generateInterpretation(
   return `${metricName} of ${value.toFixed(2)}% ${lang.indicates} ${lang[level]} ${lang.performance}.`;
 }
 
-/**
- * Helper: Generate OFI recommendations
- */
 function generateOFIRecommendations(
   ofi: number,
   level: PerformanceLevel,
@@ -423,9 +394,6 @@ function generateOFIRecommendations(
   return recommendations;
 }
 
-/**
- * Helper: Generate OFI warnings
- */
 function generateOFIWarnings(
   ofi: number,
   level: PerformanceLevel,

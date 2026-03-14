@@ -1,19 +1,6 @@
-/**
- * @fileoverview Context strategy for OFI (Operational Friction Index) metric.
- * Vanguard Crux proprietary methodology for operational efficiency analysis.
- * 
- * @module infrastructure/strategies/OFIContextStrategy
- */
-
 import type { IContextStrategy } from '@/lib/application/strategies/IContextStrategy';
 import type { MetricContext } from '@/types/project';
 
-/**
- * Strategy for generating XAI context for OFI metric.
- * Vanguard Crux proprietary metric for operational efficiency.
- * 
- * @implements {IContextStrategy}
- */
 export class OFIContextStrategy implements IContextStrategy {
   /**
    * Generates XAI context for OFI metric.
@@ -90,7 +77,7 @@ export class OFIContextStrategy implements IContextStrategy {
       recommendations.push(
         'Vanguard Crux Diagnostic: Schedule operational efficiency assessment'
       );
-      
+
       // Calculate ROI of automation
       const automationCostEstimate = potentialSavings * 0.3; // 30% of annual savings
       const automationROI = (potentialSavings / automationCostEstimate) * 100;

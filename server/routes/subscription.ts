@@ -3,10 +3,6 @@ import { getSubscriptionStatus } from '../services/subscription-service';
 
 const router = Router();
 
-/**
- * Get current user's subscription status
- * GET /api/subscription/status
- */
 router.get('/status', async (req, res) => {
   try {
     const openId = req.headers['x-user-openid'] as string | undefined;

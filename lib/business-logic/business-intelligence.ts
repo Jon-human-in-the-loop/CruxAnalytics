@@ -1,8 +1,3 @@
-/**
- * @fileoverview Business Intelligence metrics with XAI support
- * Implements OFI, TFDI, and SER metrics with strategic context
- */
-
 import type { XAIResult, XAIContextConfig } from '../xai/types';
 import {
   generateOperationalFrictionContext,
@@ -59,16 +54,6 @@ export interface SERResult {
   valuePerDollar: number;
 }
 
-/**
- * Calculates Operational Friction Index (OFI)
- * Formula: (repetitiveHours / totalHours) × 100 × frictionMultiplier
- * 
- * @param repetitiveHours - Hours spent on repetitive tasks
- * @param totalHours - Total available hours
- * @param frictionMultiplier - Multiplier for friction impact (default 1.0)
- * @param config - XAI configuration
- * @returns XAI-enhanced OFI result
- */
 export async function calculateOFI(
   repetitiveHours: number,
   totalHours: number,
@@ -116,17 +101,6 @@ export async function calculateOFI(
   };
 }
 
-/**
- * Calculates Tech-Debt Financial Impact (TFDI)
- * Compares manual cost vs automation cost over time horizon
- * 
- * @param manualHoursPerMonth - Hours of manual work per month
- * @param manualHourlyRate - Cost per hour of manual work
- * @param automationCost - One-time cost of automation solution
- * @param timeHorizonMonths - Evaluation period in months
- * @param config - XAI configuration
- * @returns XAI-enhanced TFDI result
- */
 export async function calculateTFDI(
   manualHoursPerMonth: number,
   manualHourlyRate: number,
@@ -174,17 +148,6 @@ export async function calculateTFDI(
   };
 }
 
-/**
- * Calculates Sustainability Efficiency Ratio (SER)
- * Formula: (efficiencyGain × lifetime) / (frictionCost + investment)
- * 
- * @param efficiencyGain - Efficiency improvement percentage (0-100)
- * @param lifetime - Expected lifetime in months
- * @param frictionCost - Cost of operational friction
- * @param investment - Total investment required
- * @param config - XAI configuration
- * @returns XAI-enhanced SER result
- */
 export async function calculateSER(
   efficiencyGain: number,
   lifetime: number,
@@ -232,13 +195,6 @@ export async function calculateSER(
   };
 }
 
-/**
- * Calculates all business intelligence metrics in parallel
- * 
- * @param inputs - Combined inputs for all metrics
- * @param config - XAI configuration
- * @returns All metrics with XAI context
- */
 export async function calculateAllBusinessMetrics(
   inputs: {
     repetitiveHours: number;

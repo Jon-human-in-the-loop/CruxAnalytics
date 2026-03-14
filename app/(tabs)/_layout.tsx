@@ -60,7 +60,7 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="gear" color={color} />,
         }}
       />
-      
+
       {/* Calculator routes - hidden from tab bar but accessible via navigation */}
       <Tabs.Screen
         name="calculators/break-even"

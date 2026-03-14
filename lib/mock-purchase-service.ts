@@ -15,7 +15,7 @@ export class MockPurchaseService implements IPurchaseService {
   async configure(_apiKey: string): Promise<void> {
     console.log('[MockPurchase] Configured (mock mode)');
     this.configured = true;
-    
+
     // Simulate initialization delay
     await new Promise(resolve => setTimeout(resolve, 500));
   }
@@ -137,9 +137,6 @@ export class MockPurchaseService implements IPurchaseService {
     return status === 'true';
   }
 
-  /**
-   * Debug helper: Reset premium status (for testing)
-   */
   async resetPremiumStatus(): Promise<void> {
     await AsyncStorage.removeItem(MOCK_PREMIUM_KEY);
     await AsyncStorage.removeItem(`${MOCK_PREMIUM_KEY}_package`);

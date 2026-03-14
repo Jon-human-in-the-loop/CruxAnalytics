@@ -1,10 +1,3 @@
-/**
- * @fileoverview Default context strategy for metrics without specific strategies.
- * Provides basic XAI context when specialized strategy is not available.
- * 
- * @module infrastructure/strategies/DefaultContextStrategy
- */
-
 import type { IContextStrategy } from '@/lib/application/strategies/IContextStrategy';
 import type { MetricContext } from '@/types/project';
 

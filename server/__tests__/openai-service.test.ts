@@ -12,7 +12,7 @@ describe('OpenAI Service', () => {
 
   it.skipIf(!hasApiKey)('should connect to OpenAI API successfully', async () => {
     const status = await checkOpenAIStatus();
-    
+
     expect(status).toBeDefined();
     expect(status.connected).toBe(true);
     expect(status.model).toBeDefined();
@@ -28,7 +28,7 @@ describe('OpenAI Service', () => {
     - Payback: 18 meses`;
 
     const insights = await generateFinancialInsights(prompt, 'es');
-    
+
     expect(insights).toBeDefined();
     expect(typeof insights).toBe('string');
     expect(insights.length).toBeGreaterThan(50);

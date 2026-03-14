@@ -41,11 +41,11 @@ export function MetricCard({
         <Text className="text-sm text-muted font-body-medium">{title}</Text>
         {icon && <View>{icon}</View>}
       </View>
-      
+
       <Text className={cn('text-2xl font-bold font-heading', statusColors[status])}>
         {value}
       </Text>
-      
+
       {subtitle && (
         <Text className="text-xs text-muted mt-1 font-body">{subtitle}</Text>
       )}

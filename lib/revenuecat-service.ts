@@ -14,7 +14,7 @@ export class RevenueCatService implements IPurchaseService {
 
   async getOfferings(): Promise<PurchasePackage[]> {
     const offerings = await Purchases.getOfferings();
-    
+
     if (!offerings.current?.availablePackages) {
       return [];
     }
@@ -46,7 +46,7 @@ export class RevenueCatService implements IPurchaseService {
 
     try {
       const result = await Purchases.purchasePackage(rcPackage);
-      
+
       return {
         customerInfo: result.customerInfo as any,
         userCancelled: false,

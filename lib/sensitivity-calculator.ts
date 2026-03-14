@@ -34,7 +34,7 @@ export function calculateSensitivity(
   variations: number[] = [-30, -20, -10, 0, 10, 20, 30]
 ): SensitivityResult[] {
   const results: SensitivityResult[] = [];
-  
+
   // Get base case values
   const baseParams = {
     initialInvestment: project.initialInvestment,
@@ -128,7 +128,7 @@ export function generateTornadoChartData(
 
   for (const variable of variables) {
     const results = calculateSensitivity(project, variable, [-30, 0, 30]);
-    
+
     const negativeCase = results.find((r) => r.variation === -30);
     const positiveCase = results.find((r) => r.variation === 30);
     const baseCase = results.find((r) => r.variation === 0);

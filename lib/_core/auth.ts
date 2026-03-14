@@ -31,7 +31,6 @@ export async function getGuestId(): Promise<string> {
   }
 }
 
-
 export type User = {
   id: number;
   openId: string;

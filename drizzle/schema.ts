@@ -21,16 +21,16 @@ export const users = mysqlTable("users", {
   email: varchar("email", { length: 320 }),
   loginMethod: varchar("loginMethod", { length: 64 }),
   role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
-  
+
   // Subscription & Monetization fields
   subscriptionTier: mysqlEnum("subscriptionTier", ["free", "premium"]).default("free").notNull(),
   subscriptionExpiry: timestamp("subscriptionExpiry"),
   revenueCatUserId: varchar("revenueCatUserId", { length: 128 }),
-  
+
   // Usage tracking for FREE tier limits
   aiAnalysisCount: int("aiAnalysisCount").default(0).notNull(),
   aiAnalysisResetDate: timestamp("aiAnalysisResetDate").defaultNow().notNull(),
-  
+
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),

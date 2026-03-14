@@ -1,11 +1,4 @@
 /**
- * @fileoverview Core domain entity for all metrics with XAI (Explainable AI) integration.
- * This is a pure domain entity with no external dependencies.
- * 
- * @module domain/entities/Metric
- */
-
-/**
  * Metric category enumeration
  */
 export enum MetricCategory {
@@ -51,7 +44,6 @@ export interface MetricContext {
  * Core domain entity for all metrics.
  * Encapsulates metric data with XAI context for transparency and interpretability.
  * 
- * @class Metric
  * 
  * @example
  * ```typescript
@@ -79,15 +71,6 @@ export class Metric {
   private readonly _context: MetricContext;
   private readonly _timestamp: string;
 
-  /**
-   * Creates a new Metric instance
-   * 
-   * @param name - The metric name (e.g., 'ROI', 'NPV', 'OFI')
-   * @param value - The calculated metric value
-   * @param context - The XAI context explaining the metric
-   * 
-   * @throws {Error} If name is empty or value is not a finite number
-   */
   constructor(name: string, value: number, context: MetricContext) {
     if (!name || name.trim().length === 0) {
       throw new Error('Metric name cannot be empty');
@@ -124,9 +107,6 @@ export class Metric {
     return { ...this._context };
   }
 
-  /**
-   * Gets the timestamp when the metric was created
-   */
   get timestamp(): string {
     return this._timestamp;
   }

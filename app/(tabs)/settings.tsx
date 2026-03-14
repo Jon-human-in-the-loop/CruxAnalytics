@@ -59,7 +59,7 @@ export default function SettingsScreen() {
     if (Platform.OS !== 'web') {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     }
-    
+
     setGlobalThemeMode(mode);
   };
 
@@ -169,7 +169,7 @@ export default function SettingsScreen() {
       }
 
       const projects = await getAllProjects();
-      
+
       if (projects.length === 0) {
         Alert.alert(t('settings.no_projects_title'), t('settings.no_projects_message'));
         return;
@@ -275,7 +275,7 @@ export default function SettingsScreen() {
     if (Platform.OS !== 'web') {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
     }
-    
+
     Alert.alert(
       t('settings.clear_cache'),
       t('settings.clear_cache_confirm'),

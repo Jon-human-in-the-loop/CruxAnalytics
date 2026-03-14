@@ -1,19 +1,6 @@
-/**
- * @fileoverview Context strategy for SER (Strategic Efficiency Ratio) metric.
- * Vanguard Crux proprietary methodology for growth sustainability analysis.
- * 
- * @module infrastructure/strategies/SERContextStrategy
- */
-
 import type { IContextStrategy } from '@/lib/application/strategies/IContextStrategy';
 import type { MetricContext } from '@/types/project';
 
-/**
- * Strategy for generating XAI context for SER metric.
- * Vanguard Crux proprietary metric for strategic efficiency.
- * 
- * @implements {IContextStrategy}
- */
 export class SERContextStrategy implements IContextStrategy {
   generateContext(value: number, projectData: any): MetricContext {
     const interpretation = this.interpretValue(value);

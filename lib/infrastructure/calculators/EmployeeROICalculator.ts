@@ -1,43 +1,11 @@
-/**
- * @fileoverview Employee ROI calculator for small businesses.
- * Calculates the return on investment for hiring decisions.
- * 
- * @module infrastructure/calculators/EmployeeROICalculator
- * 
- * @example
- * ```typescript
- * const calculator = new EmployeeROICalculator();
- * const result = calculator.calculate({
- *   annualSalary: 60000,
- *   annualBenefits: 12000,
- *   onboardingCosts: 5000,
- *   revenueGenerated: 150000,
- *   hoursPerWeek: 40
- * });
- * ```
- */
-
 import { BaseCalculator } from './BaseCalculator';
 import type { EmployeeROIInput } from '@/types/project';
 
-/**
- * Calculator for employee return on investment.
- * Helps small businesses evaluate hiring decisions.
- * 
- * @class EmployeeROICalculator
- * @extends BaseCalculator
- */
 export class EmployeeROICalculator extends BaseCalculator {
     constructor() {
         super('EmployeeROICalculator');
     }
 
-    /**
-     * Calculates employee ROI and productivity metrics.
-     * 
-     * @param input - Employee ROI input data
-     * @returns Employee ROI analysis results
-     */
     calculate(input: EmployeeROIInput): {
         totalCost: number;
         roiPercentage: number;
@@ -125,11 +93,6 @@ export class EmployeeROICalculator extends BaseCalculator {
         };
     }
 
-    /**
-     * Gets benchmark comparison for the role.
-     * 
-     * @private
-     */
     private getBenchmarkComparison(
         productivityRatio: number,
         costPerHour: number,
@@ -163,12 +126,6 @@ export class EmployeeROICalculator extends BaseCalculator {
         return { costEfficiency, productivityLevel };
     }
 
-    /**
-     * Validates employee ROI input data.
-     * 
-     * @protected
-     * @override
-     */
     protected override validate(input: EmployeeROIInput): void {
         super.validate(input);
 
@@ -179,12 +136,6 @@ export class EmployeeROICalculator extends BaseCalculator {
         this.assertRange(input.hoursPerWeek, 1, 80, 'hoursPerWeek');
     }
 
-    /**
-     * Generates recommendations based on employee ROI analysis.
-     * 
-     * @param result - Calculation results
-     * @returns Array of recommendation strings
-     */
     generateRecommendations(result: ReturnType<typeof this.calculate>): string[] {
         const recommendations: string[] = [];
 

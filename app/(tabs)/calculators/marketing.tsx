@@ -1,8 +1,3 @@
-/**
- * @fileoverview Marketing ROI Calculator Page
- * Measures advertising effectiveness by channel
- */
-
 import React, { useState, useMemo } from 'react';
 import { View, Text, TextInput, Pressable, ScrollView, Alert, Dimensions, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';

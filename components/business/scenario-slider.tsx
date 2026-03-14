@@ -29,7 +29,7 @@ export function ScenarioSlider({
 
   const handleValueChange = (newValue: number) => {
     onValueChange(newValue);
-    
+
     // Haptic feedback on value change (only on mobile)
     if (Platform.OS !== 'web') {
       Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);

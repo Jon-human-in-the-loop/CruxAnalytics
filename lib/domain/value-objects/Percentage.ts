@@ -1,15 +1,7 @@
 /**
- * @fileoverview Value object for percentage values with validation and formatting.
- * Follows value object pattern with immutability.
- * 
- * @module domain/value-objects/Percentage
- */
-
-/**
  * Value object for percentage values.
  * Immutable with validation and formatting capabilities.
  * 
- * @class Percentage
  * 
  * @example
  * ```typescript
@@ -24,22 +16,13 @@
 export class Percentage {
   private readonly _value: number;
 
-  /**
-   * Creates a new Percentage instance
-   * 
-   * @param value - The percentage value (e.g., 15.5 for 15.5%)
-   * @param allowNegative - Whether to allow negative percentages (default: true)
-   * @param max - Maximum allowed value (default: 1000 for growth rates, 100 for standard percentages)
-   * 
-   * @throws {Error} If value is not a finite number or outside allowed range
-   */
   constructor(value: number, allowNegative: boolean = true, max: number = 1000) {
     if (!Number.isFinite(value)) {
       throw new Error('Percentage value must be a finite number');
     }
 
     const min = allowNegative ? -100 : 0;
-    
+
     if (value < min || value > max) {
       throw new Error(`Percentage value must be between ${min} and ${max}`);
     }
@@ -175,20 +158,6 @@ export class Percentage {
     return new Percentage(Math.abs(this._value), false);
   }
 
-  /**
-   * Applies this percentage to a number
-   * 
-   * @param base - The base number to apply percentage to
-   * @returns Result of applying the percentage
-   * 
-   * @example
-   * ```typescript
-   * const discount = new Percentage(10);
-   * const originalPrice = 100;
-   * const discountAmount = discount.applyTo(originalPrice); // 10
-   * const finalPrice = originalPrice - discountAmount; // 90
-   * ```
-   */
   applyTo(base: number): number {
     if (!Number.isFinite(base)) {
       throw new Error('Base value must be a finite number');

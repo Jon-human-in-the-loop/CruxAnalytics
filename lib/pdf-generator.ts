@@ -117,7 +117,7 @@ function generateHTMLReport(
       padding: 0;
       box-sizing: border-box;
     }
-    
+
     body {
       font-family: 'Latin Modern Roman', 'Computer Modern Roman', 'Computer Modern', Georgia, 'Times New Roman', Times, serif;
       font-size: 11pt;
@@ -129,26 +129,26 @@ function generateHTMLReport(
       max-width: 800px;
       margin: 0 auto;
     }
-    
+
     .header {
       text-align: center;
       margin-bottom: 40px;
       padding-top: 20px;
     }
-    
+
     .header h1 {
       font-size: 20pt;
       font-weight: bold;
       color: #000000;
       margin-bottom: 15px;
     }
-    
+
     .header .subtitle {
       font-size: 12pt;
       color: #333333;
       margin-bottom: 5px;
     }
-    
+
     .validated-badge {
       display: block;
       text-align: center;
@@ -157,11 +157,11 @@ function generateHTMLReport(
       margin-top: 20px;
       color: #000000;
     }
-    
+
     .section {
       margin-bottom: 30px;
     }
-    
+
     .section-title {
       font-size: 14pt;
       font-weight: bold;
@@ -169,88 +169,88 @@ function generateHTMLReport(
       margin-bottom: 15px;
       margin-top: 25px;
     }
-    
+
     .metrics-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 20px;
       margin-bottom: 30px;
     }
-    
+
     .metric-card {
       border: 1px solid #000;
       padding: 15px;
       text-align: center;
     }
-    
+
     .metric-label {
       font-size: 10pt;
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-bottom: 8px;
     }
-    
+
     .metric-value {
       font-size: 18pt;
       font-weight: bold;
     }
-    
+
     .metric-value.positive {
       color: #000000; /* LaTeX is typically pure B&W */
     }
-    
+
     .metric-value.negative {
       color: #000000;
     }
-    
+
     .metric-subtitle {
       font-size: 9pt;
       font-style: italic;
       margin-top: 4px;
     }
-    
+
     .chart-container {
       border: 1px solid #000;
       padding: 15px;
       margin-bottom: 20px;
       text-align: center;
     }
-    
+
     .chart-container img {
       max-width: 100%;
       height: auto;
     }
-    
+
     .chart-placeholder {
       padding: 40px 20px;
       font-style: italic;
     }
-    
+
     .project-info {
       border-top: 2px solid #000;
       border-bottom: 2px solid #000;
       padding: 15px 0;
       margin-bottom: 30px;
     }
-    
+
     .project-info-row {
       display: flex;
       justify-content: space-between;
       padding: 4px 0;
     }
-    
+
     .project-info-row:last-child {
       border-bottom: none;
     }
-    
+
     .project-info-label {
       font-weight: bold;
     }
-    
+
     .project-info-value {
       color: #000;
     }
-    
+
     .footer {
       margin-top: 60px;
       padding-top: 20px;
@@ -259,12 +259,12 @@ function generateHTMLReport(
       color: #687076;
       font-size: 12px;
     }
-    
+
     @media print {
       body {
         padding: 20px;
       }
-      
+
       .section {
         page-break-inside: avoid;
       }
@@ -313,7 +313,7 @@ function generateHTMLReport(
           ${results.roi > 0 ? t.positive_return : t.negative_return}
         </div>
       </div>
-      
+
       <div class="metric-card">
         <div class="metric-label">${t.npv_full}</div>
         <div class="metric-value ${results.npv > 0 ? 'positive' : 'negative'}">
@@ -323,7 +323,7 @@ function generateHTMLReport(
           ${results.npv > 0 ? t.creates_value : t.destroys_value}
         </div>
       </div>
-      
+
       <div class="metric-card">
         <div class="metric-label">${t.payback_full}</div>
         <div class="metric-value">
@@ -331,7 +331,7 @@ function generateHTMLReport(
         </div>
         <div class="metric-subtitle">${t.recovery_period}</div>
       </div>
-      
+
       <div class="metric-card">
         <div class="metric-label">${t.irr_full}</div>
         <div class="metric-value ${results.irr > project.discountRate ? 'positive' : 'negative'}">

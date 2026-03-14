@@ -26,9 +26,9 @@ describe('Mock Payments Configuration', () => {
   it('should return mock packages', async () => {
     const service = getPurchaseService();
     await service.configure('mock_api_key');
-    
+
     const packages = await service.getOfferings();
-    
+
     expect(packages).toHaveLength(2);
     expect(packages[0].identifier).toBe('pro_monthly_mock');
     expect(packages[0].product.priceString).toBe('$9.99');

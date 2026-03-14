@@ -30,7 +30,7 @@ export function useDeviceId() {
         // This ID is unique per app vendor and persists across app reinstalls
         // unless all apps from the same vendor are uninstalled
         id = await Application.getIosIdForVendorAsync();
-        
+
         if (!id) {
           console.warn('[DeviceId] iOS IDFV not available, generating fallback');
           id = await getFallbackDeviceId();
@@ -39,7 +39,7 @@ export function useDeviceId() {
         // Android: Use androidId
         // This ID is unique per device and app signing key
         id = Application.getAndroidId();
-        
+
         if (!id) {
           console.warn('[DeviceId] Android ID not available, generating fallback');
           id = await getFallbackDeviceId();
@@ -54,7 +54,7 @@ export function useDeviceId() {
       setLoading(false);
     } catch (error) {
       console.error('[DeviceId] Error getting device ID:', error);
-      
+
       // Fallback to generated ID
       const fallbackId = await getFallbackDeviceId();
       setDeviceId(fallbackId);
@@ -77,7 +77,7 @@ export function useDeviceId() {
       // Generate new UUID
       const uuid = generateUUID();
       await AsyncStorage.setItem(DEVICE_ID_KEY, uuid);
-      
+
       console.log('[DeviceId] Generated fallback ID:', uuid.substring(0, 8) + '...');
       return uuid;
     } catch (error) {

@@ -1,8 +1,3 @@
-/**
- * @fileoverview Loan Calculator Page
- * Evaluates loan options with amortization schedule and affordability analysis
- */
-
 import React, { useState, useMemo } from 'react';
 import { View, Text, TextInput, Pressable, ScrollView, Alert, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';

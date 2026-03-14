@@ -1,44 +1,11 @@
-/**
- * @fileoverview Cohort-specific metrics calculator.
- * Implements Contribution Margin by Cohort for identifying profitable customer segments.
- * 
- * @module infrastructure/calculators/CohortMetricsCalculator
- * 
- * @example
- * ```typescript
- * const calculator = new CohortMetricsCalculator();
- * const result = calculator.calculate({
- *   cohortName: 'Enterprise Q1 2026',
- *   cohortRevenue: 500000,
- *   directCosts: 200000,
- *   customerCount: 50,
- *   acquisitionCost: 5000,
- *   servicingCostPerCustomer: 200
- * });
- * ```
- */
-
 import { BaseCalculator } from './BaseCalculator';
 import type { CohortInput } from '@/types/project';
 
-/**
- * Calculator for cohort-specific profitability metrics.
- * Helps identify which customer segments are profitable vs loss-making.
- * 
- * @class CohortMetricsCalculator
- * @extends BaseCalculator
- */
 export class CohortMetricsCalculator extends BaseCalculator {
     constructor() {
         super('CohortMetricsCalculator');
     }
 
-    /**
-     * Calculates all cohort profitability metrics.
-     * 
-     * @param input - Cohort-specific input data
-     * @returns Object containing contribution margin, margin per customer, and profitability index
-     */
     calculate(input: CohortInput): {
         contributionMargin: number;
         marginPerCustomer: number;
@@ -68,12 +35,6 @@ export class CohortMetricsCalculator extends BaseCalculator {
         };
     }
 
-    /**
-     * Validates cohort input data.
-     * 
-     * @protected
-     * @override
-     */
     protected override validate(input: CohortInput): void {
         super.validate(input);
 
@@ -87,20 +48,6 @@ export class CohortMetricsCalculator extends BaseCalculator {
         this.assertPositive(input.servicingCostPerCustomer, 'servicingCostPerCustomer');
     }
 
-    /**
-     * Calculates Contribution Margin as a percentage.
-     * Formula: (Revenue - Direct Costs) / Revenue × 100
-     * 
-     * Interpretation:
-     * - > 40%: High-value cohort, consider expansion
-     * - 20-40%: Acceptable, monitor for improvements
-     * - 0-20%: Below average, review pricing strategy
-     * - < 0%: Loss-making, consider discontinuing
-     * 
-     * @private
-     * @param input - Cohort input data
-     * @returns Contribution margin percentage
-     */
     private calculateContributionMargin(input: CohortInput): number {
         const { cohortRevenue, directCosts } = input;
 
@@ -113,14 +60,6 @@ export class CohortMetricsCalculator extends BaseCalculator {
         return this.round(margin, 2);
     }
 
-    /**
-     * Calculates the contribution margin per individual customer.
-     * Formula: (Revenue - Direct Costs) / Customer Count
-     * 
-     * @private
-     * @param input - Cohort input data
-     * @returns Margin per customer in currency
-     */
     private calculateMarginPerCustomer(input: CohortInput): number {
         const { cohortRevenue, directCosts, customerCount } = input;
 
@@ -130,21 +69,6 @@ export class CohortMetricsCalculator extends BaseCalculator {
         return this.round(marginPerCustomer, 2);
     }
 
-    /**
-     * Calculates Cohort Profitability Index.
-     * Compares contribution margin to break-even and acquisition costs.
-     * Formula: (Margin per Customer - Acquisition Cost) / Servicing Cost
-     * 
-     * Interpretation:
-     * - > 2.0: Excellent, strong profitability
-     * - 1.0-2.0: Good, sustainable
-     * - 0-1.0: Marginal, needs improvement
-     * - < 0: Unprofitable cohort
-     * 
-     * @private
-     * @param input - Cohort input data
-     * @returns Profitability index ratio
-     */
     private calculateProfitabilityIndex(input: CohortInput): number {
         const marginPerCustomer = this.calculateMarginPerCustomer(input);
         const { acquisitionCost, servicingCostPerCustomer } = input;
@@ -156,11 +80,6 @@ export class CohortMetricsCalculator extends BaseCalculator {
         return this.round(index, 2);
     }
 
-    /**
-     * Gets benchmark values for Contribution Margin (%).
-     * 
-     * @returns Benchmark object
-     */
     getContributionMarginBenchmarks(): { optimal: number; acceptable: number; critical: number } {
         return {
             optimal: 40,
@@ -169,11 +88,6 @@ export class CohortMetricsCalculator extends BaseCalculator {
         };
     }
 
-    /**
-     * Gets benchmark values for Profitability Index.
-     * 
-     * @returns Benchmark object
-     */
     getProfitabilityIndexBenchmarks(): { optimal: number; acceptable: number; critical: number } {
         return {
             optimal: 2.0,
@@ -182,13 +96,6 @@ export class CohortMetricsCalculator extends BaseCalculator {
         };
     }
 
-    /**
-     * Generates recommendations based on cohort metrics.
-     * 
-     * @param contributionMargin - The calculated contribution margin
-     * @param profitabilityIndex - The calculated profitability index
-     * @returns Array of recommendation strings
-     */
     generateRecommendations(
         contributionMargin: number,
         profitabilityIndex: number

@@ -1,31 +1,11 @@
-/**
- * @fileoverview SaaS-specific metrics calculator.
- * Implements LTV/CAC, NRR (Net Revenue Retention), and Rule of 40.
- * 
- * @module infrastructure/calculators/SaaSMetricsCalculator
- */
-
 import { BaseCalculator } from './BaseCalculator';
 import type { SaaSInput } from '@/types/project';
 
-/**
- * Calculator for SaaS-specific business metrics.
- * Provides LTV/CAC analysis, Net Revenue Retention, and Rule of 40.
- * 
- * @class SaaSMetricsCalculator
- * @extends BaseCalculator
- */
 export class SaaSMetricsCalculator extends BaseCalculator {
   constructor() {
     super('SaaSMetricsCalculator');
   }
 
-  /**
-   * Calculates all SaaS metrics.
-   * 
-   * @param input - SaaS-specific input data
-   * @returns Object containing LTV, CAC, ltv_cac_ratio, payback_months, nrr, rule_of_40
-   */
   calculate(input: SaaSInput): {
     ltv: number;
     cac: number;
@@ -59,12 +39,6 @@ export class SaaSMetricsCalculator extends BaseCalculator {
     };
   }
 
-  /**
-   * Validates SaaS input data.
-   * 
-   * @protected
-   * @override
-   */
   protected override validate(input: SaaSInput): void {
     super.validate(input);
 
@@ -80,16 +54,6 @@ export class SaaSMetricsCalculator extends BaseCalculator {
     this.assertRange(input.profitMargin, -100, 100, 'profitMargin');
   }
 
-  /**
-   * Calculates Customer Lifetime Value (LTV).
-   * Formula: (ARPU × Gross Margin) / Churn Rate
-   * 
-   * Benchmarks:
-   * - LTV/CAC ratio > 3: Healthy
-   * - LTV/CAC ratio < 1: Unsustainable
-   * 
-   * @private
-   */
   private calculateLTV(input: SaaSInput): number {
     const { averageRevenuePerUser, grossMargin, churnRate } = input;
 
@@ -105,17 +69,6 @@ export class SaaSMetricsCalculator extends BaseCalculator {
     return this.round(ltv, 2);
   }
 
-  /**
-   * Calculates CAC Payback Period in months.
-   * Formula: CAC / (ARPU × Gross Margin)
-   * 
-   * Benchmarks:
-   * - < 12 months: Excellent
-   * - 12-18 months: Acceptable
-   * - > 18 months: Concerning
-   * 
-   * @private
-   */
   private calculatePaybackPeriod(input: SaaSInput): number {
     const { averageRevenuePerUser, grossMargin, cacCost } = input;
 
@@ -127,18 +80,6 @@ export class SaaSMetricsCalculator extends BaseCalculator {
     return this.round(payback, 2);
   }
 
-  /**
-   * Calculates Net Revenue Retention (NRR).
-   * Formula: (Starting MRR + Expansion - Churn - Contraction) / Starting MRR × 100
-   * 
-   * Benchmarks:
-   * - > 120%: Excellent, strong expansion
-   * - 100-120%: Good, stable growth
-   * - 90-100%: Acceptable, but needs improvement
-   * - < 90%: Concerning, churn problem
-   * 
-   * @private
-   */
   private calculateNRR(input: SaaSInput): number {
     const { startingMRR, expansionMRR, churnedMRR, contractedMRR } = input;
 
@@ -148,17 +89,6 @@ export class SaaSMetricsCalculator extends BaseCalculator {
     return this.round(nrr, 2);
   }
 
-  /**
-   * Calculates Rule of 40.
-   * Formula: Revenue Growth % + Profit Margin %
-   * 
-   * Benchmarks:
-   * - ≥ 40: Healthy SaaS business
-   * - 20-40: Acceptable, room for improvement
-   * - < 20: Needs strategic adjustment
-   * 
-   * @private
-   */
   private calculateRuleOf40(input: SaaSInput): number {
     const { revenueGrowthRate, profitMargin } = input;
 
@@ -167,9 +97,6 @@ export class SaaSMetricsCalculator extends BaseCalculator {
     return this.round(ruleOf40, 2);
   }
 
-  /**
-   * Gets benchmark values for LTV/CAC ratio.
-   */
   getLTVCACBenchmarks(): { optimal: number; acceptable: number; industry: number } {
     return {
       optimal: 5.0,
@@ -178,9 +105,6 @@ export class SaaSMetricsCalculator extends BaseCalculator {
     };
   }
 
-  /**
-   * Gets benchmark values for Payback Period (months).
-   */
   getPaybackBenchmarks(): { optimal: number; acceptable: number; industry: number } {
     return {
       optimal: 12,
@@ -189,9 +113,6 @@ export class SaaSMetricsCalculator extends BaseCalculator {
     };
   }
 
-  /**
-   * Gets benchmark values for NRR (%).
-   */
   getNRRBenchmarks(): { optimal: number; acceptable: number; industry: number } {
     return {
       optimal: 120,
@@ -200,9 +121,6 @@ export class SaaSMetricsCalculator extends BaseCalculator {
     };
   }
 
-  /**
-   * Gets benchmark values for Rule of 40.
-   */
   getRuleOf40Benchmarks(): { optimal: number; acceptable: number; industry: number } {
     return {
       optimal: 50,

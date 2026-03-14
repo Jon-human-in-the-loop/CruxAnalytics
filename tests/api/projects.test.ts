@@ -1,8 +1,3 @@
-/**
- * @fileoverview Projects API test
- * Tests the projects API router structure and types
- */
-
 import { describe, it, expect } from 'vitest';
 import { projects, scenarios } from '@/shared/db/schema';
 import type { FinancialResults } from '@/shared/db/schema';
@@ -74,7 +69,7 @@ describe('Projects API Schema', () => {
     it('should export router from server/routers/projects.ts', async () => {
       // Dynamic import to check if the router exports correctly
       const { projectsRouter } = await import('@/server/routers/projects');
-      
+
       expect(projectsRouter).toBeDefined();
       expect(typeof projectsRouter).toBe('object');
     });
@@ -85,7 +80,7 @@ describe('API Client Layer', () => {
   describe('Project Storage Compatibility', () => {
     it('should export all required functions from lib/project-storage.ts', async () => {
       const projectStorage = await import('@/lib/project-storage');
-      
+
       // Check that all required functions are exported
       expect(projectStorage.getAllProjects).toBeDefined();
       expect(projectStorage.getProject).toBeDefined();
@@ -97,7 +92,7 @@ describe('API Client Layer', () => {
       expect(projectStorage.saveScenarioSnapshot).toBeDefined();
       expect(projectStorage.deleteScenario).toBeDefined();
       expect(projectStorage.getBaseScenario).toBeDefined();
-      
+
       // Legacy functions
       expect(projectStorage.exportAllProjects).toBeDefined();
       expect(projectStorage.importProjects).toBeDefined();
@@ -109,7 +104,7 @@ describe('API Client Layer', () => {
   describe('API Projects Module', () => {
     it('should export all API functions from lib/api/projects.ts', async () => {
       const apiProjects = await import('@/lib/api/projects');
-      
+
       // Check that all API functions are exported
       expect(apiProjects.getAllProjects).toBeDefined();
       expect(apiProjects.getProject).toBeDefined();
@@ -129,7 +124,7 @@ describe('Type Mappings', () => {
   it('should correctly define mapping functions', async () => {
     // Just verify that the module can be imported and has the structure
     const apiProjects = await import('@/lib/api/projects');
-    
+
     // The mapping functions are internal, but we can test the exported functions exist
     expect(typeof apiProjects.getAllProjects).toBe('function');
     expect(typeof apiProjects.getProject).toBe('function');

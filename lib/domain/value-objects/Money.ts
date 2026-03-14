@@ -1,11 +1,4 @@
 /**
- * @fileoverview Value object for monetary values with immutability and currency support.
- * Follows value object pattern with no identity and immutable state.
- * 
- * @module domain/value-objects/Money
- */
-
-/**
  * Supported currency codes
  */
 export enum Currency {
@@ -39,7 +32,6 @@ const CURRENCY_SYMBOLS: Record<Currency, string> = {
  * Value object for monetary values.
  * Immutable with operations that return new instances.
  * 
- * @class Money
  * 
  * @example
  * ```typescript
@@ -55,14 +47,6 @@ export class Money {
   private readonly _amount: number;
   private readonly _currency: Currency;
 
-  /**
-   * Creates a new Money instance
-   * 
-   * @param amount - The monetary amount
-   * @param currency - The currency code (default: USD)
-   * 
-   * @throws {Error} If amount is not a finite number
-   */
   constructor(amount: number, currency: Currency = Currency.USD) {
     if (!Number.isFinite(amount)) {
       throw new Error('Money amount must be a finite number');
@@ -104,7 +88,7 @@ export class Money {
    */
   format(locale?: string, options?: Intl.NumberFormatOptions): string {
     const defaultLocale = locale || 'en-US';
-    
+
     return new Intl.NumberFormat(defaultLocale, {
       style: 'currency',
       currency: this._currency,
@@ -122,7 +106,7 @@ export class Money {
    */
   formatAmount(locale?: string): string {
     const defaultLocale = locale || 'en-US';
-    
+
     return new Intl.NumberFormat(defaultLocale, {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,

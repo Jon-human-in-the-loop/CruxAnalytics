@@ -1,8 +1,3 @@
-/**
- * @fileoverview Business Intelligence facade with unified API
- * Provides comprehensive business analytics capabilities
- */
-
 import type { XAIResult, XAIScenarioResult, XAIContextConfig } from '../xai/types';
 import {
   calculateOFI,

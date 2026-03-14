@@ -1,9 +1,4 @@
 /**
- * @fileoverview Repository pattern for data access
- * Provides CRUD operations and unit of work pattern
- */
-
-/**
  * Base entity interface
  */
 export interface Entity {
@@ -35,25 +30,25 @@ export interface QueryOptions<T> {
 export interface Repository<T extends Entity> {
   /** Find entity by ID */
   findById(id: string | number): Promise<T | null>;
-  
+
   /** Find entities matching criteria */
   find(options?: QueryOptions<T>): Promise<T[]>;
-  
+
   /** Find first entity matching criteria */
   findOne(options?: QueryOptions<T>): Promise<T | null>;
-  
+
   /** Create a new entity */
   create(data: Omit<T, 'id' | 'createdAt' | 'updatedAt'>): Promise<T>;
-  
+
   /** Update an existing entity */
   update(id: string | number, data: Partial<Omit<T, 'id'>>): Promise<T>;
-  
+
   /** Delete an entity */
   delete(id: string | number): Promise<boolean>;
-  
+
   /** Count entities matching criteria */
   count(options?: QueryOptions<T>): Promise<number>;
-  
+
   /** Check if entity exists */
   exists(id: string | number): Promise<boolean>;
 }

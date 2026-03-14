@@ -1,8 +1,3 @@
-/**
- * @fileoverview Tests for encryption module
- * Verifies encrypt/decrypt round-trip and data security utilities
- */
-
 import { describe, it, expect } from 'vitest';
 import {
     encrypt,

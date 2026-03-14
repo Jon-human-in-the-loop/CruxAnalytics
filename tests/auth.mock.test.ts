@@ -19,7 +19,7 @@ describe("Mock Authentication", () => {
     } else {
       delete process.env.NODE_ENV;
     }
-    
+
     if (originalUseMockAuth !== undefined) {
       process.env.USE_MOCK_AUTH = originalUseMockAuth;
     } else {
@@ -113,7 +113,7 @@ describe("Mock Authentication", () => {
 
     const mockReq = { headers: {} } as any;
     const mockRes = {} as any;
-    
+
     const opts: CreateExpressContextOptions = {
       req: mockReq,
       res: mockRes,

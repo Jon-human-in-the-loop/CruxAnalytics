@@ -1,8 +1,3 @@
-/**
- * @fileoverview Worker client for financial calculations
- * WORKERS TEMPORALMENTE DESHABILITADOS - Usando modo síncrono
- */
-
 import type { FinancialCalculationInput, FinancialCalculationResult } from '@/types/project';
 
 /**

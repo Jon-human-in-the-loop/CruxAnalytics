@@ -64,7 +64,7 @@ export function AutoSaveIndicator({ status, lastSaved }: AutoSaveIndicatorProps)
       {status === 'saving' && (
         <ActivityIndicator size="small" color={colors.primary} />
       )}
-      
+
       {status === 'saved' && (
         <View
           style={{

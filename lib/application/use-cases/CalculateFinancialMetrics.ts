@@ -1,10 +1,3 @@
-/**
- * @fileoverview Use case for calculating financial metrics with XAI enrichment.
- * Orchestrates: ValidationService → CalculationService → XAIService
- * 
- * @module application/use-cases/CalculateFinancialMetrics
- */
-
 import { CalculationService } from '@/lib/application/services/CalculationService';
 import { XAIService } from '@/lib/application/services/XAIService';
 import { Metric } from '@/lib/domain/entities/Metric';
@@ -20,7 +13,6 @@ import type { ProjectData, EnrichedProjectResults, EnrichedMetric, AuditEntry } 
  * Use case for calculating all financial metrics with XAI enrichment.
  * Main entry point for metric calculations in the application.
  * 
- * @class CalculateFinancialMetrics
  * 
  * @example
  * ```typescript
@@ -77,14 +69,6 @@ export class CalculateFinancialMetrics {
     this.xaiService.registerStrategy('CHURN_IMPACT', new DefaultContextStrategy('Churn Impact'));
   }
 
-  /**
-   * Executes the use case: calculates and enriches all metrics.
-   * 
-   * @param projectData - Project data with all inputs
-   * @returns Promise resolving to enriched project results
-   * 
-   * @throws {Error} If calculation fails
-   */
   async execute(projectData: ProjectData): Promise<EnrichedProjectResults> {
     const startTime = Date.now();
     const auditLog: AuditEntry[] = [];
@@ -142,11 +126,6 @@ export class CalculateFinancialMetrics {
     }
   }
 
-  /**
-   * Enriches standard financial metrics with XAI context.
-   * 
-   * @private
-   */
   private enrichStandardMetrics(
     rawResults: {
       roi: number;
@@ -168,11 +147,6 @@ export class CalculateFinancialMetrics {
     return metrics.map(m => m.toXAIFormat());
   }
 
-  /**
-   * Enriches Vanguard proprietary metrics with XAI context.
-   * 
-   * @private
-   */
   private enrichVanguardMetrics(
     rawResults: {
       ofi: number;

@@ -1,27 +1,6 @@
-/**
- * @fileoverview Cash flow forecast calculator for small businesses.
- * Projects monthly cash flow and identifies potential cash shortfalls.
- * 
- * @module infrastructure/calculators/CashFlowForecastCalculator
- * 
- * @example
- * ```typescript
- * const calculator = new CashFlowForecastCalculator();
- * const result = calculator.calculate({
- *   startingCash: 50000,
- *   monthlyRevenue: 30000,
- *   monthlyExpenses: 25000,
- *   forecastMonths: 12
- * });
- * ```
- */
-
 import { BaseCalculator } from './BaseCalculator';
 import type { CashFlowForecastInput } from '@/types/project';
 
-/**
- * Result for a single month in the forecast
- */
 export interface MonthlyForecast {
     month: number;
     monthName: string;
@@ -32,13 +11,6 @@ export interface MonthlyForecast {
     isDeficit: boolean;
 }
 
-/**
- * Calculator for cash flow forecasting.
- * Essential for small businesses to predict and prevent cash shortfalls.
- * 
- * @class CashFlowForecastCalculator
- * @extends BaseCalculator
- */
 export class CashFlowForecastCalculator extends BaseCalculator {
     private readonly monthNames = [
         'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -49,12 +21,6 @@ export class CashFlowForecastCalculator extends BaseCalculator {
         super('CashFlowForecastCalculator');
     }
 
-    /**
-     * Calculates cash flow forecast for the specified period.
-     * 
-     * @param input - Cash flow forecast input data
-     * @returns Complete cash flow forecast with alerts
-     */
     calculate(input: CashFlowForecastInput): {
         monthlyForecasts: MonthlyForecast[];
         totalRevenue: number;
@@ -166,12 +132,6 @@ export class CashFlowForecastCalculator extends BaseCalculator {
         };
     }
 
-    /**
-     * Validates cash flow forecast input data.
-     * 
-     * @protected
-     * @override
-     */
     protected override validate(input: CashFlowForecastInput): void {
         super.validate(input);
 
@@ -190,12 +150,6 @@ export class CashFlowForecastCalculator extends BaseCalculator {
         }
     }
 
-    /**
-     * Generates alerts and recommendations based on forecast.
-     * 
-     * @param result - Calculation results
-     * @returns Array of alert/recommendation strings
-     */
     generateAlerts(result: ReturnType<typeof this.calculate>): string[] {
         const alerts: string[] = [];
 

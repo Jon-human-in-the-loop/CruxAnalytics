@@ -1,43 +1,11 @@
-/**
- * @fileoverview Break-even analysis calculator for small businesses.
- * Calculates the point where total revenue equals total costs.
- * 
- * @module infrastructure/calculators/BreakEvenCalculator
- * 
- * @example
- * ```typescript
- * const calculator = new BreakEvenCalculator();
- * const result = calculator.calculate({
- *   fixedCosts: 50000,
- *   pricePerUnit: 25,
- *   variableCostPerUnit: 10,
- *   currentSalesUnits: 5000
- * });
- * // Result: breakEvenUnits = 3334, marginOfSafety = 33.3%
- * ```
- */
-
 import { BaseCalculator } from './BaseCalculator';
 import type { BreakEvenInput } from '@/types/project';
 
-/**
- * Calculator for break-even analysis.
- * Essential metric for small business owners to understand minimum sales needed.
- * 
- * @class BreakEvenCalculator
- * @extends BaseCalculator
- */
 export class BreakEvenCalculator extends BaseCalculator {
     constructor() {
         super('BreakEvenCalculator');
     }
 
-    /**
-     * Calculates break-even point and related metrics.
-     * 
-     * @param input - Break-even input data
-     * @returns Break-even analysis results
-     */
     calculate(input: BreakEvenInput): {
         breakEvenUnits: number;
         breakEvenRevenue: number;
@@ -98,12 +66,6 @@ export class BreakEvenCalculator extends BaseCalculator {
         };
     }
 
-    /**
-     * Validates break-even input data.
-     * 
-     * @protected
-     * @override
-     */
     protected override validate(input: BreakEvenInput): void {
         super.validate(input);
 
@@ -122,23 +84,11 @@ export class BreakEvenCalculator extends BaseCalculator {
         }
     }
 
-    /**
-     * Calculates break-even point in units.
-     * Formula: Fixed Costs / (Price - Variable Cost)
-     * 
-     * @private
-     */
     private calculateBreakEvenUnits(input: BreakEvenInput): number {
         const contributionMargin = input.pricePerUnit - input.variableCostPerUnit;
         return this.safeDivide(input.fixedCosts, contributionMargin, 0);
     }
 
-    /**
-     * Generates recommendations based on break-even analysis.
-     * 
-     * @param result - Calculation results
-     * @returns Array of recommendation strings
-     */
     generateRecommendations(result: ReturnType<typeof this.calculate>): string[] {
         const recommendations: string[] = [];
 
@@ -181,9 +131,6 @@ export class BreakEvenCalculator extends BaseCalculator {
         return recommendations;
     }
 
-    /**
-     * Gets benchmark values for margin of safety.
-     */
     getMarginOfSafetyBenchmarks(): { healthy: number; acceptable: number; critical: number } {
         return {
             healthy: 25,

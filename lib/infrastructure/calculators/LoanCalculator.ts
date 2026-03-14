@@ -1,22 +1,3 @@
-/**
- * @fileoverview Loan calculator for small business financing.
- * Evaluates loan options and calculates affordability.
- * 
- * @module infrastructure/calculators/LoanCalculator
- * 
- * @example
- * ```typescript
- * const calculator = new LoanCalculator();
- * const result = calculator.calculate({
- *   principal: 100000,
- *   annualInterestRate: 8.5,
- *   termMonths: 60,
- *   monthlyRevenue: 50000,
- *   monthlyExpenses: 40000
- * });
- * ```
- */
-
 import { BaseCalculator } from './BaseCalculator';
 import type { LoanInput } from '@/types/project';
 
@@ -31,24 +12,11 @@ export interface AmortizationEntry {
     balance: number;
 }
 
-/**
- * Calculator for loan evaluation and affordability.
- * Helps small businesses evaluate financing options.
- * 
- * @class LoanCalculator
- * @extends BaseCalculator
- */
 export class LoanCalculator extends BaseCalculator {
     constructor() {
         super('LoanCalculator');
     }
 
-    /**
-     * Calculates loan metrics and affordability.
-     * 
-     * @param input - Loan input data
-     * @returns Loan analysis results
-     */
     calculate(input: LoanInput): {
         monthlyPayment: number;
         totalPayment: number;
@@ -133,11 +101,6 @@ export class LoanCalculator extends BaseCalculator {
         };
     }
 
-    /**
-     * Calculates monthly payment using amortization formula.
-     * 
-     * @private
-     */
     private calculateMonthlyPayment(
         principal: number,
         monthlyRate: number,
@@ -185,11 +148,6 @@ export class LoanCalculator extends BaseCalculator {
         return schedule;
     }
 
-    /**
-     * Calculates effective annual rate including fees.
-     * 
-     * @private
-     */
     private calculateEffectiveRate(
         netProceeds: number,
         monthlyPayment: number,
@@ -204,11 +162,6 @@ export class LoanCalculator extends BaseCalculator {
         return (totalInterest / averageBalance / years) * 100;
     }
 
-    /**
-     * Calculates affordability metrics.
-     * 
-     * @private
-     */
     private calculateAffordability(
         input: LoanInput,
         monthlyPayment: number
@@ -243,12 +196,6 @@ export class LoanCalculator extends BaseCalculator {
         };
     }
 
-    /**
-     * Validates loan input data.
-     * 
-     * @protected
-     * @override
-     */
     protected override validate(input: LoanInput): void {
         super.validate(input);
 
@@ -261,13 +208,6 @@ export class LoanCalculator extends BaseCalculator {
         }
     }
 
-    /**
-     * Generates recommendations based on loan analysis.
-     * 
-     * @param result - Calculation results
-     * @param input - Original input for context
-     * @returns Array of recommendation strings
-     */
     generateRecommendations(
         result: ReturnType<typeof this.calculate>,
         input: LoanInput
