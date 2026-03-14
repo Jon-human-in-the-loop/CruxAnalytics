@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { View, Text, TextInput, Pressable, ScrollView, Alert } from 'react-native';
+import { View, Text, TextInput, Pressable, ScrollView, Alert, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {
     GlassCard,
@@ -140,12 +140,14 @@ export default function PricingPage() {
         }
     };
 
+    const isSmall = Dimensions.get('window').width < 600;
+
     return (
         <ScrollView
             className="flex-1 bg-[#020617]"
-            contentContainerStyle={{ paddingHorizontal: 20, paddingVertical: 40 }}
+            contentContainerStyle={{ paddingHorizontal: isSmall ? 12 : 20, paddingVertical: isSmall ? 16 : 40 }}
         >
-            <View className="max-w-5xl mx-auto">
+            <View className="w-full">
                 {/* Top Navigation */}
                 <View className="flex-row items-center justify-between mb-8">
                     <Pressable
@@ -165,9 +167,9 @@ export default function PricingPage() {
                     />
                 </View>
 
-                <View className="gap-6">
+                <View className={isSmall ? 'gap-6' : 'flex-row gap-6 items-start'}>
                     {/* Form */}
-                    <View className="w-full">
+                    <View className={isSmall ? 'w-full' : 'flex-1'}>
                         <GlassCard>
                             <Text className="text-white font-semibold text-lg mb-6">
                                 {t('calculators.enter_data')}
@@ -200,7 +202,7 @@ export default function PricingPage() {
                     </View>
 
                     {/* Results */}
-                    <View className="w-full gap-4">
+                    <View className={isSmall ? 'w-full gap-4' : 'flex-1 gap-4'}>
                         {result ? (
                             <>
                                 {/* Main Price */}

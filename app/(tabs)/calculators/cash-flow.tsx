@@ -218,7 +218,7 @@ export default function CashFlowPage() {
             className="flex-1 bg-[#020617]"
             contentContainerStyle={{ paddingHorizontal: isSmall ? 12 : 20, paddingVertical: isSmall ? 16 : 40 }}
         >
-            <View className="max-w-5xl mx-auto">
+            <View className="w-full">
                 {/* Top Navigation */}
                 <View className={`flex-row items-center justify-between ${isSmall ? 'mb-4' : 'mb-8'}`}>
                     <Pressable
@@ -238,9 +238,9 @@ export default function CashFlowPage() {
                     />
                 </View>
 
-                <View className="gap-6">
+                <View className={isSmall ? 'gap-6' : 'flex-row gap-6 items-start'}>
                     {/* Input Form */}
-                    <View className="w-full">
+                    <View className={isSmall ? 'w-full' : 'flex-1'}>
                         <GlassCard>
                             <Text className={`text-white font-semibold ${isSmall ? 'text-base mb-4' : 'text-lg mb-6'}`}>{t('calculators.enter_data')}</Text>
 
@@ -279,7 +279,7 @@ export default function CashFlowPage() {
                     </View>
 
                     {/* Results */}
-                    <View className={`w-full ${isSmall ? 'gap-3' : 'gap-4'}`}>
+                    <View className={isSmall ? 'w-full gap-3' : 'flex-1 gap-4'}>
                         {result ? (
                             <>
                                 {/* Summary Cards */}
